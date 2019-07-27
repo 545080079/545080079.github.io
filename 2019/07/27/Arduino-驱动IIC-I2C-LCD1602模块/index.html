@@ -14,10 +14,12 @@
 <meta property="og:site_name" content="MRoad">
 <meta property="og:description" content="I2CI2C又称IIC，即Inter-Integrated Circuit(集成电路总线）。多个芯片可以连接到同一总线结构下，同时每个芯片都可以作为实施数据传输的控制源。I2C串行总线一般有两根信号线，一根是双向的数据线SDA，另一根是时钟线SCL。所有接到I2C总线设备上的串行数据SDA都接到总线的SDA上，各设备的时钟线SCL接到总线的SCL上。 连接I2C LCD1602集成了4个引脚，我采">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-27T11:19:38.651Z">
+<meta property="og:image" content="http://yoursite.com/.com//test1.jpg">
+<meta property="og:updated_time" content="2019-07-27T11:25:16.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arduino----I2C LCD1602模块">
 <meta name="twitter:description" content="I2CI2C又称IIC，即Inter-Integrated Circuit(集成电路总线）。多个芯片可以连接到同一总线结构下，同时每个芯片都可以作为实施数据传输的控制源。I2C串行总线一般有两根信号线，一根是双向的数据线SDA，另一根是时钟线SCL。所有接到I2C总线设备上的串行数据SDA都接到总线的SDA上，各设备的时钟线SCL接到总线的SCL上。 连接I2C LCD1602集成了4个引脚，我采">
+<meta name="twitter:image" content="http://yoursite.com/.com//test1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -98,14 +100,13 @@
 <p>将这段代码烧录到Arduino开发板，即可从串口输出中得到0xXX的地址，8574芯片的地址一般是<br>0x27，但因型号不同而异。</p>
 <h2 id="Arduino代码——lcd1602IIC-ino"><a href="#Arduino代码——lcd1602IIC-ino" class="headerlink" title="Arduino代码——lcd1602IIC.ino"></a>Arduino代码——lcd1602IIC.ino</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;Wire.h&gt;                   //I2C库文件</span><br><span class="line">#include &lt;LiquidCrystal_I2C.h&gt;      //I2C 1602库文件，可以通过自带的库管理器添加</span><br><span class="line"></span><br><span class="line">LiquidCrystal_I2C lcd(0x27,16,2);   // LCD地址是0x27，设置为16字/行，共2行</span><br><span class="line"> </span><br><span class="line"> void setup() &#123;</span><br><span class="line">  lcd.init();</span><br><span class="line">  lcd.backlight();</span><br><span class="line">  lcd.print(&quot;Author:Luoyutao&quot;);</span><br><span class="line">  lcd.setCursor(0,1);               //新的一行</span><br><span class="line">  lcd.print(&quot;www.lyt0617.cn&quot;);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>简单的测试代码，接好线烧好程序，即可得到如下图显示，一切正常。</p>
-<p>PS：如果不显示，用螺丝刀调整电位器，改变V0的电压，让对比度调至适当比例即可。</p>
+<p>简单的测试代码，接好线烧好程序，即可得到如下图显示，一切正常。<br><img src="/.com//test1.jpg" alt="test1"><br>PS：如果不显示，用螺丝刀调整电位器，改变V0的电压，让对比度调至适当比例即可。</p>
 <p>END</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/27/Arduino-驱动IIC-I2C-LCD1602模块/" data-id="cjylco3lg0001zkvfrs5peirq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/27/Arduino-驱动IIC-I2C-LCD1602模块/" data-id="cjylg7ptt0000yovfm5y5q2re" class="article-share-link">Share</a>
       
       
     </footer>
