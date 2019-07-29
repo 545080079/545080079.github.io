@@ -175,6 +175,112 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode—e-441-——排列硬币" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/29/leetcode—e-441-——排列硬币/">leetcode—e[441]——排列硬币</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/29/leetcode—e-441-——排列硬币/" class="archive-article-date">
+  	<time datetime="2019-07-29T03:55:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>你总共有 n 枚硬币，你需要将它们摆成一个阶梯形状，第 k 行就必须正好有 k 枚硬币。</p>
+<p>给定一个数字 n，找出可形成完整阶梯行的总行数。</p>
+<p>n 是一个非负整数，并且在32位有符号整型的范围内。</p>
+<p>示例 1:</p>
+<p>n = 5</p>
+<p>硬币可排列成以下几行:<br>¤<br>¤ ¤<br>¤ ¤</p>
+<p>因为第三行不完整，所以返回2.<br>示例 2:</p>
+<p>n = 8</p>
+<p>硬币可排列成以下几行:<br>¤<br>¤ ¤<br>¤ ¤ ¤<br>¤ ¤</p>
+<p>因为第四行不完整，所以返回3.</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/arranging-coins" target="_blank" rel="noopener">https://leetcode-cn.com/problems/arranging-coins</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>难度为简单，可以直接用模拟的方式，O(n)时间内算出行数。也可以根据等差数列求和公式m*(m+1)/2=n来优化时复至O(1)。</p>
+<h2 id="实现一：简单模拟，O-n"><a href="#实现一：简单模拟，O-n" class="headerlink" title="实现一：简单模拟，O(n)"></a>实现一：简单模拟，O(n)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int arrangeCoins(int n) &#123;</span><br><span class="line">        int row=0,val=1;</span><br><span class="line">        while(n&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            if(n-val&gt;=0)</span><br><span class="line">            &#123;</span><br><span class="line">                n-=val++;</span><br><span class="line">                ++row;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        return row;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行时间48ms。</p>
+<h2 id="实现二：等差数列公式法，O-1"><a href="#实现二：等差数列公式法，O-1" class="headerlink" title="实现二：等差数列公式法，O(1)"></a>实现二：等差数列公式法，O(1)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int arrangeCoins(int n) &#123;</span><br><span class="line">        return (int)(sqrt(double(2*(double)n+0.25))-0.5);</span><br><span class="line">        //由i*(i+1)/2=n公式直接变形可得i=sqrt(2n+0.25)-0.5</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>还可用二分查找，待补充。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">简单模拟</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">二分查找</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/29/leetcode—e-441-——排列硬币/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-125-——验证回文串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -195,15 +301,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>题目如下：</p>
-<p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p>
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p>
 <p>说明：本题中，我们将空字符串定义为有效的回文串。</p>
 <p>示例 1:</p>
 <p>输入: “A man, a plan, a canal: Panama”<br>输出: true<br>示例 2:</p>
 <p>输入: “race a car”<br>输出: false</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/valid-palindrome" target="_blank" rel="noopener">https://leetcode-cn.com/problems/valid-palindrome</a></p>
-<p>简单题，注意题目要求的忽略大小写和特殊字符，只判断数字和字母即可。一种解法是可以采用双指针的思想，定义i,j分别指向开头和结尾，逐渐向中间移动，出现不一致立刻返回False，否则true。</p>
-<p>双指针法实现如下：</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>简单题，注意题目要求的忽略大小写和特殊字符，只判断数字和字母即可。一种解法是可以采用双指针的思想，定义i,j分别指向开头和结尾，逐渐向中间移动，出现不一致立刻返回False，否则true。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>双指针法实现如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool isPalindrome(string s) &#123;</span><br><span class="line">        if(s.size()==0||s.size()==1)</span><br><span class="line">            return true;</span><br><span class="line">        </span><br><span class="line">        int i=0,j;</span><br><span class="line">        string str;</span><br><span class="line">        while(i&lt;s.size())</span><br><span class="line">        &#123;</span><br><span class="line">            if(s[i]&gt;=65 &amp;&amp; s[i]&lt;=90)//题目不区分大小写，因此大写全部转为小写方便判断</span><br><span class="line">                s[i]+=32;</span><br><span class="line">            if(s[j]&gt;=65 &amp;&amp; s[j]&lt;=90)</span><br><span class="line">                s[j]+=32;</span><br><span class="line">            </span><br><span class="line">            if(isalpha(s[i])!=0 || isdigit(s[i])!=0)//跳过所有非字母非数字</span><br><span class="line">                str+=s[i];</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        i=0,j=str.size()-1;</span><br><span class="line">        while(i&lt;j)</span><br><span class="line">        &#123;</span><br><span class="line">            if(i==j)</span><br><span class="line">                return true;</span><br><span class="line">            if(str[i]!=str[j])</span><br><span class="line">                return false;</span><br><span class="line">            ++i;</span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>用到了额外的空间O(n)，时复O(n)，空间可以省去，有时间再优化。还可以用栈先进后出的特性做本题，但是懒得写了-。-</p>
@@ -395,8 +500,7 @@
       
         <h2 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h2><p>I2C又称IIC，即Inter-Integrated Circuit(集成电路总线）。多个芯片可以连接到同一总线结构下，同时每个芯片都可以作为实施数据传输的控制源。I2C串行总线一般有两根信号线，一根是双向的数据线SDA，另一根是时钟线SCL。所有接到I2C总线设备上的串行数据SDA都接到总线的SDA上，各设备的时钟线SCL接到总线的SCL上。</p>
 <h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>I2C LCD1602集成了4个引脚，我采用的是PCF8574T驱动芯片。<br>LCD1602&lt;—&gt;Arduino UNO开发板 连接方式如下：<br>GND &lt;—&gt; GND<br>VCC &lt;—&gt; 5V<br>SDA &lt;—&gt; SDA<br>SCL &lt;—&gt; SCL</p>
-<p>##检查地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &lt;Wire.h&gt;</span><br><span class="line">void setup()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  Wire.begin();</span><br><span class="line"></span><br><span class="line">Serial.begin(9600);</span><br><span class="line">  Serial.println(&quot;\nI2C Scanner&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  byte error, address;</span><br><span class="line"></span><br><span class="line">  int nDevices;</span><br><span class="line"></span><br><span class="line">  Serial.println(&quot;Scanning...&quot;);</span><br><span class="line"></span><br><span class="line">  nDevices = 0;</span><br><span class="line"></span><br><span class="line">  for(address = 1; address &lt; 127; address++ ) </span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    // The i2c_scanner uses the return value of</span><br><span class="line"></span><br><span class="line">    // the Write.endTransmisstion to see if</span><br><span class="line"></span><br><span class="line">    // a device did acknowledge to the address.</span><br><span class="line"></span><br><span class="line">    Wire.beginTransmission(address);</span><br><span class="line"></span><br><span class="line">    error = Wire.endTransmission();</span><br><span class="line"></span><br><span class="line">    if (error == 0)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">      Serial.print(&quot;I2C device found at address 0x&quot;);</span><br><span class="line"></span><br><span class="line">      if (address&lt;16) </span><br><span class="line"></span><br><span class="line">        Serial.print(&quot;0&quot;);</span><br><span class="line"></span><br><span class="line">      Serial.print(address,HEX);</span><br><span class="line"></span><br><span class="line">      Serial.println(&quot;  !&quot;);</span><br><span class="line"></span><br><span class="line">      nDevices++;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if (error==4) </span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">      Serial.print(&quot;Unknow error at address 0x&quot;);</span><br><span class="line"></span><br><span class="line">      if (address&lt;16) </span><br><span class="line"></span><br><span class="line">        Serial.print(&quot;0&quot;);</span><br><span class="line"></span><br><span class="line">      Serial.println(address,HEX);</span><br><span class="line"></span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (nDevices == 0)</span><br><span class="line"></span><br><span class="line">    Serial.println(&quot;No I2C devices found\n&quot;);</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line">    Serial.println(&quot;done\n&quot;);</span><br><span class="line">    delay(5000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="检查地址"><a href="#检查地址" class="headerlink" title="检查地址"></a>检查地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &lt;Wire.h&gt;</span><br><span class="line">void setup()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  Wire.begin();</span><br><span class="line"></span><br><span class="line">Serial.begin(9600);</span><br><span class="line">  Serial.println(&quot;\nI2C Scanner&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  byte error, address;</span><br><span class="line"></span><br><span class="line">  int nDevices;</span><br><span class="line"></span><br><span class="line">  Serial.println(&quot;Scanning...&quot;);</span><br><span class="line"></span><br><span class="line">  nDevices = 0;</span><br><span class="line"></span><br><span class="line">  for(address = 1; address &lt; 127; address++ ) </span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    // The i2c_scanner uses the return value of</span><br><span class="line"></span><br><span class="line">    // the Write.endTransmisstion to see if</span><br><span class="line"></span><br><span class="line">    // a device did acknowledge to the address.</span><br><span class="line"></span><br><span class="line">    Wire.beginTransmission(address);</span><br><span class="line"></span><br><span class="line">    error = Wire.endTransmission();</span><br><span class="line"></span><br><span class="line">    if (error == 0)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">      Serial.print(&quot;I2C device found at address 0x&quot;);</span><br><span class="line"></span><br><span class="line">      if (address&lt;16) </span><br><span class="line"></span><br><span class="line">        Serial.print(&quot;0&quot;);</span><br><span class="line"></span><br><span class="line">      Serial.print(address,HEX);</span><br><span class="line"></span><br><span class="line">      Serial.println(&quot;  !&quot;);</span><br><span class="line"></span><br><span class="line">      nDevices++;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if (error==4) </span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">      Serial.print(&quot;Unknow error at address 0x&quot;);</span><br><span class="line"></span><br><span class="line">      if (address&lt;16) </span><br><span class="line"></span><br><span class="line">        Serial.print(&quot;0&quot;);</span><br><span class="line"></span><br><span class="line">      Serial.println(address,HEX);</span><br><span class="line"></span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (nDevices == 0)</span><br><span class="line"></span><br><span class="line">    Serial.println(&quot;No I2C devices found\n&quot;);</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line">    Serial.println(&quot;done\n&quot;);</span><br><span class="line">    delay(5000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>将这段代码烧录到Arduino开发板，即可从串口输出中得到0xXX的地址，8574芯片的地址一般是0x27，但因型号不同而异。</p>
 <h2 id="Arduino代码——lcd1602IIC-ino"><a href="#Arduino代码——lcd1602IIC-ino" class="headerlink" title="Arduino代码——lcd1602IIC.ino"></a>Arduino代码——lcd1602IIC.ino</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;Wire.h&gt;                   //I2C库文件</span><br><span class="line">#include &lt;LiquidCrystal_I2C.h&gt;      //I2C 1602库文件，可以通过自带的库管理器添加</span><br><span class="line"></span><br><span class="line">LiquidCrystal_I2C lcd(0x27,16,2);   // LCD地址是0x27，设置为16字/行，共2行</span><br><span class="line"> </span><br><span class="line"> void setup() &#123;</span><br><span class="line">  lcd.init();</span><br><span class="line">  lcd.backlight();</span><br><span class="line">  lcd.print(&quot;Author:Luoyutao&quot;);</span><br><span class="line">  lcd.setCursor(0,1);               //新的一行</span><br><span class="line">  lcd.print(&quot;www.lyt0617.cn&quot;);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -570,11 +674,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">字符串</a>
+                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">双指针</a>
+                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,6 +687,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">字符串</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双指针</a>
               </li>
              
               <li class="article-tag-list-item">

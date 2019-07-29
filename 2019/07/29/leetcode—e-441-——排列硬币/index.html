@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://545080079.github.io">
-  <title>这是未来三年的更新计划~ | MRoad</title>
+  <title>leetcode—e[441]——排列硬币 | MRoad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2019年7月27日建好了这个网站，目的是为了记录自己研究生阶段所做的功课，也总结一些走过的弯路，希望可以帮到未来的自己和别的人。 因为大三大四的时候有在云服务器上做过一个基于LAMP环境的个人网站，对MYSQL、LINUX、PHP、JS等还算有一些了解；又因为本科方向是嵌入式开发，所以毕设做的也是一个单片机WIFI窗户控制智能系统，用的是经典的51单片机，建立简单的TCP SOCKET套接字连接">
-<meta name="keywords" content="Plan">
+  <meta name="description" content="题目你总共有 n 枚硬币，你需要将它们摆成一个阶梯形状，第 k 行就必须正好有 k 枚硬币。 给定一个数字 n，找出可形成完整阶梯行的总行数。 n 是一个非负整数，并且在32位有符号整型的范围内。 示例 1: n = 5 硬币可排列成以下几行:¤¤ ¤¤ ¤ 因为第三行不完整，所以返回2.示例 2: n = 8 硬币可排列成以下几行:¤¤ ¤¤ ¤ ¤¤ ¤ 因为第四行不完整，所以返回3. 来源：">
+<meta name="keywords" content="简单模拟,二分查找">
 <meta property="og:type" content="article">
-<meta property="og:title" content="这是未来三年的更新计划~">
-<meta property="og:url" content="http://545080079.github.io/2019/07/28/这是未来三年的更新计划/index.html">
+<meta property="og:title" content="leetcode—e[441]——排列硬币">
+<meta property="og:url" content="http://545080079.github.io/2019/07/29/leetcode—e-441-——排列硬币/index.html">
 <meta property="og:site_name" content="MRoad">
-<meta property="og:description" content="2019年7月27日建好了这个网站，目的是为了记录自己研究生阶段所做的功课，也总结一些走过的弯路，希望可以帮到未来的自己和别的人。 因为大三大四的时候有在云服务器上做过一个基于LAMP环境的个人网站，对MYSQL、LINUX、PHP、JS等还算有一些了解；又因为本科方向是嵌入式开发，所以毕设做的也是一个单片机WIFI窗户控制智能系统，用的是经典的51单片机，建立简单的TCP SOCKET套接字连接">
+<meta property="og:description" content="题目你总共有 n 枚硬币，你需要将它们摆成一个阶梯形状，第 k 行就必须正好有 k 枚硬币。 给定一个数字 n，找出可形成完整阶梯行的总行数。 n 是一个非负整数，并且在32位有符号整型的范围内。 示例 1: n = 5 硬币可排列成以下几行:¤¤ ¤¤ ¤ 因为第三行不完整，所以返回2.示例 2: n = 8 硬币可排列成以下几行:¤¤ ¤¤ ¤ ¤¤ ¤ 因为第四行不完整，所以返回3. 来源：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-28T14:58:32.058Z">
+<meta property="og:updated_time" content="2019-07-29T04:27:21.709Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="这是未来三年的更新计划~">
-<meta name="twitter:description" content="2019年7月27日建好了这个网站，目的是为了记录自己研究生阶段所做的功课，也总结一些走过的弯路，希望可以帮到未来的自己和别的人。 因为大三大四的时候有在云服务器上做过一个基于LAMP环境的个人网站，对MYSQL、LINUX、PHP、JS等还算有一些了解；又因为本科方向是嵌入式开发，所以毕设做的也是一个单片机WIFI窗户控制智能系统，用的是经典的51单片机，建立简单的TCP SOCKET套接字连接">
+<meta name="twitter:title" content="leetcode—e[441]——排列硬币">
+<meta name="twitter:description" content="题目你总共有 n 枚硬币，你需要将它们摆成一个阶梯形状，第 k 行就必须正好有 k 枚硬币。 给定一个数字 n，找出可形成完整阶梯行的总行数。 n 是一个非负整数，并且在32位有符号整型的范围内。 示例 1: n = 5 硬币可排列成以下几行:¤¤ ¤¤ ¤ 因为第三行不完整，所以返回2.示例 2: n = 8 硬币可排列成以下几行:¤¤ ¤¤ ¤ ¤¤ ¤ 因为第四行不完整，所以返回3. 来源：">
   
     <link rel="alternative" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -175,36 +175,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-这是未来三年的更新计划" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-leetcode—e-441-——排列硬币" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      这是未来三年的更新计划~
+      leetcode—e[441]——排列硬币
     </h1>
   
 
         
-        <a href="/2019/07/28/这是未来三年的更新计划/" class="archive-article-date">
-  	<time datetime="2019-07-28T14:01:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-28</time>
+        <a href="/2019/07/29/leetcode—e-441-——排列硬币/" class="archive-article-date">
+  	<time datetime="2019-07-29T03:55:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>2019年7月27日建好了这个网站，目的是为了记录自己研究生阶段所做的功课，也总结一些走过的弯路，希望可以帮到未来的自己和别的人。</p>
-<p>因为大三大四的时候有在云服务器上做过一个基于LAMP环境的个人网站，对MYSQL、LINUX、PHP、JS等还算有一些了解；又因为本科方向是嵌入式开发，所以毕设做的也是一个单片机WIFI窗户控制智能系统，用的是经典的51单片机，建立简单的TCP SOCKET套接字连接ESP8266与手机APP的数据传输。对传感器、电路有进行一定的了解。基于此，打算在即将到来的新的生活中，基于以上，做一个延展。</p>
-<p>现在大概理一下要写什么吧。主要分成几个大类目录：</p>
-<p>·51单片机与其常用模块</p>
-<p>·基于Arduino的开发实战</p>
-<p>··简单传感器应用部分</p>
-<p>··智能小车部分</p>
-<p>·Linux</p>
-<p>·LeetCode算法</p>
-<p>emmm，就这么多吧，以后会慢慢完善的 ♪(^∇^*)。<br>END</p>
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>你总共有 n 枚硬币，你需要将它们摆成一个阶梯形状，第 k 行就必须正好有 k 枚硬币。</p>
+<p>给定一个数字 n，找出可形成完整阶梯行的总行数。</p>
+<p>n 是一个非负整数，并且在32位有符号整型的范围内。</p>
+<p>示例 1:</p>
+<p>n = 5</p>
+<p>硬币可排列成以下几行:<br>¤<br>¤ ¤<br>¤ ¤</p>
+<p>因为第三行不完整，所以返回2.<br>示例 2:</p>
+<p>n = 8</p>
+<p>硬币可排列成以下几行:<br>¤<br>¤ ¤<br>¤ ¤ ¤<br>¤ ¤</p>
+<p>因为第四行不完整，所以返回3.</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/arranging-coins" target="_blank" rel="noopener">https://leetcode-cn.com/problems/arranging-coins</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>难度为简单，可以直接用模拟的方式，O(n)时间内算出行数。也可以根据等差数列求和公式m*(m+1)/2=n来优化时复至O(1)。</p>
+<h2 id="实现一：简单模拟，O-n"><a href="#实现一：简单模拟，O-n" class="headerlink" title="实现一：简单模拟，O(n)"></a>实现一：简单模拟，O(n)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int arrangeCoins(int n) &#123;</span><br><span class="line">        int row=0,val=1;</span><br><span class="line">        while(n&gt;0)</span><br><span class="line">        &#123;</span><br><span class="line">            if(n-val&gt;=0)</span><br><span class="line">            &#123;</span><br><span class="line">                n-=val++;</span><br><span class="line">                ++row;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        return row;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行时间48ms。</p>
+<h2 id="实现二：等差数列公式法，O-1"><a href="#实现二：等差数列公式法，O-1" class="headerlink" title="实现二：等差数列公式法，O(1)"></a>实现二：等差数列公式法，O(1)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int arrangeCoins(int n) &#123;</span><br><span class="line">        return (int)(sqrt(double(2*(double)n+0.25))-0.5);</span><br><span class="line">        //由i*(i+1)/2=n公式直接变形可得i=sqrt(2n+0.25)-0.5</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>还可用二分查找，待补充。</p>
 
       
 
@@ -244,7 +252,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Plan</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">简单模拟</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">二分查找</a>
         		</li>
       		
 		</ul>
@@ -256,11 +268,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Plan//" class="article-tag-list-link color5">Plan</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Plan/First-at0728//" class="article-tag-list-link color3">First_at0728</a>
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
         		</li>
       		
 		</ul>
@@ -315,7 +323,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://545080079.github.io/2019/07/28/这是未来三年的更新计划/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://545080079.github.io/2019/07/29/leetcode—e-441-——排列硬币/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -329,18 +337,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/07/29/leetcode-125-——验证回文串/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          leetcode[125]——验证回文串
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/07/27/Arduino-驱动IIC-I2C-LCD1602模块/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Arduino----I2C LCD1602模块</div>
+    <a href="/2019/07/29/leetcode-125-——验证回文串/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">leetcode[125]——验证回文串</div>
       <i class="icon-circle-right"></i>
     </a>
   
