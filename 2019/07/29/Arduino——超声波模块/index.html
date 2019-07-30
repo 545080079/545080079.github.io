@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="MRoad">
 <meta property="og:description" content="实验综述本文主要介绍的是之后要做的智能小车的一个模块，关系到避障循迹，单独拿出来做一个测试。想法是通过不断地测试距离离前方障碍物的距离，来回避障碍物，通过舵机摇头继续测试距离，来决定左转、右转、掉头或者继续前行。 计算距离因声速约344m/s，于是距离Y米=(X秒344m/s)/2，除于2是因为来回重复测了两次。因此X秒=（ 2Y米）/344 ==》X秒=0.0058Y米 ==》Y米=pulseI">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-29T14:04:30.292Z">
+<meta property="og:updated_time" content="2019-07-29T14:07:42.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arduino——超声波模块">
 <meta name="twitter:description" content="实验综述本文主要介绍的是之后要做的智能小车的一个模块，关系到避障循迹，单独拿出来做一个测试。想法是通过不断地测试距离离前方障碍物的距离，来回避障碍物，通过舵机摇头继续测试距离，来决定左转、右转、掉头或者继续前行。 计算距离因声速约344m/s，于是距离Y米=(X秒344m/s)/2，除于2是因为来回重复测了两次。因此X秒=（ 2Y米）/344 ==》X秒=0.0058Y米 ==》Y米=pulseI">
@@ -332,6 +332,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/07/30/Arduino——红外解码/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Arduino——红外解码
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/07/29/leetcode-400-—-——第N个数字/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">leetcode[400]——第N个数字</div>
@@ -460,31 +469,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">字符串</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">双指针</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">传感器</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">解析法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
+                <a href="javascript:void(0)" class="js-tag color3">解码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -496,11 +489,35 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
+                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">字符串</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">双指针</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">解析法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
               </li>
             
             <div class="clearfix"></div>
