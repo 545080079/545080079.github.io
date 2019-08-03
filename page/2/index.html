@@ -171,6 +171,218 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Arduino——红外解码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/30/Arduino——红外解码/">Arduino——红外解码</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/30/Arduino——红外解码/" class="archive-article-date">
+  	<time datetime="2019-07-30T14:10:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="实验综述"><a href="#实验综述" class="headerlink" title="实验综述"></a>实验综述</h2><p> 实验目的是想通过研究解码原理，实现手机APP遥控单片机。由于实验涉及红外解码，所以用到了IRremote库文件，里面封装了dump函数，用于处理raw value，转化为16进制数，具体实现原理先没有深究，输出是一个位数不定的16进制数。</p>
+<h2 id="IRemote库（截取部分）"><a href="#IRemote库（截取部分）" class="headerlink" title="IRemote库（截取部分）"></a>IRemote库（截取部分）</h2><p>解码部分主要实现逻辑就是依次判断，已知的类型有6种，符合哪一个类型的特征就是哪一个类型（我的遥控器是NEC的，手机暂时未知，正在学习中）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">int IRrecv::decode(decode_results *results) &#123;</span><br><span class="line">  results-&gt;rawbuf = irparams.rawbuf;</span><br><span class="line">  results-&gt;rawlen = irparams.rawlen;</span><br><span class="line">  if (irparams.rcvstate != STATE_STOP) &#123;</span><br><span class="line">    return ERR;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">  Serial.println(&quot;Attempting NEC decode&quot;);</span><br><span class="line">#endif</span><br><span class="line">  if (decodeNEC(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">  Serial.println(&quot;Attempting Sony decode&quot;);</span><br><span class="line">#endif</span><br><span class="line">  if (decodeSony(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">  Serial.println(&quot;Attempting Sanyo decode&quot;);</span><br><span class="line">#endif</span><br><span class="line">  if (decodeSanyo(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">  Serial.println(&quot;Attempting Mitsubishi decode&quot;);</span><br><span class="line">#endif</span><br><span class="line">  if (decodeMitsubishi(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">  Serial.println(&quot;Attempting RC5 decode&quot;);</span><br><span class="line">#endif  </span><br><span class="line">  if (decodeRC5(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">  Serial.println(&quot;Attempting RC6 decode&quot;);</span><br><span class="line">#endif </span><br><span class="line">  if (decodeRC6(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">    Serial.println(&quot;Attempting Panasonic decode&quot;);</span><br><span class="line">#endif </span><br><span class="line">    if (decodePanasonic(results)) &#123;</span><br><span class="line">        return DECODED;</span><br><span class="line">    &#125;</span><br><span class="line">#ifdef DEBUG</span><br><span class="line">    Serial.println(&quot;Attempting JVC decode&quot;);</span><br><span class="line">#endif </span><br><span class="line">    if (decodeJVC(results)) &#123;</span><br><span class="line">        return DECODED;</span><br><span class="line">    &#125;</span><br><span class="line">  // decodeHash returns a hash on any input.</span><br><span class="line">  // Thus, it needs to be last in the list.</span><br><span class="line">  // If you add any decodes, add them before this.</span><br><span class="line">  if (decodeHash(results)) &#123;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">  // Throw away and start over</span><br><span class="line">  resume();</span><br><span class="line">  return ERR;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下面是类型NEC的代码片段。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">long IRrecv::decodeNEC(decode_results *results) &#123;</span><br><span class="line">  long data = 0;</span><br><span class="line">  int offset = 1; // Skip first space</span><br><span class="line">  // Initial mark</span><br><span class="line">  if (!MATCH_MARK(results-&gt;rawbuf[offset], NEC_HDR_MARK)) &#123;</span><br><span class="line">    return ERR;</span><br><span class="line">  &#125;</span><br><span class="line">  offset++;</span><br><span class="line">  // Check for repeat</span><br><span class="line">  if (irparams.rawlen == 4 &amp;&amp;</span><br><span class="line">    MATCH_SPACE(results-&gt;rawbuf[offset], NEC_RPT_SPACE) &amp;&amp;</span><br><span class="line">    MATCH_MARK(results-&gt;rawbuf[offset+1], NEC_BIT_MARK)) &#123;</span><br><span class="line">    results-&gt;bits = 0;</span><br><span class="line">    results-&gt;value = REPEAT;</span><br><span class="line">    results-&gt;decode_type = NEC;</span><br><span class="line">    return DECODED;</span><br><span class="line">  &#125;</span><br><span class="line">  if (irparams.rawlen &lt; 2 * NEC_BITS + 4) &#123;</span><br><span class="line">    return ERR;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>包含了lcd1602的操作，仅完成了接收原码-&gt;解码-&gt;串口输出显示解码值的工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line">//============================智宇科技===========================</span><br><span class="line">//  例程19-红外遥控</span><br><span class="line">//===============================================================</span><br><span class="line">#include &lt;IRremote.h&gt;//红外库，需另外下载</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#include &lt;Wire.h&gt;</span><br><span class="line">#include &lt;LiquidCrystal_I2C.h&gt;</span><br><span class="line"></span><br><span class="line">LiquidCrystal_I2C lcd(0x27,16,2);</span><br><span class="line"></span><br><span class="line">int RECV_PIN = 11;//端口声明</span><br><span class="line">int LED1 = 2;</span><br><span class="line">int LED2 = 3;</span><br><span class="line">int LED3 = 4;</span><br><span class="line">int LED4 = 5;</span><br><span class="line">int LED5 = 6;</span><br><span class="line">int LED6 = 7;</span><br><span class="line">long on1  = 0x00FF6897;//编码示例,与发送匹配用</span><br><span class="line">long off1 = 0x00ff30CF;</span><br><span class="line">long on2 = 0x00FF9867;</span><br><span class="line">long off2 = 0x00FF18E7;</span><br><span class="line">long on3 = 0x00FFB04F;</span><br><span class="line">long off3 = 0x00FF7A85;</span><br><span class="line">long on4 = 0x00FF10EF;</span><br><span class="line">long off4 = 0x00FF42BD;</span><br><span class="line">long on5 = 0x00FF38C7;</span><br><span class="line">long off5 = 0x00FF4AB5;</span><br><span class="line">long on6 = 0x00FF5AA5;</span><br><span class="line">long off6 = 0x00FF52AD;</span><br><span class="line">IRrecv irrecv(RECV_PIN);</span><br><span class="line">decode_results results;//结构声明</span><br><span class="line"></span><br><span class="line">// Dumps out the decode_results structure.</span><br><span class="line">// Call this after IRrecv::decode()</span><br><span class="line">// void * to work around compiler issue</span><br><span class="line">//void dump(void *v) &#123;</span><br><span class="line">//  decode_results *results = (decode_results *)v</span><br><span class="line"></span><br><span class="line">void dump(decode_results *results)</span><br><span class="line">&#123;</span><br><span class="line">	int count = results-&gt;rawlen;</span><br><span class="line">	if (results-&gt;decode_type == UNKNOWN) </span><br><span class="line">	&#123;</span><br><span class="line">		Serial.println(&quot;Could not decode message&quot;);</span><br><span class="line">	&#125; </span><br><span class="line">	else </span><br><span class="line">	&#123;</span><br><span class="line">		if (results-&gt;decode_type == NEC) </span><br><span class="line">		&#123;</span><br><span class="line">			Serial.print(&quot;Decoded NEC: &quot;);</span><br><span class="line">		&#125; </span><br><span class="line">		else if (results-&gt;decode_type == SONY) </span><br><span class="line">				&#123;</span><br><span class="line">					Serial.print(&quot;Decoded SONY: &quot;);</span><br><span class="line">				&#125; </span><br><span class="line">				else if (results-&gt;decode_type == RC5) </span><br><span class="line">						&#123;</span><br><span class="line">							Serial.print(&quot;Decoded RC5: &quot;);</span><br><span class="line">						&#125; </span><br><span class="line">						else if (results-&gt;decode_type == RC6) </span><br><span class="line">								&#123;</span><br><span class="line">									Serial.print(&quot;Decoded RC6: &quot;);</span><br><span class="line">								&#125;</span><br><span class="line">		Serial.print(results-&gt;value, HEX);</span><br><span class="line">		Serial.print(&quot; (&quot;);</span><br><span class="line">		Serial.print(results-&gt;bits, DEC);</span><br><span class="line">		Serial.println(&quot; bits)&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">		Serial.print(&quot;Raw (&quot;);</span><br><span class="line">		Serial.print(count, DEC);</span><br><span class="line">		Serial.print(&quot;): &quot;);</span><br><span class="line"></span><br><span class="line">	  	for (int i = 0; i &lt; count; i++) </span><br><span class="line">	     &#123;</span><br><span class="line">			if ((i % 2) == 1) </span><br><span class="line">			&#123;</span><br><span class="line">				Serial.print(results-&gt;rawbuf[i]*USECPERTICK, DEC);</span><br><span class="line">			&#125; </span><br><span class="line">			else  </span><br><span class="line">			&#123;</span><br><span class="line">				Serial.print(-(int)results-&gt;rawbuf[i]*USECPERTICK, DEC);</span><br><span class="line">			&#125;</span><br><span class="line">			Serial.print(&quot; &quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		Serial.println(&quot;&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void setup()</span><br><span class="line">&#123;</span><br><span class="line">	pinMode(RECV_PIN, INPUT);   //端口模式，输入</span><br><span class="line">	pinMode(LED1, OUTPUT);//端口模式，输出</span><br><span class="line">	pinMode(LED2, OUTPUT);//端口模式，输出</span><br><span class="line">	pinMode(LED3, OUTPUT);//端口模式，输出</span><br><span class="line">	pinMode(LED4, OUTPUT);//端口模式，输出</span><br><span class="line">	pinMode(LED5, OUTPUT);//端口模式，输出</span><br><span class="line">	pinMode(LED6, OUTPUT);//端口模式，输出</span><br><span class="line">	pinMode(13, OUTPUT);////端口模式，输出</span><br><span class="line">	Serial.begin(9600);	//波特率9600</span><br><span class="line">	irrecv.enableIRIn(); // Start the receiver</span><br><span class="line"></span><br><span class="line">  lcd.init();</span><br><span class="line">  lcd.backlight();</span><br><span class="line">//  lcd.setCursor(0,0);</span><br><span class="line">//  lcd.print(&quot;Author:Luo yutao&quot;);</span><br><span class="line">//  lcd.setCursor(0,1);</span><br><span class="line">//  lcd.print(&quot;SA1922576&quot;);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int on = 0;</span><br><span class="line">unsigned long last = millis();</span><br><span class="line"></span><br><span class="line">void loop() </span><br><span class="line">&#123;</span><br><span class="line">  if (irrecv.decode(&amp;results)) //调用库函数：解码</span><br><span class="line">   &#123;</span><br><span class="line">    // If it&apos;s been at least 1/4 second since the last</span><br><span class="line">    // IR received, toggle the relay</span><br><span class="line">    if (millis() - last &gt; 250) </span><br><span class="line">      &#123;</span><br><span class="line">       on = !on;</span><br><span class="line">       digitalWrite(13, on ? HIGH : LOW);</span><br><span class="line">       dump(&amp;results);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">    if (results.value == on1 )</span><br><span class="line">       digitalWrite(LED1, HIGH);</span><br><span class="line">    if (results.value == off1 )</span><br><span class="line">       digitalWrite(LED1, LOW); </span><br><span class="line">    if (results.value == on2 )</span><br><span class="line">       digitalWrite(LED2, HIGH);</span><br><span class="line">    if (results.value == off2 )</span><br><span class="line">       digitalWrite(LED2, LOW); </span><br><span class="line">    if (results.value == on3 )</span><br><span class="line">       digitalWrite(LED3, HIGH);</span><br><span class="line">    if (results.value == off3 )</span><br><span class="line">       digitalWrite(LED3, LOW);</span><br><span class="line">    if (results.value == on4 )</span><br><span class="line">       digitalWrite(LED4, HIGH);</span><br><span class="line">    if (results.value == off4 )</span><br><span class="line">       digitalWrite(LED4, LOW); </span><br><span class="line">    if (results.value == on5 )</span><br><span class="line">       digitalWrite(LED5, HIGH);</span><br><span class="line">    if (results.value == off5 )</span><br><span class="line">       digitalWrite(LED5, LOW); </span><br><span class="line">    if (results.value == on6 )</span><br><span class="line">       digitalWrite(LED6, HIGH);</span><br><span class="line">    if (results.value == off6 )</span><br><span class="line">       digitalWrite(LED6, LOW);        </span><br><span class="line">    last = millis();      </span><br><span class="line">    irrecv.resume(); // Receive the next value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><p>接线如下：</p>
+<img src="/2019/07/30/Arduino——红外解码/hw1.jpg" title="jpgName:hw1.jpg">
+<p>实测：库中的函数并不能检测出手机红外发射器发射的信号类型，函数返回类型永远是unknown，原因不详，实验卒。</p>
+<p>未完待续。。。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">传感器</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">红外遥控</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">解码</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Arduino//" class="article-tag-list-link color3">Arduino</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/30/Arduino——红外解码/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Arduino——超声波模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/29/Arduino——超声波模块/">Arduino——超声波模块</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/29/Arduino——超声波模块/" class="archive-article-date">
+  	<time datetime="2019-07-29T13:37:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="实验综述"><a href="#实验综述" class="headerlink" title="实验综述"></a>实验综述</h2><p>本文主要介绍的是之后要做的智能小车的一个模块，关系到避障循迹，单独拿出来做一个测试。想法是通过不断地测试距离离前方障碍物的距离，来回避障碍物，通过舵机摇头继续测试距离，来决定左转、右转、掉头或者继续前行。</p>
+<h2 id="计算距离"><a href="#计算距离" class="headerlink" title="计算距离"></a>计算距离</h2><p>因声速约344m/s，于是距离Y米=(X秒<em>344m/s)/2，除于2是因为来回重复测了两次。因此X秒=（ 2<em>Y米）/344 ==》X秒=0.0058</em>Y米 ==》Y米=pulseIn(echo,HIGH)</em>[10^(-2)]/58==》Y厘米=pulseIn(echo,HIGH)/58，证毕。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void distance_test()</span><br><span class="line">&#123;</span><br><span class="line">  digitalWrite(trig,LOW);</span><br><span class="line">  delayMicroseconds(2);</span><br><span class="line">  digitalWrite(trig, HIGH);  // 给触发脚高电平10μs，这里至少是10μs</span><br><span class="line">  delayMicroseconds(10);</span><br><span class="line">  digitalWrite(trig, LOW);    // 持续给触发脚低电</span><br><span class="line"></span><br><span class="line">  float Fdistance = pulseIn(echo, HIGH);  // 读取高电平时间(单位：微秒)</span><br><span class="line">  Fdistance= Fdistance/58;       //为什么除以58等于厘米，  Y米=（X秒*344）/2</span><br><span class="line"></span><br><span class="line">  Serial.print(&quot;Distance:&quot;);      //输出距离（单位：厘米）</span><br><span class="line">  Serial.println(Fdistance);         //显示距离</span><br><span class="line">  Distance = Fdistance;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">//传感器实验1：超声波测距</span><br><span class="line">#include &lt;Wire.h&gt;</span><br><span class="line">#include &lt;LiquidCrystal_I2C.h&gt;</span><br><span class="line"></span><br><span class="line">LiquidCrystal_I2C lcd(0x27,16,2);</span><br><span class="line">int echo=A1;//回声引脚</span><br><span class="line">int trig=A0;//触发引脚</span><br><span class="line">int Distance = 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void setup()</span><br><span class="line">&#123;</span><br><span class="line">  Serial.begin(9600);</span><br><span class="line">  pinMode(echo,INPUT);//相对于开发板上的是输入脚</span><br><span class="line">  pinMode(trig,OUTPUT);//相对于开发板上的是输出脚</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  lcd.init();</span><br><span class="line">  lcd.backlight();</span><br><span class="line">  lcd.setCursor(0,0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void distance_test()</span><br><span class="line">&#123;</span><br><span class="line">  digitalWrite(trig,LOW);</span><br><span class="line">  delayMicroseconds(2);</span><br><span class="line">  digitalWrite(trig, HIGH);  // 给触发脚高电平10μs，这里至少是10μs</span><br><span class="line">  delayMicroseconds(10);</span><br><span class="line">  digitalWrite(trig, LOW);    // 持续给触发脚低电</span><br><span class="line"></span><br><span class="line">  float Fdistance = pulseIn(echo, HIGH);  // 读取高电平时间(单位：微秒)</span><br><span class="line">  Fdistance= Fdistance/58;       //为什么除以58等于厘米，  Y米=（X秒*344）/2</span><br><span class="line">  // X秒=（ 2*Y米）/344 ==》X秒=0.0058*Y米 ==》厘米=微秒/58</span><br><span class="line">  Serial.print(&quot;Distance:&quot;);      //输出距离（单位：厘米）</span><br><span class="line">  Serial.println(Fdistance);         //显示距离</span><br><span class="line">  Distance = Fdistance;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  distance_test();</span><br><span class="line">  if((2&lt;Distance)&amp;(Distance&lt;400))//超声波测距范围2cm到400cm</span><br><span class="line">  &#123;</span><br><span class="line">    lcd.home();        //把光标移回左上角，即从头开始输出   </span><br><span class="line">    lcd.print(&quot;    Distance: &quot;);       //显示</span><br><span class="line">    lcd.setCursor(0,1);   //把光标定位在第2行</span><br><span class="line">    lcd.print(Distance);       //显示距离</span><br><span class="line">    lcd.print(&quot;cm&quot;);        //显示</span><br><span class="line">  &#125;</span><br><span class="line">  else</span><br><span class="line">  &#123;</span><br><span class="line">    lcd.home();        //把光标移回左上角，即从头开始输出  </span><br><span class="line">    lcd.print(&quot;!!! Out of range&quot;);       //显示超出距离</span><br><span class="line">  &#125;</span><br><span class="line">  delay(1000);</span><br><span class="line">  lcd.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><p>接好线，烧录开机。</p>
+
+
+<p>一切正常。</p>
+
+
+<p>模块插上舵机上的云台就不能用了，经检测是云台上的针脚拗断了。。。。有点尴尬。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">传感器</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">超声波</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">HC-SR04</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Arduino//" class="article-tag-list-link color3">Arduino</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/29/Arduino——超声波模块/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-400-—-——第N个数字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -215,11 +427,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">简单模拟</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">解析法</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">解析法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">简单模拟</a>
         		</li>
       		
 		</ul>
@@ -573,112 +785,9 @@
 
 
   
-    <article id="post-Arduino——驱动IIC-I2C-LCD1602模块" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/27/Arduino——驱动IIC-I2C-LCD1602模块/">Arduino----I2C LCD1602模块</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/27/Arduino——驱动IIC-I2C-LCD1602模块/" class="archive-article-date">
-  	<time datetime="2019-07-27T07:17:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h2><p>I2C又称IIC，即Inter-Integrated Circuit(集成电路总线）。多个芯片可以连接到同一总线结构下，同时每个芯片都可以作为实施数据传输的控制源。I2C串行总线一般有两根信号线，一根是双向的数据线SDA，另一根是时钟线SCL。所有接到I2C总线设备上的串行数据SDA都接到总线的SDA上，各设备的时钟线SCL接到总线的SCL上。</p>
-<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>I2C LCD1602集成了4个引脚，我采用的是PCF8574T驱动芯片。<br>LCD1602&lt;—&gt;Arduino UNO开发板 连接方式如下：<br>GND &lt;—&gt; GND<br>VCC &lt;—&gt; 5V<br>SDA &lt;—&gt; SDA<br>SCL &lt;—&gt; SCL</p>
-<h2 id="检查地址"><a href="#检查地址" class="headerlink" title="检查地址"></a>检查地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include &lt;Wire.h&gt;</span><br><span class="line">void setup()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  Wire.begin();</span><br><span class="line"></span><br><span class="line">Serial.begin(9600);</span><br><span class="line">  Serial.println(&quot;\nI2C Scanner&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop()</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  byte error, address;</span><br><span class="line"></span><br><span class="line">  int nDevices;</span><br><span class="line"></span><br><span class="line">  Serial.println(&quot;Scanning...&quot;);</span><br><span class="line"></span><br><span class="line">  nDevices = 0;</span><br><span class="line"></span><br><span class="line">  for(address = 1; address &lt; 127; address++ ) </span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    // The i2c_scanner uses the return value of</span><br><span class="line"></span><br><span class="line">    // the Write.endTransmisstion to see if</span><br><span class="line"></span><br><span class="line">    // a device did acknowledge to the address.</span><br><span class="line"></span><br><span class="line">    Wire.beginTransmission(address);</span><br><span class="line"></span><br><span class="line">    error = Wire.endTransmission();</span><br><span class="line"></span><br><span class="line">    if (error == 0)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">      Serial.print(&quot;I2C device found at address 0x&quot;);</span><br><span class="line"></span><br><span class="line">      if (address&lt;16) </span><br><span class="line"></span><br><span class="line">        Serial.print(&quot;0&quot;);</span><br><span class="line"></span><br><span class="line">      Serial.print(address,HEX);</span><br><span class="line"></span><br><span class="line">      Serial.println(&quot;  !&quot;);</span><br><span class="line"></span><br><span class="line">      nDevices++;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if (error==4) </span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">      Serial.print(&quot;Unknow error at address 0x&quot;);</span><br><span class="line"></span><br><span class="line">      if (address&lt;16) </span><br><span class="line"></span><br><span class="line">        Serial.print(&quot;0&quot;);</span><br><span class="line"></span><br><span class="line">      Serial.println(address,HEX);</span><br><span class="line"></span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (nDevices == 0)</span><br><span class="line"></span><br><span class="line">    Serial.println(&quot;No I2C devices found\n&quot;);</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line">    Serial.println(&quot;done\n&quot;);</span><br><span class="line">    delay(5000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>将这段代码烧录到Arduino开发板，即可从串口输出中得到0xXX的地址，8574芯片的地址一般是0x27，但因型号不同而异。</p>
-<h2 id="Arduino代码——lcd1602IIC-ino"><a href="#Arduino代码——lcd1602IIC-ino" class="headerlink" title="Arduino代码——lcd1602IIC.ino"></a>Arduino代码——lcd1602IIC.ino</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;Wire.h&gt;                   //I2C库文件</span><br><span class="line">#include &lt;LiquidCrystal_I2C.h&gt;      //I2C 1602库文件，可以通过自带的库管理器添加</span><br><span class="line"></span><br><span class="line">LiquidCrystal_I2C lcd(0x27,16,2);   // LCD地址是0x27，设置为16字/行，共2行</span><br><span class="line"> </span><br><span class="line"> void setup() &#123;</span><br><span class="line">  lcd.init();</span><br><span class="line">  lcd.backlight();</span><br><span class="line">  lcd.print(&quot;Author:Luoyutao&quot;);</span><br><span class="line">  lcd.setCursor(0,1);               //新的一行</span><br><span class="line">  lcd.print(&quot;www.lyt0617.cn&quot;);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>简单的测试代码，接好线烧好程序，即可得到如下图显示，一切正常。</p>
-<img src="/2019/07/27/Arduino——驱动IIC-I2C-LCD1602模块/test1.jpg" title="jpgName:test1.jpg">
-
-<p>PS：如果不显示，用螺丝刀调整电位器，改变V0的电压，让对比度调至适当比例即可。</p>
-<p>END</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Arduino</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">LCD1602</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Arduino//" class="article-tag-list-link color3">Arduino</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Arduino/Module//" class="article-tag-list-link color2">Module</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/27/Arduino——驱动IIC-I2C-LCD1602模块/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -785,23 +894,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
+                <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
+                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -813,11 +914,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
+                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">解析法</a>
+                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -826,6 +931,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">双指针</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">解析法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数学</a>
               </li>
              
               <li class="article-tag-list-item">
