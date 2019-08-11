@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://545080079.github.io">
-  <title>leetcode[125]——验证回文串 | MRoad</title>
+  <title>leetcode[226]———反转二叉树 | MRoad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。 说明：本题中，我们将空字符串定义为有效的回文串。 示例 1: 输入: “A man, a plan, a canal: Panama”输出: true示例 2: 输入: “race a car”输出: false 来源：力扣（LeetCode）链接：https://leetcode-cn.com/problems">
-<meta name="keywords" content="字符串,双指针">
+  <meta name="description" content="题目翻转一棵二叉树。 示例： 输入： 4   /     2     7 / \   / 1   3 6   9输出： 4   /     7     2 / \   / 9   6 3   1 来源：力扣（LeetCode）链接：https://leetcode-cn.com/problems/invert-binary-tree 分析常规题。找到递归边界是root-&amp;gt;left,root-">
+<meta name="keywords" content="树,递归">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode[125]——验证回文串">
-<meta property="og:url" content="http://545080079.github.io/2019/07/29/leetcode-125-——验证回文串/index.html">
+<meta property="og:title" content="leetcode[226]———反转二叉树">
+<meta property="og:url" content="http://545080079.github.io/2019/08/11/leetcode-226-———反转二叉树/index.html">
 <meta property="og:site_name" content="MRoad">
-<meta property="og:description" content="题目给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。 说明：本题中，我们将空字符串定义为有效的回文串。 示例 1: 输入: “A man, a plan, a canal: Panama”输出: true示例 2: 输入: “race a car”输出: false 来源：力扣（LeetCode）链接：https://leetcode-cn.com/problems">
+<meta property="og:description" content="题目翻转一棵二叉树。 示例： 输入： 4   /     2     7 / \   / 1   3 6   9输出： 4   /     7     2 / \   / 9   6 3   1 来源：力扣（LeetCode）链接：https://leetcode-cn.com/problems/invert-binary-tree 分析常规题。找到递归边界是root-&amp;gt;left,root-">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-29T03:59:16.174Z">
+<meta property="og:updated_time" content="2019-08-11T02:53:39.201Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode[125]——验证回文串">
-<meta name="twitter:description" content="题目给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。 说明：本题中，我们将空字符串定义为有效的回文串。 示例 1: 输入: “A man, a plan, a canal: Panama”输出: true示例 2: 输入: “race a car”输出: false 来源：力扣（LeetCode）链接：https://leetcode-cn.com/problems">
+<meta name="twitter:title" content="leetcode[226]———反转二叉树">
+<meta name="twitter:description" content="题目翻转一棵二叉树。 示例： 输入： 4   /     2     7 / \   / 1   3 6   9输出： 4   /     7     2 / \   / 9   6 3   1 来源：力扣（LeetCode）链接：https://leetcode-cn.com/problems/invert-binary-tree 分析常规题。找到递归边界是root-&amp;gt;left,root-">
   
     <link rel="alternative" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -171,38 +171,34 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-leetcode-125-——验证回文串" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-leetcode-226-———反转二叉树" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      leetcode[125]——验证回文串
+      leetcode[226]———反转二叉树
     </h1>
   
 
         
-        <a href="/2019/07/29/leetcode-125-——验证回文串/" class="archive-article-date">
-  	<time datetime="2019-07-29T03:15:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-29</time>
+        <a href="/2019/08/11/leetcode-226-———反转二叉树/" class="archive-article-date">
+  	<time datetime="2019-08-11T02:50:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p>
-<p>说明：本题中，我们将空字符串定义为有效的回文串。</p>
-<p>示例 1:</p>
-<p>输入: “A man, a plan, a canal: Panama”<br>输出: true<br>示例 2:</p>
-<p>输入: “race a car”<br>输出: false</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/valid-palindrome" target="_blank" rel="noopener">https://leetcode-cn.com/problems/valid-palindrome</a></p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>简单题，注意题目要求的忽略大小写和特殊字符，只判断数字和字母即可。一种解法是可以采用双指针的思想，定义i,j分别指向开头和结尾，逐渐向中间移动，出现不一致立刻返回False，否则true。</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>双指针法实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool isPalindrome(string s) &#123;</span><br><span class="line">        if(s.size()==0||s.size()==1)</span><br><span class="line">            return true;</span><br><span class="line">        </span><br><span class="line">        int i=0,j;</span><br><span class="line">        string str;</span><br><span class="line">        while(i&lt;s.size())</span><br><span class="line">        &#123;</span><br><span class="line">            if(s[i]&gt;=65 &amp;&amp; s[i]&lt;=90)//题目不区分大小写，因此大写全部转为小写方便判断</span><br><span class="line">                s[i]+=32;</span><br><span class="line">            if(s[j]&gt;=65 &amp;&amp; s[j]&lt;=90)</span><br><span class="line">                s[j]+=32;</span><br><span class="line">            </span><br><span class="line">            if(isalpha(s[i])!=0 || isdigit(s[i])!=0)//跳过所有非字母非数字</span><br><span class="line">                str+=s[i];</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        i=0,j=str.size()-1;</span><br><span class="line">        while(i&lt;j)</span><br><span class="line">        &#123;</span><br><span class="line">            if(i==j)</span><br><span class="line">                return true;</span><br><span class="line">            if(str[i]!=str[j])</span><br><span class="line">                return false;</span><br><span class="line">            ++i;</span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>用到了额外的空间O(n)，时复O(n)，空间可以省去，有时间再优化。还可以用栈先进后出的特性做本题，但是懒得写了-。-</p>
-
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>翻转一棵二叉树。</p>
+<p>示例：</p>
+<p>输入：</p>
+<pre><code>4</code></pre><p>   /   <br>  2     7<br> / \   / <br>1   3 6   9<br>输出：</p>
+<pre><code>4</code></pre><p>   /   <br>  7     2<br> / \   / <br>9   6 3   1</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/invert-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/invert-binary-tree</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>常规题。找到递归边界是root-&gt;left,root-&gt;right都为NULL时终止递归。使用后序遍历，自底向上地交换左右子树。</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public:</span><br><span class="line">    </span><br><span class="line">    void invert(TreeNode* root)</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        if(root-&gt;left)</span><br><span class="line">            invert(root-&gt;left);</span><br><span class="line">        if(root-&gt;right)</span><br><span class="line">          invert(root-&gt;right);</span><br><span class="line">        </span><br><span class="line">        if(root-&gt;left!=NULL || root-&gt;right!=NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode *tmp=root-&gt;left;</span><br><span class="line">            root-&gt;left=root-&gt;right;</span><br><span class="line">            root-&gt;right=tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    TreeNode* invertTree(TreeNode* root) &#123;</span><br><span class="line">        if(root)</span><br><span class="line">            invert(root);</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -241,11 +237,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">双指针</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
         		</li>
       		
 		</ul>
@@ -312,7 +308,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://545080079.github.io/2019/07/29/leetcode-125-——验证回文串/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://545080079.github.io/2019/08/11/leetcode-226-———反转二叉树/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -326,18 +322,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/07/29/leetcode-441-——排列硬币/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          leetcode[441]——排列硬币
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/07/28/这是未来三年的更新计划/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">这是未来三年的更新计划~</div>
+    <a href="/2019/08/08/leetcode-113-——路径求和II/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">leetcode[113]——路径求和II</div>
       <i class="icon-circle-right"></i>
     </a>
   
