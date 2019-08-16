@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://545080079.github.io">
-  <title>leetcode[102]——二叉树的层次遍历 | MRoad</title>
+  <title>leetcode[1022]——从根到叶的二进制之和 | MRoad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。 例如:给定二叉树: [3,9,20,null,null,15,7], 3   /   9  20    /     15   7 返回其层次遍历结果： [  [3],  [9,20],  [15,7]] /**  Definition for a binary tree node. struct TreeNode">
-<meta name="keywords" content="树,二叉树,层次遍历">
+  <meta name="description" content="题目给出一棵二叉树，其上每个结点的值都是 0 或 1 。每一条从根到叶的路径都代表一个从最高有效位开始的二进制数。例如，如果路径为 0 -&amp;gt; 1 -&amp;gt; 1 -&amp;gt; 0 -&amp;gt; 1，那么它表示二进制数 01101，也就是 13 。 对树上的每一片叶子，我们都要找出从根到该叶子的路径所表示的数字。 以 10^9 + 7 为模，返回这些数字之和。 输入：[1,0,1,0,1,0,1]">
+<meta name="keywords" content="树,递归,位运算">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode[102]——二叉树的层次遍历">
-<meta property="og:url" content="http://545080079.github.io/2019/08/03/leetcode-102-——二叉树的层次遍历/index.html">
+<meta property="og:title" content="leetcode[1022]——从根到叶的二进制之和">
+<meta property="og:url" content="http://545080079.github.io/2019/08/16/leetcode-1022-——从根到叶的二进制之和/index.html">
 <meta property="og:site_name" content="MRoad">
-<meta property="og:description" content="问题给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。 例如:给定二叉树: [3,9,20,null,null,15,7], 3   /   9  20    /     15   7 返回其层次遍历结果： [  [3],  [9,20],  [15,7]] /**  Definition for a binary tree node. struct TreeNode">
+<meta property="og:description" content="题目给出一棵二叉树，其上每个结点的值都是 0 或 1 。每一条从根到叶的路径都代表一个从最高有效位开始的二进制数。例如，如果路径为 0 -&amp;gt; 1 -&amp;gt; 1 -&amp;gt; 0 -&amp;gt; 1，那么它表示二进制数 01101，也就是 13 。 对树上的每一片叶子，我们都要找出从根到该叶子的路径所表示的数字。 以 10^9 + 7 为模，返回这些数字之和。 输入：[1,0,1,0,1,0,1]">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-03T04:30:22.864Z">
+<meta property="og:updated_time" content="2019-08-16T02:36:21.204Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode[102]——二叉树的层次遍历">
-<meta name="twitter:description" content="问题给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。 例如:给定二叉树: [3,9,20,null,null,15,7], 3   /   9  20    /     15   7 返回其层次遍历结果： [  [3],  [9,20],  [15,7]] /**  Definition for a binary tree node. struct TreeNode">
+<meta name="twitter:title" content="leetcode[1022]——从根到叶的二进制之和">
+<meta name="twitter:description" content="题目给出一棵二叉树，其上每个结点的值都是 0 或 1 。每一条从根到叶的路径都代表一个从最高有效位开始的二进制数。例如，如果路径为 0 -&amp;gt; 1 -&amp;gt; 1 -&amp;gt; 0 -&amp;gt; 1，那么它表示二进制数 01101，也就是 13 。 对树上的每一片叶子，我们都要找出从根到该叶子的路径所表示的数字。 以 10^9 + 7 为模，返回这些数字之和。 输入：[1,0,1,0,1,0,1]">
   
     <link rel="alternative" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -171,45 +171,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-leetcode-102-——二叉树的层次遍历" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-leetcode-1022-——从根到叶的二进制之和" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      leetcode[102]——二叉树的层次遍历
+      leetcode[1022]——从根到叶的二进制之和
     </h1>
   
 
         
-        <a href="/2019/08/03/leetcode-102-——二叉树的层次遍历/" class="archive-article-date">
-  	<time datetime="2019-08-03T04:21:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-03</time>
+        <a href="/2019/08/16/leetcode-1022-——从根到叶的二进制之和/" class="archive-article-date">
+  	<time datetime="2019-08-16T02:30:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。</p>
-<p>例如:<br>给定二叉树: [3,9,20,null,null,15,7],</p>
-<pre><code>3</code></pre><p>   / <br>  9  20<br>    /  <br>   15   7</p>
-<p>返回其层次遍历结果：</p>
-<p>[<br>  [3],<br>  [9,20],<br>  [15,7]<br>]</p>
-<p>/**</p>
-<ul>
-<li>Definition for a binary tree node.</li>
-<li>struct TreeNode {</li>
-<li>int val;</li>
-<li>TreeNode *left;</li>
-<li>TreeNode *right;</li>
-<li>TreeNode(int x) : val(x), left(NULL), right(NULL) {}</li>
-<li>};</li>
-<li>/</li>
-</ul>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal" target="_blank" rel="noopener">https://leetcode-cn.com/problems/binary-tree-level-order-traversal</a></p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>本题是简单题，可以当作一个层次遍历的模板。</p>
-<h2 id="完整代码（C-）"><a href="#完整代码（C-）" class="headerlink" title="完整代码（C++）"></a>完整代码（C++）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public:</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; levelOrder(TreeNode* root) &#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt; &gt; ans;</span><br><span class="line">        if(root==NULL)</span><br><span class="line">            return ans;</span><br><span class="line">        queue&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        while(!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            int len=q.size();</span><br><span class="line">            vector&lt;int&gt; v;</span><br><span class="line">            while(len--)</span><br><span class="line">            &#123;</span><br><span class="line">            TreeNode *tmp=q.front();</span><br><span class="line">            v.push_back(tmp-&gt;val);</span><br><span class="line">            q.pop();</span><br><span class="line">            if(tmp-&gt;left!=NULL)</span><br><span class="line">                q.push(tmp-&gt;left);</span><br><span class="line">            if(tmp-&gt;right!=NULL)</span><br><span class="line">                q.push(tmp-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.push_back(v);</span><br><span class="line">        &#125;</span><br><span class="line">        return ans;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给出一棵二叉树，其上每个结点的值都是 0 或 1 。每一条从根到叶的路径都代表一个从最高有效位开始的二进制数。例如，如果路径为 0 -&gt; 1 -&gt; 1 -&gt; 0 -&gt; 1，那么它表示二进制数 01101，也就是 13 。</p>
+<p>对树上的每一片叶子，我们都要找出从根到该叶子的路径所表示的数字。</p>
+<p>以 10^9 + 7 为模，返回这些数字之和。</p>
+<p>输入：[1,0,1,0,1,0,1]<br>输出：22<br>解释：(100) + (101) + (110) + (111) = 4 + 5 + 6 + 7 = 22</p>
+<p>提示：</p>
+<p>树中的结点数介于 1 和 1000 之间。<br>node.val 为 0 或 1 。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/sum-of-root-to-leaf-binary-numbers" target="_blank" rel="noopener">https://leetcode-cn.com/problems/sum-of-root-to-leaf-binary-numbers</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>刚开始我用的是十进制二进制互转再累加，后面发现这样非常麻烦，而且在累加时还会溢出报错。所以这里可以使用位运算，把前面一位左<br>移1位，再或上当前的节点值，即可得到一个完整的二进制-&gt;十进制数字，再累加即可。</p>
+<p>边界条件就是判断如果是叶子节点，即可把当前得到的完整十进制数累加到sum，并返回。</p>
+<h2 id="完整代码（C-）"><a href="#完整代码（C-）" class="headerlink" title="完整代码（C++）"></a>完整代码（C++）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    </span><br><span class="line">    int sum=0;</span><br><span class="line">    </span><br><span class="line">    void lyt(TreeNode* root,int x)</span><br><span class="line">    &#123;</span><br><span class="line">        if(!root)</span><br><span class="line">            return;</span><br><span class="line">        </span><br><span class="line">        int newx=x&lt;&lt;1 | root-&gt;val;</span><br><span class="line">        </span><br><span class="line">        if(!root-&gt;left &amp;&amp; !root-&gt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=newx;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        lyt(root-&gt;left,newx);</span><br><span class="line">        lyt(root-&gt;right,newx);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    int sumRootToLeaf(TreeNode* root) &#123;</span><br><span class="line">        lyt(root,0);</span><br><span class="line">        return sum;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
 
       
@@ -252,11 +243,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">层次遍历</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">位运算</a>
         		</li>
       		
 		</ul>
@@ -323,7 +314,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://545080079.github.io/2019/08/03/leetcode-102-——二叉树的层次遍历/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://545080079.github.io/2019/08/16/leetcode-1022-——从根到叶的二进制之和/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -337,18 +328,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/08/leetcode-437-——路径求和III/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          leetcode[437]——路径求和III
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/02/leetcode-268-——缺失数字/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">leetcode[268]——缺失数字</div>
+    <a href="/2019/08/15/Arduino-基于Blinker的蓝牙手机控制小车/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Arduino--基于Blinker的蓝牙手机控制小车</div>
       <i class="icon-circle-right"></i>
     </a>
   
