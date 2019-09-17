@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://545080079.github.io">
   <title>Android-APK编译过程 | MRoad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="综述最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 AAPT阶段AAPT是一个android SDK里的工具之一。功能是将代码">
+  <meta name="description" content="$\color{blue}{综述}$最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}">
 <meta name="keywords" content="编译原理,AAPT,APK编译,APK打包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-APK编译过程">
 <meta property="og:url" content="http://545080079.github.io/2019/09/17/Android-APK编译过程/index.html">
 <meta property="og:site_name" content="MRoad">
-<meta property="og:description" content="综述最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 AAPT阶段AAPT是一个android SDK里的工具之一。功能是将代码">
+<meta property="og:description" content="$\color{blue}{综述}$最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-17T05:55:26.780Z">
+<meta property="og:updated_time" content="2019-09-17T06:01:23.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-APK编译过程">
-<meta name="twitter:description" content="综述最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 AAPT阶段AAPT是一个android SDK里的工具之一。功能是将代码">
+<meta name="twitter:description" content="$\color{blue}{综述}$最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}">
   
     <link rel="alternative" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -197,14 +197,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p>最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。</p>
+        <h2 id="color-blue-综述"><a href="#color-blue-综述" class="headerlink" title="$\color{blue}{综述}$"></a>$\color{blue}{综述}$</h2><p>最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。</p>
 <h3 id="分为如下几个流程叙述："><a href="#分为如下几个流程叙述：" class="headerlink" title="分为如下几个流程叙述："></a>分为如下几个流程叙述：</h3><p>（1）AAPT阶段</p>
 <p>（2）AIDL阶段</p>
 <p>（3）JAVA Compiler阶段</p>
 <p>（4）DEX阶段</p>
 <p>（5）APKbuilder阶段</p>
 <p>（6）Jar Signer阶段+zipalign阶段</p>
-<h2 id="AAPT阶段"><a href="#AAPT阶段" class="headerlink" title="AAPT阶段"></a>AAPT阶段</h2><p>AAPT是一个android SDK里的工具之一。功能是将代码打包生成R.java，resources.arsc和res文件。</p>
+<h2 id="color-blue-AAPT阶段"><a href="#color-blue-AAPT阶段" class="headerlink" title="$\color{blue}{AAPT阶段}$"></a>$\color{blue}{AAPT阶段}$</h2><p>AAPT是一个android SDK里的工具之一。功能是将代码打包生成R.java，resources.arsc和res文件。</p>
 <h3 id="res目录"><a href="#res目录" class="headerlink" title="res目录"></a>res目录</h3><p>res目录下包含9种目录（其中，res中的raw、pic类型的源文件保持原样，且可为非XML格式，其余都是以XML文件的形式保存的）<br>分别是：</p>
 <p>–animator：描述属性动画。</p>
 <p>–anim：描述补间动画。</p>
@@ -219,9 +219,9 @@
 <p>每当添加一种res中的资源时，R.java就会添加一条静态内部类里的静态常量类final成员，且都是int类型。</p>
 <p>#####插播小知识：final类一般用于工具类的声明修饰，因为工具类使用时不需要再对其进行重写或者继承。</p>
 <h3 id="resources-arsc文件"><a href="#resources-arsc文件" class="headerlink" title="resources.arsc文件"></a>resources.arsc文件</h3><p>resources.arsc这个文件记录了所有的应用程序资源目录的信息，包括每一个资源名称、类型、值、ID以及所配置的维度信息。<br>我们可以将这个resources.arsc文件想象成是一个资源索引表，这个资源索引表在给定资源ID和设备配置信息的情况下，<br>能够在应用程序的资源目录中快速地找到最匹配的资源。</p>
-<h2 id="AIDL阶段"><a href="#AIDL阶段" class="headerlink" title="AIDL阶段"></a>AIDL阶段</h2><p>AIDL全名是Android Interface Definition Language（Android接口定义语言），这个阶段会根据.aidl的文件生成JAVA<br>接口文件</p>
+<h2 id="color-blue-AIDL阶段"><a href="#color-blue-AIDL阶段" class="headerlink" title="$\color{blue}{AIDL阶段}$"></a>$\color{blue}{AIDL阶段}$</h2><p>AIDL全名是Android Interface Definition Language（Android接口定义语言），这个阶段会根据.aidl的文件生成JAVA<br>接口文件</p>
 <h2 id="Java-Compiler阶段"><a href="#Java-Compiler阶段" class="headerlink" title="Java Compiler阶段"></a>Java Compiler阶段</h2><p>这个阶段将R.java，JAVA接口文件，JAVA源文件编译，生成.class文件</p>
-<h2 id="DEX阶段"><a href="#DEX阶段" class="headerlink" title="DEX阶段"></a>DEX阶段</h2><p>将.class文件和第三方的库文件进行整合链接处理后，生成classes.dex文件</p>
+<h2 id="color-blue-DEX阶段"><a href="#color-blue-DEX阶段" class="headerlink" title="$\color{blue}{DEX阶段}$"></a>$\color{blue}{DEX阶段}$</h2><p>将.class文件和第三方的库文件进行整合链接处理后，生成classes.dex文件</p>
 
       
 
@@ -498,22 +498,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
               </li>
              
@@ -527,6 +511,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">http请求</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -559,6 +559,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,14 +611,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Plan</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
               </li>
              
               <li class="article-tag-list-item">
