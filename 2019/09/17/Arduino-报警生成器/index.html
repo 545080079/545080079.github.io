@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="MRoad">
 <meta property="og:description" content="开题这个是之前做的一键报警系统的客户端设备，用于用户在家快速向警方发出求救信号。主要原理是通过WIFI向远程服务器发送报警信息，再由服务器用JPUSH（开源）推送至警方Client。 用到的库函数123456#include &amp;lt;BLEDevice.h&amp;gt;#include &amp;lt;BLEServer.h&amp;gt;#include &amp;lt;BLEUtils.h&amp;gt;#include &amp;lt;">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-17T02:15:15.950Z">
+<meta property="og:updated_time" content="2019-09-17T02:15:38.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arduino-报警生成器">
 <meta name="twitter:description" content="开题这个是之前做的一键报警系统的客户端设备，用于用户在家快速向警方发出求救信号。主要原理是通过WIFI向远程服务器发送报警信息，再由服务器用JPUSH（开源）推送至警方Client。 用到的库函数123456#include &amp;lt;BLEDevice.h&amp;gt;#include &amp;lt;BLEServer.h&amp;gt;#include &amp;lt;BLEUtils.h&amp;gt;#include &amp;lt;">
@@ -207,9 +207,7 @@
 <p>（4）警方服务点接受报警信息请求，出警</p>
 <h2 id="程序模块编写"><a href="#程序模块编写" class="headerlink" title="程序模块编写"></a>程序模块编写</h2><p>具体分为BLE、WIFI两部分。</p>
 <h3 id="BLE模块"><a href="#BLE模块" class="headerlink" title="BLE模块"></a>BLE模块</h3><p>蓝牙部分实现的是初始化阶段APP与设备的相互通信。</p>
-<h5 id="（1）实现BLECharacteristic类的回调onWrite函数重写"><a href="#（1）实现BLECharacteristic类的回调onWrite函数重写" class="headerlink" title="（1）实现BLECharacteristic类的回调onWrite函数重写"></a>（1）实现BLECharacteristic类的回调onWrite函数重写</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class MyCallbacks: public BLECharacteristicCallbacks</span><br><span class="line">    void onWrite(BLECharacteristic *pCharacteristic)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">class MyCallbacks: public BLECharacteristicCallbacks &#123;</span><br><span class="line">    void onWrite(BLECharacteristic *pCharacteristic) &#123;</span><br><span class="line">      std::string rxValue = pCharacteristic-&gt;getValue();//c++ string</span><br><span class="line">      if (rxValue.length() &gt; 0) &#123;</span><br><span class="line">        Serial.print(&quot;------&gt;Received Value: &quot;);</span><br><span class="line">        for (int i = 0; i &lt; rxValue.length(); i++) &#123;</span><br><span class="line">          Serial.print(rxValue[i]);</span><br><span class="line">          tmp+=rxValue[i];</span><br><span class="line">        &#125;</span><br><span class="line">          int i=0;</span><br><span class="line">          while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">            tmpssid[i]=tmp[i++];</span><br><span class="line">          ++i;</span><br><span class="line">          int j=0;</span><br><span class="line">                    while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">                      tmppwd[j++]=tmp[i++];</span><br><span class="line">          if(!flag)</span><br><span class="line">          &#123;</span><br><span class="line">                    ssId=(char*)malloc(sizeof(tmpssid.length()));</span><br><span class="line">                    password=(char*)malloc(sizeof(tmppwd.length()));</span><br><span class="line">                    ssId=tmpssid.data();//WIFI名称获取</span><br><span class="line">                    password=tmppwd.data();//WIFI密码获取</span><br><span class="line">                    //debug</span><br><span class="line">                    Serial.print(&quot;\n&quot;);</span><br><span class="line">                    Serial.print(&quot;ssid=&quot;);</span><br><span class="line">                    Serial.println(ssId);</span><br><span class="line">                    Serial.print(&quot;pwd=&quot;);</span><br><span class="line">                    Serial.println(password);</span><br><span class="line">                    display.drawString(0, 11, tmpssid.data());//第2行显示收到的wifi名称</span><br><span class="line">                    display.drawString(0, 22, tmppwd.data());//第3行显示收到的wifi密码</span><br><span class="line">                    display.display();</span><br><span class="line">                    //收尾</span><br><span class="line">                    tmpssid.clear();</span><br><span class="line">                    tmppwd.clear();</span><br><span class="line">                    Serial.println();</span><br><span class="line">                    tmp.clear();</span><br><span class="line">                    flag=true;</span><br><span class="line">          &#125;</span><br><span class="line">          else</span><br><span class="line">          &#123;</span><br><span class="line">            for(int i=0;i&lt;tmp.length();i++)</span><br><span class="line">            &#123;</span><br><span class="line">              postData+=tmp[i];</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">            Serial.print(&quot;postdata=&quot;);</span><br><span class="line">            Serial.println(postData);</span><br><span class="line">            </span><br><span class="line">          &#125;          </span><br><span class="line">                  if (rxValue.find(&quot;A&quot;) != -1) &#123; </span><br><span class="line">                    Serial.print(&quot;Rx A!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  else if (rxValue.find(&quot;B&quot;) != -1) &#123;</span><br><span class="line">                    Serial.print(&quot;Rx B!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  Serial.println();</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="（1）实现BLECharacteristic类的回调onWrite函数重写"><a href="#（1）实现BLECharacteristic类的回调onWrite函数重写" class="headerlink" title="（1）实现BLECharacteristic类的回调onWrite函数重写"></a>（1）实现BLECharacteristic类的回调onWrite函数重写</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">class MyCallbacks: public BLECharacteristicCallbacks &#123;</span><br><span class="line">    void onWrite(BLECharacteristic *pCharacteristic) &#123;</span><br><span class="line">      std::string rxValue = pCharacteristic-&gt;getValue();//c++ string</span><br><span class="line">      if (rxValue.length() &gt; 0) &#123;</span><br><span class="line">        Serial.print(&quot;------&gt;Received Value: &quot;);</span><br><span class="line">        for (int i = 0; i &lt; rxValue.length(); i++) &#123;</span><br><span class="line">          Serial.print(rxValue[i]);</span><br><span class="line">          tmp+=rxValue[i];</span><br><span class="line">        &#125;</span><br><span class="line">          int i=0;</span><br><span class="line">          while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">            tmpssid[i]=tmp[i++];</span><br><span class="line">          ++i;</span><br><span class="line">          int j=0;</span><br><span class="line">                    while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">                      tmppwd[j++]=tmp[i++];</span><br><span class="line">          if(!flag)</span><br><span class="line">          &#123;</span><br><span class="line">                    ssId=(char*)malloc(sizeof(tmpssid.length()));</span><br><span class="line">                    password=(char*)malloc(sizeof(tmppwd.length()));</span><br><span class="line">                    ssId=tmpssid.data();//WIFI名称获取</span><br><span class="line">                    password=tmppwd.data();//WIFI密码获取</span><br><span class="line">                    //debug</span><br><span class="line">                    Serial.print(&quot;\n&quot;);</span><br><span class="line">                    Serial.print(&quot;ssid=&quot;);</span><br><span class="line">                    Serial.println(ssId);</span><br><span class="line">                    Serial.print(&quot;pwd=&quot;);</span><br><span class="line">                    Serial.println(password);</span><br><span class="line">                    display.drawString(0, 11, tmpssid.data());//第2行显示收到的wifi名称</span><br><span class="line">                    display.drawString(0, 22, tmppwd.data());//第3行显示收到的wifi密码</span><br><span class="line">                    display.display();</span><br><span class="line">                    //收尾</span><br><span class="line">                    tmpssid.clear();</span><br><span class="line">                    tmppwd.clear();</span><br><span class="line">                    Serial.println();</span><br><span class="line">                    tmp.clear();</span><br><span class="line">                    flag=true;</span><br><span class="line">          &#125;</span><br><span class="line">          else</span><br><span class="line">          &#123;</span><br><span class="line">            for(int i=0;i&lt;tmp.length();i++)</span><br><span class="line">            &#123;</span><br><span class="line">              postData+=tmp[i];</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">            Serial.print(&quot;postdata=&quot;);</span><br><span class="line">            Serial.println(postData);</span><br><span class="line">            </span><br><span class="line">          &#125;          </span><br><span class="line">                  if (rxValue.find(&quot;A&quot;) != -1) &#123; </span><br><span class="line">                    Serial.print(&quot;Rx A!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  else if (rxValue.find(&quot;B&quot;) != -1) &#123;</span><br><span class="line">                    Serial.print(&quot;Rx B!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  Serial.println();</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br></pre></td></tr></table></figure>
 
 <h5 id="（2）BLE的初始化"><a href="#（2）BLE的初始化" class="headerlink" title="（2）BLE的初始化"></a>（2）BLE的初始化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// Create the BLE Device</span><br><span class="line">BLEDevice::init(&quot;ESP32 BLE Test&quot;); //自定义蓝牙识别名称</span><br><span class="line"></span><br><span class="line">// Create the BLE Server</span><br><span class="line">BLEServer *pServer = BLEDevice::createServer();</span><br><span class="line">pServer-&gt;setCallbacks(new MyServerCallbacks());</span><br><span class="line"></span><br><span class="line">// Create the BLE Service</span><br><span class="line">BLEService *pService = pServer-&gt;createService(SERVICE_UUID);</span><br><span class="line"></span><br><span class="line">// Create a BLE Characteristic</span><br><span class="line">pCharacteristic = pService-&gt;createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);</span><br><span class="line">                 </span><br><span class="line">pCharacteristic-&gt;addDescriptor(new BLE2902());</span><br><span class="line"></span><br><span class="line">BLECharacteristic *pCharacteristic = pService-&gt;createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);</span><br><span class="line"></span><br><span class="line">pCharacteristic-&gt;setCallbacks(new MyCallbacks());</span><br><span class="line"></span><br><span class="line">// Start the service</span><br><span class="line">pService-&gt;start();//开启服务</span><br><span class="line"></span><br><span class="line">// Start advertising</span><br><span class="line">pServer-&gt;getAdvertising()-&gt;start();</span><br><span class="line">Serial.println(&quot;Waiting a client connection to notify...&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -359,6 +357,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/09/17/Android-APK编译过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Android-APK编译过程
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/09/09/Android-ReceiverT/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Android-ReceiverT</div>
@@ -487,6 +494,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编译原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">AAPT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">APK编译</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">APK打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
               </li>
              
@@ -551,14 +574,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
               </li>
              
@@ -600,6 +615,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Plan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -667,27 +690,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>广告位招租（滑稽.jpg）</a>
             </li>
           
         </ul>
@@ -698,8 +701,8 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">中科大 研一，
-目前在算法题的海洋中沉溺...还做一些Arduino，51的玩具...欢迎各位大佬交流讨论 扣扣545080079</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">中科带 研一
+目前在和老师做一个安卓的项目，涉及Linux与底层交互，欢迎各位大佬交流讨论，我的Wx13859984262</div>
   	  	
     	</section>
     
