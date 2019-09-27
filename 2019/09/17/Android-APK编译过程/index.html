@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://545080079.github.io">
   <title>Android-APK编译过程 | MRoad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="$\color{blue}{综述}$最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}">
+  <meta name="description" content="综述最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}$AAPT是一个android">
 <meta name="keywords" content="编译原理,AAPT,APK编译,APK打包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-APK编译过程">
 <meta property="og:url" content="http://545080079.github.io/2019/09/17/Android-APK编译过程/index.html">
 <meta property="og:site_name" content="MRoad">
-<meta property="og:description" content="$\color{blue}{综述}$最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}">
+<meta property="og:description" content="综述最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}$AAPT是一个android">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-17T06:01:23.199Z">
+<meta property="og:updated_time" content="2019-09-27T13:07:24.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-APK编译过程">
-<meta name="twitter:description" content="$\color{blue}{综述}$最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}">
+<meta name="twitter:description" content="综述最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。 分为如下几个流程叙述：（1）AAPT阶段 （2）AIDL阶段 （3）JAVA Compiler阶段 （4）DEX阶段 （5）APKbuilder阶段 （6）Jar Signer阶段+zipalign阶段 $\color{blue}{AAPT阶段}$AAPT是一个android">
   
     <link rel="alternative" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -197,7 +197,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="color-blue-综述"><a href="#color-blue-综述" class="headerlink" title="$\color{blue}{综述}$"></a>$\color{blue}{综述}$</h2><p>最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。</p>
+        <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a><span style="color:blue">综述</span></h2><p>最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。</p>
 <h3 id="分为如下几个流程叙述："><a href="#分为如下几个流程叙述：" class="headerlink" title="分为如下几个流程叙述："></a>分为如下几个流程叙述：</h3><p>（1）AAPT阶段</p>
 <p>（2）AIDL阶段</p>
 <p>（3）JAVA Compiler阶段</p>
