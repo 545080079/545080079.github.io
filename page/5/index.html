@@ -183,6 +183,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode-400-—-——第N个数字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/29/leetcode-400-—-——第N个数字/">leetcode[400]——第N个数字</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/29/leetcode-400-—-——第N个数字/" class="archive-article-date">
+  	<time datetime="2019-07-29T06:32:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在无限的整数序列 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, …中找到第 n 个数字。</p>
+<p>注意:<br>n 是正数且在32为整形范围内 ( n &lt; 231)。</p>
+<p>示例 1:</p>
+<p>输入:<br>3</p>
+<p>输出:<br>3<br>示例 2:</p>
+<p>输入:<br>11</p>
+<p>输出:<br>0</p>
+<p>说明:<br>第11个数字在序列 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, … 里是0，它是10的一部分。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/nth-digit" target="_blank" rel="noopener">https://leetcode-cn.com/problems/nth-digit</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>难度为简单，但第一次做的时候没想到，越想越复杂，最后是借鉴了评论的一个解法，才理清的思路。</p>
+<p>算法分为2个部分<br>1.先计算出前缀，输入的n在字符串中的被占用的长度length。如n=456就表示该数字前面被占用了9<em>1+90</em>2+0*3+…=189。<br>2.再计算尾部num=10^(i-1)+(n-length-1)/i。如n=456时，i=3 –&gt; num=100+(456-189-1)/3=100+269/3=189，以及计算出第index位=(n-length-1)%i=269%3=2<br>得到数字是8。<br>PS：其中，10^(i-1)代表第一位数字，即最高位的取值，如i-1==2则最高位是1，该数字就是1XX，继续算后面的XX=89，于是相加得num=100+89=189。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">   int findNthDigit(int n) &#123;</span><br><span class="line">    if (n &lt; 10)  return n;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    long long length = 0, cnt = 9, i = 1;</span><br><span class="line">    </span><br><span class="line">    //前缀，算length</span><br><span class="line">    for (; length + cnt*i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        length += cnt * i;</span><br><span class="line">        cnt *= 10;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //尾部，算num和第index位</span><br><span class="line">    long long num = pow(10, i-1) + (n-length-1)/i;  //以n=456为例，(n-length-1)/i代表n-length-1是在去掉低位数后的位数，100~999是每个数字占3位，所以要除于3，算出有几个3位数。</span><br><span class="line">    long long index = (n-length-1)%i;       //余数即是第index位的值</span><br><span class="line">    </span><br><span class="line">    return to_string(num)[index]-&apos;0&apos;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">解析法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">简单模拟</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/29/leetcode-400-—-——第N个数字/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-441-——排列硬币" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -838,15 +937,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Google框架</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Google GWT</a>
+                <a href="javascript:void(0)" class="js-tag color5">Google WT</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Google GAE</a>
+                <a href="javascript:void(0)" class="js-tag color5">Google AE</a>
               </li>
              
               <li class="article-tag-list-item">
