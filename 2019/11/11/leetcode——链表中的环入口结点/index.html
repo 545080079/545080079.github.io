@@ -17,7 +17,7 @@
 <meta property="og:description" content="题目给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 分析题目比较简单，用两个节点fast和slow，举一个例子即可理解：比如链表3-&amp;gt;4-&amp;gt;5-&amp;gt;6-&amp;gt;7-&amp;gt;5… fast=5,7,3,4,5 slow=4,5,6,7,5，在此时fast和slow相遇到下图的b相遇点，因为相遇点不一定是环开始的节点，所以要从头再遍历一遍直到再次出现相同的节">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://545080079.github.io/2019/11/11/leetcode——链表中的环入口结点/img1.jpg">
-<meta property="og:updated_time" content="2019-11-11T11:27:43.149Z">
+<meta property="og:updated_time" content="2019-11-11T11:32:53.839Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode——链表中的环入口结点">
 <meta name="twitter:description" content="题目给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。 分析题目比较简单，用两个节点fast和slow，举一个例子即可理解：比如链表3-&amp;gt;4-&amp;gt;5-&amp;gt;6-&amp;gt;7-&amp;gt;5… fast=5,7,3,4,5 slow=4,5,6,7,5，在此时fast和slow相遇到下图的b相遇点，因为相遇点不一定是环开始的节点，所以要从头再遍历一遍直到再次出现相同的节">
@@ -210,8 +210,7 @@
 <p>fast=5,7,3,4,5</p>
 <p>slow=4,5,6,7,5，在此时fast和slow相遇到下图的b相遇点，因为相遇点不一定是环开始的节点，<br>所以要从头再遍历一遍直到再次出现相同的节点，此时便是环的入口节点。详细证明摘自：<br>链接：<a href="https://www.nowcoder.com/questionTerminal/253d2c59ec3e4bc68da16833f79a38e4" target="_blank" rel="noopener">https://www.nowcoder.com/questionTerminal/253d2c59ec3e4bc68da16833f79a38e4</a><br>来源：牛客网</p>
 <p>两个结论：<br>1、设置快慢指针，假如有环，他们最后一定相遇。<br>2、两个指针分别从链表头和相遇点继续出发，每次走一步，最后一定相遇与环入口。<br>证明结论1：设置快慢指针fast和low，fast每次走两步，low每次走一步。假如有环，两者一定会相遇（因为low一旦进环，可看作fast在后面追赶low的过程，每次两者都接近一步，最后一定能追上）。<br>证明结论2：<br>设：<br>链表头到环入口长度为–a<br>环入口到相遇点长度为–b<br>相遇点到环入口长度为–c</p>
-<img src="/2019/11/11/leetcode——链表中的环入口结点/img1.jpg">
-
+<img src="/2019/11/11/leetcode——链表中的环入口结点/img1.jpg" title="jpgName:app1.jpg"> 
 
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> public class ListNode &#123;</span><br><span class="line">    int val;</span><br><span class="line">    ListNode next = null;</span><br><span class="line"></span><br><span class="line">    ListNode(int val) &#123;</span><br><span class="line">        this.val = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">*/</span><br><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">    public ListNode EntryNodeOfLoop(ListNode pHead)</span><br><span class="line">    &#123;</span><br><span class="line">        if(pHead==null|| pHead.next==null || pHead.next.next==null)</span><br><span class="line">            return null;</span><br><span class="line">        </span><br><span class="line">        ListNode fast=pHead.next.next;</span><br><span class="line">        ListNode slow=pHead.next;</span><br><span class="line">        while(fast!=slow)</span><br><span class="line">        &#123;</span><br><span class="line">            if(fast.next!=null &amp;&amp; fast.next.next!=null)</span><br><span class="line">            &#123;</span><br><span class="line">                fast=fast.next.next;</span><br><span class="line">                slow=slow.next;</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        fast=pHead;</span><br><span class="line">        while(fast!=slow)   </span><br><span class="line">        &#123;</span><br><span class="line">            fast=fast.next;</span><br><span class="line">            slow=slow.next;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        return fast;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -338,6 +337,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/11/14/leetcode-剑指OFFER-全排列的去重全排列问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          leetcode----剑指OFFER----全排列的去重全排列问题
+        
+      </div>
+    </a>
   
   
     <a href="/2019/11/10/projectAndroid-Google服务/" id="article-nav-older" class="article-nav-link-wrap">
@@ -483,22 +491,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
               </li>
              
@@ -512,6 +504,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">http请求</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -611,11 +619,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异或</a>
+                <a href="javascript:void(0)" class="js-tag color3">剑指OFFER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">全排列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异或</a>
               </li>
              
               <li class="article-tag-list-item">

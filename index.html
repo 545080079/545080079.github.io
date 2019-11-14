@@ -183,6 +183,113 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode-剑指OFFER-全排列的去重全排列问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/14/leetcode-剑指OFFER-全排列的去重全排列问题/">leetcode----剑指OFFER----全排列的去重全排列问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/14/leetcode-剑指OFFER-全排列的去重全排列问题/" class="archive-article-date">
+  	<time datetime="2019-11-14T11:55:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="字符串的排列"><a href="#字符串的排列" class="headerlink" title="字符串的排列"></a>字符串的排列</h2><p>题目描述<br>输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。<br>输入描述:<br>输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>本题是一个去重全排列问题，注意要以字典序打印出来，这里正常想到的是递归法。</p>
+<p>全排列算法和加强版的去重复全排列算法原理在这里讲的很详细：<br><a href="https://blog.csdn.net/wzy_1988/article/details/8939140" target="_blank" rel="noopener">https://blog.csdn.net/wzy_1988/article/details/8939140</a></p>
+<p>总结一下全排列的模板算法。<br>要写如下几个方法：<br>（1）Swap(str,i,j)：交换字符串位置i,j的值</p>
+<p>（2）Permutation(String str,int start,int end)：全排列递归方法</p>
+<p>（3）Main()：调用Permutation()</p>
+<p>（4）*【去重全排列才需要】isNeedSWap(str,begin,k)：如果indexof[begin, k-1]中的值有和indexof[k]重复的话，<br>则不需要交换</p>
+<p>有几个需要注意的点：</p>
+<ol>
+<li><p>java的string不可改写，可以string转换为stringbuffer或者toCharArray()，<br>这里用的是前者，StringBuffer类有setCharAt、CharAt、toString、append方法。</p>
+</li>
+<li><p>为了确保是字典序排序，必须进行排序，可以调用Collections类的sort方法对arrarlist进行排序。</p>
+</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Collections;</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    ArrayList&lt;String&gt; al=new ArrayList&lt;String&gt;();</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    public String swap(String str,int i,int j)</span><br><span class="line">    &#123;</span><br><span class="line">        StringBuffer strbuf=new StringBuffer(str);</span><br><span class="line">        char tmp=strbuf.charAt(i);</span><br><span class="line">        strbuf.setCharAt(i,strbuf.charAt(j));</span><br><span class="line">        strbuf.setCharAt(j,tmp);</span><br><span class="line">        return strbuf.toString();</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //判断begin~k-1位置有无重复</span><br><span class="line">    public boolean isSwap(String str,int begin,int k)</span><br><span class="line">    &#123;</span><br><span class="line">        for(int i=begin;i&lt;k;++i)</span><br><span class="line">            if(str.charAt(i)==str.charAt(k))</span><br><span class="line">                return false;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void allSort(String str,int begin,int end)</span><br><span class="line">    &#123;</span><br><span class="line">        if(begin==end)</span><br><span class="line">        &#123;</span><br><span class="line">            al.add(str);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i=begin;i&lt;=end;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            if(isSwap(str,begin,i))</span><br><span class="line">            &#123;</span><br><span class="line">                str=swap(str,begin,i);</span><br><span class="line">                allSort(str,begin+1,end);</span><br><span class="line">                str=swap(str,begin,i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public ArrayList&lt;String&gt; Permutation(String str) &#123;</span><br><span class="line">        if(str.length()&lt;=0)</span><br><span class="line">            return al;</span><br><span class="line">        allSort(str,0,str.length()-1);//0~size-1的全排列（去重版）</span><br><span class="line">        Collections.sort(al);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        return al;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剑指OFFER</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">全排列</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/14/leetcode-剑指OFFER-全排列的去重全排列问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode——链表中的环入口结点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -208,8 +315,7 @@
 <p>fast=5,7,3,4,5</p>
 <p>slow=4,5,6,7,5，在此时fast和slow相遇到下图的b相遇点，因为相遇点不一定是环开始的节点，<br>所以要从头再遍历一遍直到再次出现相同的节点，此时便是环的入口节点。详细证明摘自：<br>链接：<a href="https://www.nowcoder.com/questionTerminal/253d2c59ec3e4bc68da16833f79a38e4" target="_blank" rel="noopener">https://www.nowcoder.com/questionTerminal/253d2c59ec3e4bc68da16833f79a38e4</a><br>来源：牛客网</p>
 <p>两个结论：<br>1、设置快慢指针，假如有环，他们最后一定相遇。<br>2、两个指针分别从链表头和相遇点继续出发，每次走一步，最后一定相遇与环入口。<br>证明结论1：设置快慢指针fast和low，fast每次走两步，low每次走一步。假如有环，两者一定会相遇（因为low一旦进环，可看作fast在后面追赶low的过程，每次两者都接近一步，最后一定能追上）。<br>证明结论2：<br>设：<br>链表头到环入口长度为–a<br>环入口到相遇点长度为–b<br>相遇点到环入口长度为–c</p>
-<img src="/2019/11/11/leetcode——链表中的环入口结点/img1.jpg">
-
+<img src="/2019/11/11/leetcode——链表中的环入口结点/img1.jpg" title="jpgName:app1.jpg"> 
 
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> public class ListNode &#123;</span><br><span class="line">    int val;</span><br><span class="line">    ListNode next = null;</span><br><span class="line"></span><br><span class="line">    ListNode(int val) &#123;</span><br><span class="line">        this.val = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">*/</span><br><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">    public ListNode EntryNodeOfLoop(ListNode pHead)</span><br><span class="line">    &#123;</span><br><span class="line">        if(pHead==null|| pHead.next==null || pHead.next.next==null)</span><br><span class="line">            return null;</span><br><span class="line">        </span><br><span class="line">        ListNode fast=pHead.next.next;</span><br><span class="line">        ListNode slow=pHead.next;</span><br><span class="line">        while(fast!=slow)</span><br><span class="line">        &#123;</span><br><span class="line">            if(fast.next!=null &amp;&amp; fast.next.next!=null)</span><br><span class="line">            &#123;</span><br><span class="line">                fast=fast.next.next;</span><br><span class="line">                slow=slow.next;</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        fast=pHead;</span><br><span class="line">        while(fast!=slow)   </span><br><span class="line">        &#123;</span><br><span class="line">            fast=fast.next;</span><br><span class="line">            slow=slow.next;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        return fast;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -417,11 +523,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">异或</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">异或</a>
         		</li>
       		
 		</ul>
@@ -668,107 +774,6 @@
 
 
   
-    <article id="post-leetcode-63——不同路径II" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/09/leetcode-63——不同路径II/">leetcode-63——不同路径II</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/09/leetcode-63——不同路径II/" class="archive-article-date">
-  	<time datetime="2019-10-09T06:52:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p>
-<p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
-<p>网格中的障碍物和空位置分别用 1 和 0 来表示。</p>
-<p>说明：m 和 n 的值均不超过 100。</p>
-<p>示例 1:</p>
-<p>输入:<br>[<br>  [0,0,0],<br>  [0,1,0],<br>  [0,0,0]<br>]<br>输出: 2<br>解释:<br>3x3 网格的正中间有一个障碍物。<br>从左上角到右下角一共有 2 条不同的路径：</p>
-<ol>
-<li>向右 -&gt; 向右 -&gt; 向下 -&gt; 向下</li>
-<li>向下 -&gt; 向下 -&gt; 向右 -&gt; 向右</li>
-</ol>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/unique-paths-ii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/unique-paths-ii</a></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>是62题【不同路径】的升级版，基本思路一样，由于在练习DP，所以采用和62一样的DP解，时空效率不是最优的，纯当练手。</p>
-<p>题目给了一个障碍物方阵，在初始化第一行和第一列的1时，要注意但凡i之前(j之前)有一个障碍物，i(j)后面的dp数组都只能<br>初始化为0，因为之前有障碍物，不可能走到这一格。</p>
-<p>初始化完后，基本思路就和62一样了，多加一个碰到障碍物的判断就行了。</p>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int uniquePathsWithObstacles(int[][] obstacleGrid) &#123;</span><br><span class="line">        int m=obstacleGrid.length;</span><br><span class="line">        int n=obstacleGrid[0].length;</span><br><span class="line">        int dp[][]=new int[m][n];</span><br><span class="line">        for(int i=0;i&lt;m;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            if(obstacleGrid[i][0]==1)</span><br><span class="line">                break;</span><br><span class="line">            dp[i][0]=1;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int j=0;j&lt;n;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            if(obstacleGrid[0][j]==1)</span><br><span class="line">                break;</span><br><span class="line">            dp[0][j]=1;</span><br><span class="line">        &#125;    </span><br><span class="line">        </span><br><span class="line">        for(int i=1;i&lt;m;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j=1;j&lt;n;++j)</span><br><span class="line">            &#123;</span><br><span class="line">                if(obstacleGrid[i][j]==1)</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i][j]=0;</span><br><span class="line">                &#125;</span><br><span class="line">                else</span><br><span class="line">                    dp[i][j]=dp[i-1][j]+dp[i][j-1];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[m-1][n-1];</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/09/leetcode-63——不同路径II/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -882,22 +887,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
               </li>
              
@@ -911,6 +900,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">http请求</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1010,11 +1015,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异或</a>
+                <a href="javascript:void(0)" class="js-tag color3">剑指OFFER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">全排列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异或</a>
               </li>
              
               <li class="article-tag-list-item">
