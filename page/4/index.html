@@ -183,6 +183,116 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode-437-——路径求和III" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/08/leetcode-437-——路径求和III/">leetcode[437]——路径求和III</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/08/leetcode-437-——路径求和III/" class="archive-article-date">
+  	<time datetime="2019-08-08T03:05:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个二叉树，它的每个结点都存放着一个整数值。</p>
+<p>找出路径和等于给定数值的路径总数。</p>
+<p>路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
+<p>二叉树不超过1000个节点，且节点数值范围是 [-1000000,1000000] 的整数。</p>
+<p>示例：</p>
+<p>root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8</p>
+<pre><code>  10
+ /  \
+5   -3</code></pre><p>   / \    <br>  3   2   11<br> / \   <br>3  -2   1</p>
+<p>返回 3。和等于 8 的路径有:</p>
+<ol>
+<li>5 -&gt; 3</li>
+<li>5 -&gt; 2 -&gt; 1</li>
+<li>-3 -&gt; 11</li>
+</ol>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/path-sum-iii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/path-sum-iii</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>是《路径总和I》的升级版III，要求每个节点都可以作为开始和结束，要计算出所有满足条件的路径，直观的想法就是让所有节点都当一次起始节点，当符合条件时计数器++</p>
+<p>关键在于理解内层递归的 sum- root-&gt;val以及边界条件root-&gt;val==sum，在最后一次调用时，sum形参的值应该刚好等于当前的root-&gt;val（如果该路径实际满足条件的话）。</p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public:</span><br><span class="line">    int countPath(TreeNode* root,int sum)</span><br><span class="line">    &#123;</span><br><span class="line">        if(root==NULL)</span><br><span class="line">            return 0;</span><br><span class="line">        int cnt=0;</span><br><span class="line">        if(root-&gt;val==sum)//内层边界，满足则路径数++</span><br><span class="line">            ++cnt;</span><br><span class="line">        cnt+=countPath(root-&gt;left,sum -root-&gt;val)+countPath(root-&gt;right,sum-root-&gt;val);//此处是内层递归，对于每一个外层的X节点，计算在X之下每一条路径的值</span><br><span class="line">        return cnt;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int pathSum(TreeNode* root, int sum) &#123;</span><br><span class="line">        if(root==NULL)</span><br><span class="line">            return 0;</span><br><span class="line">        int cnt=countPath(root,sum);</span><br><span class="line">        return pathSum(root-&gt;left,sum)+pathSum(root-&gt;right,sum)+cnt;//此处是外层递归，目的是让每个节点都可以作为一次起始节点</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">双重递归</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/08/leetcode-437-——路径求和III/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-102-——二叉树的层次遍历" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -647,106 +757,6 @@
 
 
   
-    <article id="post-算法——中国象棋将帅问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/31/算法——中国象棋将帅问题/">算法——中国象棋将帅问题</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/31/算法——中国象棋将帅问题/" class="archive-article-date">
-  	<time datetime="2019-07-31T12:23:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>取自《编程之美》P13，中国象棋中有王不见王的规则，也就是说将和帅不能处于同一纵向直线上。请据此编写程序，输出将帅的所有合法位置，要求代码只能使用一个变量。</p>
-<p>重点是只能使用一个变量！！</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>整体思想大概可以理出一个框架：<br>for 将A的位置<br>    for 帅B的位置<br>        判断将A和帅比的位置组合是否满足要求。<br>        如果满足则输出。</p>
-<p>因为只能用一个变量，所以思路是用unsigned char b变量（1byte），本题中8bits即可表示所有的位置。前4bits表示A，后4bits表示B。</p>
-<p>因此，可以得出需要编写的宏清单有：</p>
-<p>（1）right_set(b,x)：设置b的右边为x</p>
-<p>（2）left_set(b,x)：设置b的左边为x</p>
-<p>（3）right_get(b)：得到b右边位置</p>
-<p>（4）left_get(b)：得到b左边位置</p>
-<h2 id="完整代码-C"><a href="#完整代码-C" class="headerlink" title="完整代码(C)"></a>完整代码(C)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">#define half_length 4      //本题变量长度的一半是4</span><br><span class="line">#define len 3              //将帅移动范围是len*len=9个格子</span><br><span class="line">#define FULLMASK 255       //255=二进制1111 1111</span><br><span class="line">#define LMASK (FULLMASK&lt;&lt;half_length) //1111 0000 左边的mask，后边宏实现需要该掩码(MASK)</span><br><span class="line">#define RMASK (FULLMASK&gt;&gt;half_length) //0000 1111 右边的mask</span><br><span class="line"></span><br><span class="line">//基本操作</span><br><span class="line">#define right_set(b,x) ( b = (RMASK &amp; b) ^ x )</span><br><span class="line">#define left_set(b,x) ( b = (LMASK &amp; b) ^ (x &lt;&lt; half_length) )</span><br><span class="line">#define right_get(b) (RMASK &amp; b)</span><br><span class="line">#define left_get(b) ( (LMASK &amp; b) &gt;&gt; half_length)</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    unsigned char b;//一个char 是8位</span><br><span class="line">for(left_set(b,1); left_get(b)&lt;= len * len ; left_set(b,(left_get(b)+1)))</span><br><span class="line">    for(right_set(b,1);right_get(b)&lt;= len* len ; right_set(b,(right_get(b)+1)))</span><br><span class="line">        if(left_get(b) % len != right_get(b) % len )</span><br><span class="line">            printf(&quot;A = %d , B = %d\n&quot;,left_get(b),right_get(b) );</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>输出结果如下，</p>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">位操作</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/31/算法——中国象棋将帅问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -844,22 +854,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编译原理</a>
               </li>
              
@@ -873,6 +867,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">APK打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -912,6 +922,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
@@ -921,14 +939,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -997,6 +1007,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">双端队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">队列</a>
               </li>
              
               <li class="article-tag-list-item">

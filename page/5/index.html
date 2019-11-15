@@ -183,6 +183,106 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法——中国象棋将帅问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/31/算法——中国象棋将帅问题/">算法——中国象棋将帅问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/31/算法——中国象棋将帅问题/" class="archive-article-date">
+  	<time datetime="2019-07-31T12:23:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>取自《编程之美》P13，中国象棋中有王不见王的规则，也就是说将和帅不能处于同一纵向直线上。请据此编写程序，输出将帅的所有合法位置，要求代码只能使用一个变量。</p>
+<p>重点是只能使用一个变量！！</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>整体思想大概可以理出一个框架：<br>for 将A的位置<br>    for 帅B的位置<br>        判断将A和帅比的位置组合是否满足要求。<br>        如果满足则输出。</p>
+<p>因为只能用一个变量，所以思路是用unsigned char b变量（1byte），本题中8bits即可表示所有的位置。前4bits表示A，后4bits表示B。</p>
+<p>因此，可以得出需要编写的宏清单有：</p>
+<p>（1）right_set(b,x)：设置b的右边为x</p>
+<p>（2）left_set(b,x)：设置b的左边为x</p>
+<p>（3）right_get(b)：得到b右边位置</p>
+<p>（4）left_get(b)：得到b左边位置</p>
+<h2 id="完整代码-C"><a href="#完整代码-C" class="headerlink" title="完整代码(C)"></a>完整代码(C)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">#define half_length 4      //本题变量长度的一半是4</span><br><span class="line">#define len 3              //将帅移动范围是len*len=9个格子</span><br><span class="line">#define FULLMASK 255       //255=二进制1111 1111</span><br><span class="line">#define LMASK (FULLMASK&lt;&lt;half_length) //1111 0000 左边的mask，后边宏实现需要该掩码(MASK)</span><br><span class="line">#define RMASK (FULLMASK&gt;&gt;half_length) //0000 1111 右边的mask</span><br><span class="line"></span><br><span class="line">//基本操作</span><br><span class="line">#define right_set(b,x) ( b = (RMASK &amp; b) ^ x )</span><br><span class="line">#define left_set(b,x) ( b = (LMASK &amp; b) ^ (x &lt;&lt; half_length) )</span><br><span class="line">#define right_get(b) (RMASK &amp; b)</span><br><span class="line">#define left_get(b) ( (LMASK &amp; b) &gt;&gt; half_length)</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    unsigned char b;//一个char 是8位</span><br><span class="line">for(left_set(b,1); left_get(b)&lt;= len * len ; left_set(b,(left_get(b)+1)))</span><br><span class="line">    for(right_set(b,1);right_get(b)&lt;= len* len ; right_set(b,(right_get(b)+1)))</span><br><span class="line">        if(left_get(b) % len != right_get(b) % len )</span><br><span class="line">            printf(&quot;A = %d , B = %d\n&quot;,left_get(b),right_get(b) );</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>输出结果如下，</p>
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">位操作</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/31/算法——中国象棋将帅问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Arduino——红外解码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -699,104 +799,6 @@
 
 
   
-    <article id="post-这是未来三年的更新计划" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/28/这是未来三年的更新计划/">这是未来三年的更新计划~</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/28/这是未来三年的更新计划/" class="archive-article-date">
-  	<time datetime="2019-07-28T14:01:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>2019年7月27日建好了这个网站，目的是为了记录自己研究生阶段所做的功课，也总结一些走过的弯路，希望可以帮到未来的自己和别的人。</p>
-<p>因为大三大四的时候有在云服务器上做过一个基于LAMP环境的个人网站，对MYSQL、LINUX、PHP、JS等还算有一些了解；又因为本科方向是嵌入式开发，所以毕设做的也是一个单片机WIFI窗户控制智能系统，用的是经典的51单片机，建立简单的TCP SOCKET套接字连接ESP8266与手机APP的数据传输。对传感器、电路有进行一定的了解。基于此，打算在即将到来的新的生活中，基于以上，做一个延展。</p>
-<p>现在大概理一下要写什么吧。主要分成几个大类目录：</p>
-<p>·51单片机与其常用模块</p>
-<p>·基于Arduino的开发实战</p>
-<p>··简单传感器应用部分</p>
-<p>··智能小车部分</p>
-<p>·Linux</p>
-<p>·LeetCode算法</p>
-<p>emmm，就这么多吧，以后会慢慢完善的 ♪(^∇^*)。<br>END</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Plan</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Plan//" class="article-tag-list-link color5">Plan</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Plan/First-at0728//" class="article-tag-list-link color3">First_at0728</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/28/这是未来三年的更新计划/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -894,22 +896,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编译原理</a>
               </li>
              
@@ -923,6 +909,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">APK打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -962,6 +964,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
@@ -971,14 +981,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1047,6 +1049,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">双端队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">队列</a>
               </li>
              
               <li class="article-tag-list-item">

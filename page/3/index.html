@@ -183,6 +183,130 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Arduino-报警生成器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/17/Arduino-报警生成器/">Arduino-报警生成器</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/17/Arduino-报警生成器/" class="archive-article-date">
+  	<time datetime="2019-09-17T01:18:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开题"><a href="#开题" class="headerlink" title="开题"></a>开题</h2><p>这个是之前做的一键报警系统的客户端设备，用于用户在家快速向警方发出求救信号。主要原理是通过WIFI向远程服务器发送报警信息，<br>再由服务器用JPUSH（开源）推送至警方Client。</p>
+<h3 id="用到的库函数"><a href="#用到的库函数" class="headerlink" title="用到的库函数"></a>用到的库函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;BLEDevice.h&gt;</span><br><span class="line">#include &lt;BLEServer.h&gt;</span><br><span class="line">#include &lt;BLEUtils.h&gt;</span><br><span class="line">#include &lt;BLE2902.h&gt;</span><br><span class="line">#include &lt;SSD1306.h&gt;</span><br><span class="line">#include &lt;WiFi.h&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="主要逻辑线"><a href="#主要逻辑线" class="headerlink" title="主要逻辑线"></a>主要逻辑线</h3><p>用户Client—(wifi)—&gt;云服务器—(jpush)—&gt;警方Client</p>
+<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><p>（1）ESP32开发板建立与安卓手机APP的蓝牙通信，由手机APP对ESP32进行实时的可用WIFI信息通告以及报警信息的预初始化。<br>初始化成功后可以不需要蓝牙连接</p>
+<p>（2）报警设备初始化完后保持待机状态，等待用户按下报警键，通过WIFI向远程服务器发送信息，信息包括经纬度，报警人，地址，<br>联系方式</p>
+<p>（3）服务器部署监听服务，待用户发送请求后，向预先向服务器已经注册过的距离报警点最近的警方服务点发送求助信息</p>
+<p>（4）警方服务点接受报警信息请求，出警</p>
+<h2 id="程序模块编写"><a href="#程序模块编写" class="headerlink" title="程序模块编写"></a>程序模块编写</h2><p>具体分为BLE、WIFI两部分。</p>
+<h3 id="BLE模块"><a href="#BLE模块" class="headerlink" title="BLE模块"></a>BLE模块</h3><p>蓝牙部分实现的是初始化阶段APP与设备的相互通信。</p>
+<h5 id="（1）实现BLECharacteristic类的回调onWrite函数重写"><a href="#（1）实现BLECharacteristic类的回调onWrite函数重写" class="headerlink" title="（1）实现BLECharacteristic类的回调onWrite函数重写"></a>（1）实现BLECharacteristic类的回调onWrite函数重写</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">class MyCallbacks: public BLECharacteristicCallbacks &#123;</span><br><span class="line">    void onWrite(BLECharacteristic *pCharacteristic) &#123;</span><br><span class="line">      std::string rxValue = pCharacteristic-&gt;getValue();//c++ string</span><br><span class="line">      if (rxValue.length() &gt; 0) &#123;</span><br><span class="line">        Serial.print(&quot;------&gt;Received Value: &quot;);</span><br><span class="line">        for (int i = 0; i &lt; rxValue.length(); i++) &#123;</span><br><span class="line">          Serial.print(rxValue[i]);</span><br><span class="line">          tmp+=rxValue[i];</span><br><span class="line">        &#125;</span><br><span class="line">          int i=0;</span><br><span class="line">          while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">            tmpssid[i]=tmp[i++];</span><br><span class="line">          ++i;</span><br><span class="line">          int j=0;</span><br><span class="line">                    while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">                      tmppwd[j++]=tmp[i++];</span><br><span class="line">          if(!flag)</span><br><span class="line">          &#123;</span><br><span class="line">                    ssId=(char*)malloc(sizeof(tmpssid.length()));</span><br><span class="line">                    password=(char*)malloc(sizeof(tmppwd.length()));</span><br><span class="line">                    ssId=tmpssid.data();//WIFI名称获取</span><br><span class="line">                    password=tmppwd.data();//WIFI密码获取</span><br><span class="line">                    //debug</span><br><span class="line">                    Serial.print(&quot;\n&quot;);</span><br><span class="line">                    Serial.print(&quot;ssid=&quot;);</span><br><span class="line">                    Serial.println(ssId);</span><br><span class="line">                    Serial.print(&quot;pwd=&quot;);</span><br><span class="line">                    Serial.println(password);</span><br><span class="line">                    display.drawString(0, 11, tmpssid.data());//第2行显示收到的wifi名称</span><br><span class="line">                    display.drawString(0, 22, tmppwd.data());//第3行显示收到的wifi密码</span><br><span class="line">                    display.display();</span><br><span class="line">                    //收尾</span><br><span class="line">                    tmpssid.clear();</span><br><span class="line">                    tmppwd.clear();</span><br><span class="line">                    Serial.println();</span><br><span class="line">                    tmp.clear();</span><br><span class="line">                    flag=true;</span><br><span class="line">          &#125;</span><br><span class="line">          else</span><br><span class="line">          &#123;</span><br><span class="line">            for(int i=0;i&lt;tmp.length();i++)</span><br><span class="line">            &#123;</span><br><span class="line">              postData+=tmp[i];</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">            Serial.print(&quot;postdata=&quot;);</span><br><span class="line">            Serial.println(postData);</span><br><span class="line">            </span><br><span class="line">          &#125;          </span><br><span class="line">                  if (rxValue.find(&quot;A&quot;) != -1) &#123; </span><br><span class="line">                    Serial.print(&quot;Rx A!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  else if (rxValue.find(&quot;B&quot;) != -1) &#123;</span><br><span class="line">                    Serial.print(&quot;Rx B!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  Serial.println();</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="（2）BLE的初始化"><a href="#（2）BLE的初始化" class="headerlink" title="（2）BLE的初始化"></a>（2）BLE的初始化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// Create the BLE Device</span><br><span class="line">BLEDevice::init(&quot;ESP32 BLE Test&quot;); //自定义蓝牙识别名称</span><br><span class="line"></span><br><span class="line">// Create the BLE Server</span><br><span class="line">BLEServer *pServer = BLEDevice::createServer();</span><br><span class="line">pServer-&gt;setCallbacks(new MyServerCallbacks());</span><br><span class="line"></span><br><span class="line">// Create the BLE Service</span><br><span class="line">BLEService *pService = pServer-&gt;createService(SERVICE_UUID);</span><br><span class="line"></span><br><span class="line">// Create a BLE Characteristic</span><br><span class="line">pCharacteristic = pService-&gt;createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);</span><br><span class="line">                 </span><br><span class="line">pCharacteristic-&gt;addDescriptor(new BLE2902());</span><br><span class="line"></span><br><span class="line">BLECharacteristic *pCharacteristic = pService-&gt;createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);</span><br><span class="line"></span><br><span class="line">pCharacteristic-&gt;setCallbacks(new MyCallbacks());</span><br><span class="line"></span><br><span class="line">// Start the service</span><br><span class="line">pService-&gt;start();//开启服务</span><br><span class="line"></span><br><span class="line">// Start advertising</span><br><span class="line">pServer-&gt;getAdvertising()-&gt;start();</span><br><span class="line">Serial.println(&quot;Waiting a client connection to notify...&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="WIFI模块"><a href="#WIFI模块" class="headerlink" title="WIFI模块"></a>WIFI模块</h3><p>该模块包含connectToNetWork()、translateEncryptionType()、scanNetWorks()、WIFI_init()</p>
+<h5 id="connectToNetWork-：连接到APP通过蓝牙发送过来的可用指定网络"><a href="#connectToNetWork-：连接到APP通过蓝牙发送过来的可用指定网络" class="headerlink" title="connectToNetWork()：连接到APP通过蓝牙发送过来的可用指定网络"></a>connectToNetWork()：连接到APP通过蓝牙发送过来的可用指定网络</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void connectToNetwork()&#123;</span><br><span class="line">  WiFi.begin(ssId,password);</span><br><span class="line">  while (WiFi.status()!= WL_CONNECTED) &#123;</span><br><span class="line">    delay(1000);</span><br><span class="line">    Serial.println(&quot;Establishing connection to WiFi..&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  Serial.println(&quot;Connectedto network&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="translateEncryptionType-：返回扫描到的网络安全认证类型"><a href="#translateEncryptionType-：返回扫描到的网络安全认证类型" class="headerlink" title="translateEncryptionType()：返回扫描到的网络安全认证类型"></a>translateEncryptionType()：返回扫描到的网络安全认证类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">String translateEncryptionType(wifi_auth_mode_t encryptionType) &#123;</span><br><span class="line">  switch (encryptionType)&#123;</span><br><span class="line">    case (WIFI_AUTH_OPEN):</span><br><span class="line">      return &quot;Open&quot;;</span><br><span class="line">    case (WIFI_AUTH_WEP):</span><br><span class="line">      return &quot;WEP&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA_PSK):</span><br><span class="line">      return &quot;WPA_PSK&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA2_PSK):</span><br><span class="line">      return &quot;WPA2_PSK&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA_WPA2_PSK):</span><br><span class="line">      return &quot;WPA_WPA2_PSK&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA2_ENTERPRISE):</span><br><span class="line">      return &quot;WPA2_ENTERPRISE&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="scanNetWorks-：扫描当前可连接的所有网络信息"><a href="#scanNetWorks-：扫描当前可连接的所有网络信息" class="headerlink" title="scanNetWorks()：扫描当前可连接的所有网络信息"></a>scanNetWorks()：扫描当前可连接的所有网络信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void scanNetworks()&#123;</span><br><span class="line">  int numberOfNetworks= WiFi.scanNetworks();</span><br><span class="line">  Serial.print(&quot;Numberof networks found: &quot;);</span><br><span class="line">  Serial.println(numberOfNetworks);</span><br><span class="line">  for (int i = 0; i&lt; numberOfNetworks; i++) &#123;</span><br><span class="line">    Serial.print(&quot;Networkname: &quot;);</span><br><span class="line">    Serial.println(WiFi.SSID(i));</span><br><span class="line">    Serial.print(&quot;Signalstrength: &quot;);</span><br><span class="line">    Serial.println(WiFi.RSSI(i));</span><br><span class="line">    Serial.print(&quot;MACaddress: &quot;);</span><br><span class="line">    Serial.println(WiFi.BSSIDstr(i));</span><br><span class="line">    Serial.print(&quot;Encryptiontype: &quot;);</span><br><span class="line">    String encryptionTypeDescription = translateEncryptionType(WiFi.encryptionType(i));</span><br><span class="line">    Serial.println(encryptionTypeDescription);</span><br><span class="line">    Serial.println(&quot;-----------------------&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="WIFI-init-：初始化"><a href="#WIFI-init-：初始化" class="headerlink" title="WIFI_init()：初始化"></a>WIFI_init()：初始化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//wifi连接初始化</span><br><span class="line">scanNetworks();</span><br><span class="line">connectToNetwork();</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="测试：模拟报警信息发送至服务器"><a href="#测试：模拟报警信息发送至服务器" class="headerlink" title="测试：模拟报警信息发送至服务器"></a>测试：模拟报警信息发送至服务器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">WiFiClient client;</span><br><span class="line">Serial.println(&quot;连接服务器ing...&quot;);</span><br><span class="line">IPAddress server(106,14,12,46);</span><br><span class="line">if(client.connect(server,8088))//发送报警数据</span><br><span class="line">&#123;</span><br><span class="line">  Serial.println(&quot;连接远程服务器成功&quot;);</span><br><span class="line">  //client.println(postData);</span><br><span class="line">  client.println(&quot;&lt;&#123;\&quot;address\&quot;:\&quot;文荟人才公寓\&quot;,\&quot;name\&quot;:\&quot;杨震\&quot;,\&quot;lng\&quot;:31.269514083862305,\&quot;longtitude\&quot;:120.75696563720703,\&quot;phoneNumber\&quot;:\&quot;17775302520\&quot;,\&quot;status\&quot;:0&#125;&gt;&quot;);</span><br><span class="line">  Serial.println(&quot;成功向服务器发送信息！&quot;);</span><br><span class="line">  delay(2000);</span><br><span class="line">  if(client.available())</span><br><span class="line"> &#123;</span><br><span class="line">  String line = client.readStringUntil(&apos;\r\n&apos;);//获取字符串</span><br><span class="line">  Serial.println(line);//把字符串传给串口</span><br><span class="line"> &#125;</span><br><span class="line">  client.stop();</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="坑总结"><a href="#坑总结" class="headerlink" title="坑总结"></a>坑总结</h2><p>一、WIFIClient在建立TCP Socket连接时，一定要执行在scanNetworks()后立即调用connectToNetwork()，否则很容易连不上，不清楚具体原因。</p>
+<p>二、WIFIClient也可以发送HTTP的POST,GET请求，格式是client.println(“POST XXXX HTTP/1.0”);具体参照相关文档。</p>
+<p>三、std:string和String类型的相互转换要注意。前者是c标准库的char*类型，后者是c++的String字符串类型。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">TCP socket</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">WIFI</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BLE低功耗蓝牙</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">http请求</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Arduino//" class="article-tag-list-link color3">Arduino</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/17/Arduino-报警生成器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android-ReceiverT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -708,116 +832,6 @@
 
 
   
-    <article id="post-leetcode-437-——路径求和III" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/08/leetcode-437-——路径求和III/">leetcode[437]——路径求和III</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/08/leetcode-437-——路径求和III/" class="archive-article-date">
-  	<time datetime="2019-08-08T03:05:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个二叉树，它的每个结点都存放着一个整数值。</p>
-<p>找出路径和等于给定数值的路径总数。</p>
-<p>路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
-<p>二叉树不超过1000个节点，且节点数值范围是 [-1000000,1000000] 的整数。</p>
-<p>示例：</p>
-<p>root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8</p>
-<pre><code>  10
- /  \
-5   -3</code></pre><p>   / \    <br>  3   2   11<br> / \   <br>3  -2   1</p>
-<p>返回 3。和等于 8 的路径有:</p>
-<ol>
-<li>5 -&gt; 3</li>
-<li>5 -&gt; 2 -&gt; 1</li>
-<li>-3 -&gt; 11</li>
-</ol>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/path-sum-iii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/path-sum-iii</a></p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>是《路径总和I》的升级版III，要求每个节点都可以作为开始和结束，要计算出所有满足条件的路径，直观的想法就是让所有节点都当一次起始节点，当符合条件时计数器++</p>
-<p>关键在于理解内层递归的 sum- root-&gt;val以及边界条件root-&gt;val==sum，在最后一次调用时，sum形参的值应该刚好等于当前的root-&gt;val（如果该路径实际满足条件的话）。</p>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public:</span><br><span class="line">    int countPath(TreeNode* root,int sum)</span><br><span class="line">    &#123;</span><br><span class="line">        if(root==NULL)</span><br><span class="line">            return 0;</span><br><span class="line">        int cnt=0;</span><br><span class="line">        if(root-&gt;val==sum)//内层边界，满足则路径数++</span><br><span class="line">            ++cnt;</span><br><span class="line">        cnt+=countPath(root-&gt;left,sum -root-&gt;val)+countPath(root-&gt;right,sum-root-&gt;val);//此处是内层递归，对于每一个外层的X节点，计算在X之下每一条路径的值</span><br><span class="line">        return cnt;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int pathSum(TreeNode* root, int sum) &#123;</span><br><span class="line">        if(root==NULL)</span><br><span class="line">            return 0;</span><br><span class="line">        int cnt=countPath(root,sum);</span><br><span class="line">        return pathSum(root-&gt;left,sum)+pathSum(root-&gt;right,sum)+cnt;//此处是外层递归，目的是让每个节点都可以作为一次起始节点</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">双重递归</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/08/leetcode-437-——路径求和III/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -915,22 +929,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编译原理</a>
               </li>
              
@@ -944,6 +942,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">APK打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JDY-18模块</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">远程控制</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -983,6 +997,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
@@ -992,14 +1014,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1068,6 +1082,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">双端队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">队列</a>
               </li>
              
               <li class="article-tag-list-item">
