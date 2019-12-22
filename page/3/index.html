@@ -183,6 +183,198 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode-139——单词划分" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/12/leetcode-139——单词划分/">leetcode-139单139——单词划分</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/12/leetcode-139——单词划分/" class="archive-article-date">
+  	<time datetime="2019-10-12T09:07:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##题目<br>唯一的关键点是找到dp负责保存的是什么，这里dp保存的是当前的划分(s分为s1+s2)是不是可以分为两个单词。<br>接着应用动态规划就行了，要注意数组的边界.</p>
+<p>##完整代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean wordBreak(String s, List&lt;String&gt; wordDict) &#123;</span><br><span class="line">        </span><br><span class="line">        boolean dp[]=new boolean[s.length()+1];</span><br><span class="line">        HashSet&lt;String&gt; wd=new HashSet(wordDict);</span><br><span class="line">        dp[0]=true;</span><br><span class="line">        for(int i=0;i&lt;=s.length();++i)//max=length-1 ,but j&lt;i always --&gt; i&lt;=length</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j=0;j&lt;i;++j)</span><br><span class="line">            &#123;</span><br><span class="line">                if(dp[j]==true &amp;&amp; (wd.contains(s.substring(j,i))==true) )</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i]=true;//dp保存的是当前的划分(s分为s1+s2)是不是可以分为两个单词</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return dp[s.length()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">HashSet</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/12/leetcode-139——单词划分/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-leetcode-221最大正方形" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/12/leetcode-221最大正方形/">leetcode--221最大正方形</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/12/leetcode-221最大正方形/" class="archive-article-date">
+  	<time datetime="2019-10-12T08:59:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。</p>
+<pre><code>示例:
+
+输入: 
+
+1 0 1 0 0
+1 0 1 1 1
+1 1 1 1 1
+1 0 0 1 0
+
+输出: 4
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/maximal-square</code></pre><h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>利用动态规划，对每一个原始矩阵出现的1都进行dp数组的更新【时间复杂度O(n^2)】，</p>
+<p>有一个关键点，因为dp[][]第i行时要判断i-1，所以要多初始化为0的一行一列来使得数组不越界，<br>接着不断对当前的i,j找寻在dp[i-1][j],dp[i][j-1],dp[i-1][j-1]之间最小的那个数然后+1就可以得到当前ij对应<br>的边长。</p>
+<p>maxn用来保存中途遇到的最大边长。</p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int maximalSquare(char[][] matrix) &#123;</span><br><span class="line">        int rows = matrix.length, cols = rows &gt; 0 ? matrix[0].length : 0;</span><br><span class="line">        </span><br><span class="line">        int maxn=0;</span><br><span class="line">        int dp[][]=new int[rows+1][cols+1];//关键点，因为dp[][]第i行时要判断i-1，所以要多一行一列来存放0使得数组不越界</span><br><span class="line">        </span><br><span class="line">        for(int i=0;i&lt;rows;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j=0;j&lt;cols;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                if(matrix[i][j]==&apos;1&apos;)</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i+1][j+1]=Math.min(dp[i][j],Math.min(dp[i][j+1],dp[i+1][j]))+1;</span><br><span class="line">                    maxn=Math.max(dp[i+1][j+1],maxn);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return maxn*maxn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/12/leetcode-221最大正方形/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-63——不同路径II" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -613,249 +805,9 @@
 
 
   
-    <article id="post-Arduino-报警生成器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/17/Arduino-报警生成器/">Arduino-报警生成器</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/17/Arduino-报警生成器/" class="archive-article-date">
-  	<time datetime="2019-09-17T01:18:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="开题"><a href="#开题" class="headerlink" title="开题"></a>开题</h2><p>这个是之前做的一键报警系统的客户端设备，用于用户在家快速向警方发出求救信号。主要原理是通过WIFI向远程服务器发送报警信息，<br>再由服务器用JPUSH（开源）推送至警方Client。</p>
-<h3 id="用到的库函数"><a href="#用到的库函数" class="headerlink" title="用到的库函数"></a>用到的库函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;BLEDevice.h&gt;</span><br><span class="line">#include &lt;BLEServer.h&gt;</span><br><span class="line">#include &lt;BLEUtils.h&gt;</span><br><span class="line">#include &lt;BLE2902.h&gt;</span><br><span class="line">#include &lt;SSD1306.h&gt;</span><br><span class="line">#include &lt;WiFi.h&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="主要逻辑线"><a href="#主要逻辑线" class="headerlink" title="主要逻辑线"></a>主要逻辑线</h3><p>用户Client—(wifi)—&gt;云服务器—(jpush)—&gt;警方Client</p>
-<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><p>（1）ESP32开发板建立与安卓手机APP的蓝牙通信，由手机APP对ESP32进行实时的可用WIFI信息通告以及报警信息的预初始化。<br>初始化成功后可以不需要蓝牙连接</p>
-<p>（2）报警设备初始化完后保持待机状态，等待用户按下报警键，通过WIFI向远程服务器发送信息，信息包括经纬度，报警人，地址，<br>联系方式</p>
-<p>（3）服务器部署监听服务，待用户发送请求后，向预先向服务器已经注册过的距离报警点最近的警方服务点发送求助信息</p>
-<p>（4）警方服务点接受报警信息请求，出警</p>
-<h2 id="程序模块编写"><a href="#程序模块编写" class="headerlink" title="程序模块编写"></a>程序模块编写</h2><p>具体分为BLE、WIFI两部分。</p>
-<h3 id="BLE模块"><a href="#BLE模块" class="headerlink" title="BLE模块"></a>BLE模块</h3><p>蓝牙部分实现的是初始化阶段APP与设备的相互通信。</p>
-<h5 id="（1）实现BLECharacteristic类的回调onWrite函数重写"><a href="#（1）实现BLECharacteristic类的回调onWrite函数重写" class="headerlink" title="（1）实现BLECharacteristic类的回调onWrite函数重写"></a>（1）实现BLECharacteristic类的回调onWrite函数重写</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">class MyCallbacks: public BLECharacteristicCallbacks &#123;</span><br><span class="line">    void onWrite(BLECharacteristic *pCharacteristic) &#123;</span><br><span class="line">      std::string rxValue = pCharacteristic-&gt;getValue();//c++ string</span><br><span class="line">      if (rxValue.length() &gt; 0) &#123;</span><br><span class="line">        Serial.print(&quot;------&gt;Received Value: &quot;);</span><br><span class="line">        for (int i = 0; i &lt; rxValue.length(); i++) &#123;</span><br><span class="line">          Serial.print(rxValue[i]);</span><br><span class="line">          tmp+=rxValue[i];</span><br><span class="line">        &#125;</span><br><span class="line">          int i=0;</span><br><span class="line">          while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">            tmpssid[i]=tmp[i++];</span><br><span class="line">          ++i;</span><br><span class="line">          int j=0;</span><br><span class="line">                    while(tmp[i]!=&apos;#&apos;)</span><br><span class="line">                      tmppwd[j++]=tmp[i++];</span><br><span class="line">          if(!flag)</span><br><span class="line">          &#123;</span><br><span class="line">                    ssId=(char*)malloc(sizeof(tmpssid.length()));</span><br><span class="line">                    password=(char*)malloc(sizeof(tmppwd.length()));</span><br><span class="line">                    ssId=tmpssid.data();//WIFI名称获取</span><br><span class="line">                    password=tmppwd.data();//WIFI密码获取</span><br><span class="line">                    //debug</span><br><span class="line">                    Serial.print(&quot;\n&quot;);</span><br><span class="line">                    Serial.print(&quot;ssid=&quot;);</span><br><span class="line">                    Serial.println(ssId);</span><br><span class="line">                    Serial.print(&quot;pwd=&quot;);</span><br><span class="line">                    Serial.println(password);</span><br><span class="line">                    display.drawString(0, 11, tmpssid.data());//第2行显示收到的wifi名称</span><br><span class="line">                    display.drawString(0, 22, tmppwd.data());//第3行显示收到的wifi密码</span><br><span class="line">                    display.display();</span><br><span class="line">                    //收尾</span><br><span class="line">                    tmpssid.clear();</span><br><span class="line">                    tmppwd.clear();</span><br><span class="line">                    Serial.println();</span><br><span class="line">                    tmp.clear();</span><br><span class="line">                    flag=true;</span><br><span class="line">          &#125;</span><br><span class="line">          else</span><br><span class="line">          &#123;</span><br><span class="line">            for(int i=0;i&lt;tmp.length();i++)</span><br><span class="line">            &#123;</span><br><span class="line">              postData+=tmp[i];</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">            Serial.print(&quot;postdata=&quot;);</span><br><span class="line">            Serial.println(postData);</span><br><span class="line">            </span><br><span class="line">          &#125;          </span><br><span class="line">                  if (rxValue.find(&quot;A&quot;) != -1) &#123; </span><br><span class="line">                    Serial.print(&quot;Rx A!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  else if (rxValue.find(&quot;B&quot;) != -1) &#123;</span><br><span class="line">                    Serial.print(&quot;Rx B!&quot;);</span><br><span class="line">                  &#125;</span><br><span class="line">                  Serial.println();</span><br><span class="line">                &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="（2）BLE的初始化"><a href="#（2）BLE的初始化" class="headerlink" title="（2）BLE的初始化"></a>（2）BLE的初始化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// Create the BLE Device</span><br><span class="line">BLEDevice::init(&quot;ESP32 BLE Test&quot;); //自定义蓝牙识别名称</span><br><span class="line"></span><br><span class="line">// Create the BLE Server</span><br><span class="line">BLEServer *pServer = BLEDevice::createServer();</span><br><span class="line">pServer-&gt;setCallbacks(new MyServerCallbacks());</span><br><span class="line"></span><br><span class="line">// Create the BLE Service</span><br><span class="line">BLEService *pService = pServer-&gt;createService(SERVICE_UUID);</span><br><span class="line"></span><br><span class="line">// Create a BLE Characteristic</span><br><span class="line">pCharacteristic = pService-&gt;createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);</span><br><span class="line">                 </span><br><span class="line">pCharacteristic-&gt;addDescriptor(new BLE2902());</span><br><span class="line"></span><br><span class="line">BLECharacteristic *pCharacteristic = pService-&gt;createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);</span><br><span class="line"></span><br><span class="line">pCharacteristic-&gt;setCallbacks(new MyCallbacks());</span><br><span class="line"></span><br><span class="line">// Start the service</span><br><span class="line">pService-&gt;start();//开启服务</span><br><span class="line"></span><br><span class="line">// Start advertising</span><br><span class="line">pServer-&gt;getAdvertising()-&gt;start();</span><br><span class="line">Serial.println(&quot;Waiting a client connection to notify...&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="WIFI模块"><a href="#WIFI模块" class="headerlink" title="WIFI模块"></a>WIFI模块</h3><p>该模块包含connectToNetWork()、translateEncryptionType()、scanNetWorks()、WIFI_init()</p>
-<h5 id="connectToNetWork-：连接到APP通过蓝牙发送过来的可用指定网络"><a href="#connectToNetWork-：连接到APP通过蓝牙发送过来的可用指定网络" class="headerlink" title="connectToNetWork()：连接到APP通过蓝牙发送过来的可用指定网络"></a>connectToNetWork()：连接到APP通过蓝牙发送过来的可用指定网络</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void connectToNetwork()&#123;</span><br><span class="line">  WiFi.begin(ssId,password);</span><br><span class="line">  while (WiFi.status()!= WL_CONNECTED) &#123;</span><br><span class="line">    delay(1000);</span><br><span class="line">    Serial.println(&quot;Establishing connection to WiFi..&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  Serial.println(&quot;Connectedto network&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="translateEncryptionType-：返回扫描到的网络安全认证类型"><a href="#translateEncryptionType-：返回扫描到的网络安全认证类型" class="headerlink" title="translateEncryptionType()：返回扫描到的网络安全认证类型"></a>translateEncryptionType()：返回扫描到的网络安全认证类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">String translateEncryptionType(wifi_auth_mode_t encryptionType) &#123;</span><br><span class="line">  switch (encryptionType)&#123;</span><br><span class="line">    case (WIFI_AUTH_OPEN):</span><br><span class="line">      return &quot;Open&quot;;</span><br><span class="line">    case (WIFI_AUTH_WEP):</span><br><span class="line">      return &quot;WEP&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA_PSK):</span><br><span class="line">      return &quot;WPA_PSK&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA2_PSK):</span><br><span class="line">      return &quot;WPA2_PSK&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA_WPA2_PSK):</span><br><span class="line">      return &quot;WPA_WPA2_PSK&quot;;</span><br><span class="line">    case (WIFI_AUTH_WPA2_ENTERPRISE):</span><br><span class="line">      return &quot;WPA2_ENTERPRISE&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="scanNetWorks-：扫描当前可连接的所有网络信息"><a href="#scanNetWorks-：扫描当前可连接的所有网络信息" class="headerlink" title="scanNetWorks()：扫描当前可连接的所有网络信息"></a>scanNetWorks()：扫描当前可连接的所有网络信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void scanNetworks()&#123;</span><br><span class="line">  int numberOfNetworks= WiFi.scanNetworks();</span><br><span class="line">  Serial.print(&quot;Numberof networks found: &quot;);</span><br><span class="line">  Serial.println(numberOfNetworks);</span><br><span class="line">  for (int i = 0; i&lt; numberOfNetworks; i++) &#123;</span><br><span class="line">    Serial.print(&quot;Networkname: &quot;);</span><br><span class="line">    Serial.println(WiFi.SSID(i));</span><br><span class="line">    Serial.print(&quot;Signalstrength: &quot;);</span><br><span class="line">    Serial.println(WiFi.RSSI(i));</span><br><span class="line">    Serial.print(&quot;MACaddress: &quot;);</span><br><span class="line">    Serial.println(WiFi.BSSIDstr(i));</span><br><span class="line">    Serial.print(&quot;Encryptiontype: &quot;);</span><br><span class="line">    String encryptionTypeDescription = translateEncryptionType(WiFi.encryptionType(i));</span><br><span class="line">    Serial.println(encryptionTypeDescription);</span><br><span class="line">    Serial.println(&quot;-----------------------&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="WIFI-init-：初始化"><a href="#WIFI-init-：初始化" class="headerlink" title="WIFI_init()：初始化"></a>WIFI_init()：初始化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//wifi连接初始化</span><br><span class="line">scanNetworks();</span><br><span class="line">connectToNetwork();</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="测试：模拟报警信息发送至服务器"><a href="#测试：模拟报警信息发送至服务器" class="headerlink" title="测试：模拟报警信息发送至服务器"></a>测试：模拟报警信息发送至服务器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">WiFiClient client;</span><br><span class="line">Serial.println(&quot;连接服务器ing...&quot;);</span><br><span class="line">IPAddress server(106,14,12,46);</span><br><span class="line">if(client.connect(server,8088))//发送报警数据</span><br><span class="line">&#123;</span><br><span class="line">  Serial.println(&quot;连接远程服务器成功&quot;);</span><br><span class="line">  //client.println(postData);</span><br><span class="line">  client.println(&quot;&lt;&#123;\&quot;address\&quot;:\&quot;文荟人才公寓\&quot;,\&quot;name\&quot;:\&quot;杨震\&quot;,\&quot;lng\&quot;:31.269514083862305,\&quot;longtitude\&quot;:120.75696563720703,\&quot;phoneNumber\&quot;:\&quot;17775302520\&quot;,\&quot;status\&quot;:0&#125;&gt;&quot;);</span><br><span class="line">  Serial.println(&quot;成功向服务器发送信息！&quot;);</span><br><span class="line">  delay(2000);</span><br><span class="line">  if(client.available())</span><br><span class="line"> &#123;</span><br><span class="line">  String line = client.readStringUntil(&apos;\r\n&apos;);//获取字符串</span><br><span class="line">  Serial.println(line);//把字符串传给串口</span><br><span class="line"> &#125;</span><br><span class="line">  client.stop();</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="坑总结"><a href="#坑总结" class="headerlink" title="坑总结"></a>坑总结</h2><p>一、WIFIClient在建立TCP Socket连接时，一定要执行在scanNetworks()后立即调用connectToNetwork()，否则很容易连不上，不清楚具体原因。</p>
-<p>二、WIFIClient也可以发送HTTP的POST,GET请求，格式是client.println(“POST XXXX HTTP/1.0”);具体参照相关文档。</p>
-<p>三、std:string和String类型的相互转换要注意。前者是c标准库的char*类型，后者是c++的String字符串类型。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">TCP socket</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">WIFI</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BLE低功耗蓝牙</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">http请求</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Arduino//" class="article-tag-list-link color3">Arduino</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/17/Arduino-报警生成器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android-ReceiverT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/09/Android-ReceiverT/">Android-ReceiverT</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/09/Android-ReceiverT/" class="archive-article-date">
-  	<time datetime="2019-09-09T07:32:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="系统简介"><a href="#系统简介" class="headerlink" title="系统简介"></a>系统简介</h2><p>一键报警系统设计的警方接收端安卓程序部分。实现的功能有与手机蓝牙通信、与服务器的JPUSH推送通信、当前位置的定位、<br>具体经纬度的定位与坐标转换。</p>
-<p>系统主要包有bean、Bluetooth、main、database、Jpush、util。</p>
-<p>Activity主要包含LocationActivity、MapActivity、MainActivity等5个Activity。</p>
-<p>ps.很少写安卓的项目，可能代码不是很简洁规范=.=</p>
-<h2 id="部分Activity的java实现代码"><a href="#部分Activity的java实现代码" class="headerlink" title="部分Activity的java实现代码"></a>部分Activity的java实现代码</h2><h3 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a>MainActivity</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">package com.example.test_pt;</span><br><span class="line"></span><br><span class="line">import android.content.BroadcastReceiver;</span><br><span class="line">import android.content.Context;</span><br><span class="line">import android.content.Intent;</span><br><span class="line">import android.content.IntentFilter;</span><br><span class="line">import android.support.v7.app.AppCompatActivity;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.widget.Button;</span><br><span class="line">import android.widget.EditText;</span><br><span class="line">import android.widget.ImageButton;</span><br><span class="line">import cn.jpush.android.api.JPushInterface;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    private Button btn_connect_to_clond;</span><br><span class="line">    private ImageButton top_map;</span><br><span class="line">    private ImageButton top_gps;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        JPushInterface.setDebugMode(true);</span><br><span class="line">        JPushInterface.init(this);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        btn_connect_to_clond=findViewById(R.id.btn_connect_to_clond);</span><br><span class="line">        btn_connect_to_clond.setOnClickListener(new View.OnClickListener()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v)</span><br><span class="line">            &#123;</span><br><span class="line">                Intent intent =new Intent(MainActivity.this,RegActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        top_gps=findViewById(R.id.top_gps);</span><br><span class="line">        top_gps.setOnClickListener(new View.OnClickListener()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v)</span><br><span class="line">            &#123;</span><br><span class="line">                Intent intent = new Intent(MainActivity.this,LocationActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        top_map=findViewById(R.id.top_map);</span><br><span class="line">        top_map.setOnClickListener(new View.OnClickListener()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v)</span><br><span class="line">            &#123;</span><br><span class="line">                Intent intent = new Intent(MainActivity.this, MapActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="MapActvivity"><a href="#MapActvivity" class="headerlink" title="MapActvivity"></a>MapActvivity</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br></pre></td><td class="code"><pre><span class="line">package com.example.test_pt;</span><br><span class="line"></span><br><span class="line">import android.bluetooth.BluetoothAdapter;</span><br><span class="line">import android.content.BroadcastReceiver;</span><br><span class="line">import android.content.Context;</span><br><span class="line">import android.content.Intent;</span><br><span class="line">import android.content.IntentFilter;</span><br><span class="line">import android.net.ConnectivityManager;</span><br><span class="line">import android.net.NetworkInfo;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line">import android.support.constraint.ConstraintLayout;</span><br><span class="line">import android.support.v7.app.AppCompatActivity;</span><br><span class="line">import android.util.Log;</span><br><span class="line">import android.view.Gravity;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.widget.Button;</span><br><span class="line">import android.widget.ImageButton;</span><br><span class="line">import android.widget.TextView;</span><br><span class="line">import android.widget.Toast;</span><br><span class="line"></span><br><span class="line">import com.amap.api.location.AMapLocation;</span><br><span class="line">import com.amap.api.location.AMapLocationListener;</span><br><span class="line">import com.amap.api.location.CoordinateConverter;</span><br><span class="line">import com.amap.api.location.DPoint;</span><br><span class="line">import com.amap.api.maps.AMap;</span><br><span class="line">import com.amap.api.maps.CameraUpdateFactory;</span><br><span class="line">import com.amap.api.maps.MapView;</span><br><span class="line">import com.amap.api.maps.model.LatLng;</span><br><span class="line">import com.amap.api.maps.model.LatLngBounds;</span><br><span class="line">import com.amap.api.maps.model.MarkerOptions;</span><br><span class="line">import com.amap.api.maps.model.MyLocationStyle;</span><br><span class="line">import com.amap.api.services.core.AMapException;</span><br><span class="line">import com.amap.api.services.geocoder.GeocodeAddress;</span><br><span class="line">import com.amap.api.services.geocoder.GeocodeQuery;</span><br><span class="line">import com.amap.api.services.geocoder.GeocodeResult;</span><br><span class="line">import com.amap.api.services.geocoder.GeocodeSearch;</span><br><span class="line">import com.amap.api.services.geocoder.RegeocodeQuery;</span><br><span class="line">import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;</span><br><span class="line">import com.amap.api.services.geocoder.RegeocodeResult;</span><br><span class="line">import com.google.gson.Gson;</span><br><span class="line"></span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">import Bluetooth.ScanBluetoothActivity;</span><br><span class="line">import Jpush.LocalBroadcastManager;</span><br><span class="line">import bean.PoliceInfo;</span><br><span class="line">import cn.jpush.android.api.JPushInterface;</span><br><span class="line">import util.LocationUtils;</span><br><span class="line">import util.MessageScanView;</span><br><span class="line">import util.RadarView;</span><br><span class="line"></span><br><span class="line">public class MapActivity extends AppCompatActivity implements GeocodeSearch.OnGeocodeSearchListener &#123;</span><br><span class="line"></span><br><span class="line">    public MapView mMapView;</span><br><span class="line">    private AMap aMap=null;</span><br><span class="line">    private MyLocationStyle myLocationStyle;</span><br><span class="line">    private GeocodeSearch geocodeSearch;</span><br><span class="line"></span><br><span class="line">    private Button btn_setting;</span><br><span class="line">    private ImageButton top_gps;</span><br><span class="line">    private TextView text_state_blue;</span><br><span class="line">    private TextView text_state_wifi;</span><br><span class="line"></span><br><span class="line">    public static  final String RECIEVED_MESSAGE_SCANACTIVITY=&quot;com.example.amosyang.MESSAGE_RECEIVED&quot;;</span><br><span class="line">    private MessageScanView messagescanview;</span><br><span class="line">    private Button AddDevice;</span><br><span class="line">    private ConstraintLayout constraintLayout;</span><br><span class="line">    private float longtitude=0.0f;</span><br><span class="line">    private float lngtitude=0.0f;</span><br><span class="line">    private PoliceInfo policeInfo=null;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState)</span><br><span class="line">    &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_map);</span><br><span class="line"></span><br><span class="line">        initView();</span><br><span class="line">        setListener();</span><br><span class="line">        initMap(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        //判断蓝牙开关</span><br><span class="line">        BluetoothAdapter blueAdapter=BluetoothAdapter.getDefaultAdapter();</span><br><span class="line">        if(blueAdapter.isEnabled()==true)</span><br><span class="line">        &#123;</span><br><span class="line">            text_state_blue.setText(&quot;已开启&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        //判断WiFi开关</span><br><span class="line">        ConnectivityManager manager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);</span><br><span class="line">        NetworkInfo.State wifi=manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();</span><br><span class="line">        if(wifi== NetworkInfo.State.CONNECTED||wifi==NetworkInfo.State.CONNECTING)</span><br><span class="line">        &#123;</span><br><span class="line">            text_state_wifi.setText(&quot;已开启&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">//        policeInfo=new Gson().fromJson(getIntent().getStringExtra(&quot;Data&quot;),PoliceInfo.class);</span><br><span class="line">        String JpushID=JPushInterface.getRegistrationID(this);</span><br><span class="line">        Log.i(&quot;REID:&quot;,JpushID);</span><br><span class="line">        Toast.makeText(this,&quot;RegisterID=&quot;+JpushID,Toast.LENGTH_LONG).show();</span><br><span class="line">//        policeInfo.setJpushID(JpushID);</span><br><span class="line"></span><br><span class="line">        //设置广播接收器</span><br><span class="line">        setReceiver();</span><br><span class="line">//</span><br><span class="line">        //开启推送</span><br><span class="line">        JPushInterface.setDebugMode(true);</span><br><span class="line">        JPushInterface.init(this);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //定位</span><br><span class="line">//        LocationUtils.setLocationService(getApplicationContext(),mLocationListener);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        DPoint sourceLatLng=new DPoint();</span><br><span class="line">        sourceLatLng.setLatitude(31.269965);//纬度</span><br><span class="line">        sourceLatLng.setLongitude(120.731884);//经度</span><br><span class="line">        convert(sourceLatLng);//转换坐标为高德坐标系并显示在地图</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">        super.onDestroy();</span><br><span class="line">        //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图</span><br><span class="line">        mMapView.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onResume() &#123;</span><br><span class="line">        super.onResume();</span><br><span class="line">        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图</span><br><span class="line">        mMapView.onResume();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onPause() &#123;</span><br><span class="line">        super.onPause();</span><br><span class="line">        //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制</span><br><span class="line">        mMapView.onPause();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onSaveInstanceState(Bundle outState) &#123;</span><br><span class="line">        super.onSaveInstanceState(outState);</span><br><span class="line">        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态</span><br><span class="line">        mMapView.onSaveInstanceState(outState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 控件初始化函数</span><br><span class="line">     */</span><br><span class="line">    private void initView()&#123;</span><br><span class="line">//        constraintLayout=findViewById(R.id.Scan_annotion);</span><br><span class="line">//        mapView = (MapView) findViewById(R.id.map);</span><br><span class="line">//        messagescanview = findViewById(R.id.radar);</span><br><span class="line"></span><br><span class="line">        AddDevice=findViewById(R.id.AddPoliceDeviceButton);</span><br><span class="line">        text_state_blue=findViewById(R.id.text_state_blue);</span><br><span class="line">        text_state_wifi=findViewById(R.id.text_state_wifi);</span><br><span class="line">        mMapView=findViewById(R.id.map);</span><br><span class="line">        btn_setting=findViewById(R.id.btn_setting);</span><br><span class="line">        top_gps=findViewById(R.id.top_gps);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 地图初始化函数</span><br><span class="line">     * @param savedInstanceState</span><br><span class="line">     */</span><br><span class="line">    private void initMap(Bundle savedInstanceState)&#123;</span><br><span class="line">        mMapView.onCreate(savedInstanceState);// 此方法必须重写</span><br><span class="line">        if(aMap==null)</span><br><span class="line">        &#123;</span><br><span class="line">            aMap=mMapView.getMap();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        aMap.setTrafficEnabled(true);// 显示实时交通状况</span><br><span class="line">        //地图模式可选类型：MAP_TYPE_NORMAL,MAP_TYPE_SATELLITE,MAP_TYPE_NIGHT</span><br><span class="line">        aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 普通地图模式</span><br><span class="line"></span><br><span class="line">        //地图定位蓝点</span><br><span class="line">        myLocationStyle=new MyLocationStyle();</span><br><span class="line">        myLocationStyle.interval(2000);</span><br><span class="line">        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_MAP_ROTATE_NO_CENTER);//连续定位、蓝点不会移动到地图中心点，地图依照设备方向旋转，并且蓝点会跟随设备移动。</span><br><span class="line"></span><br><span class="line">        aMap.setMyLocationStyle(myLocationStyle);</span><br><span class="line">        aMap.setMyLocationEnabled(true);</span><br><span class="line">        //逆地址编码</span><br><span class="line">        geocodeSearch=new GeocodeSearch(this);</span><br><span class="line">        geocodeSearch.setOnGeocodeSearchListener(this);</span><br><span class="line"></span><br><span class="line">       // RegeocodeQuery query =new RegeocodeQuery(latLonPoint,200,GeocodeSearch.AMAP);//AMAP=火系坐标 GPS=GPS坐标</span><br><span class="line">       // geocodeSearch.getFromLocationAsyn(query);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 监听函数</span><br><span class="line">     */</span><br><span class="line">    private void setListener()&#123;</span><br><span class="line">        AddDevice.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                Intent i=new Intent(MapActivity.this, ScanBluetoothActivity.class);</span><br><span class="line">                startActivity(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        btn_setting.setOnClickListener(new View.OnClickListener()&#123;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v)</span><br><span class="line">            &#123;</span><br><span class="line">                Intent intent=new Intent(MapActivity.this,MainActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        top_gps.setOnClickListener(new View.OnClickListener()&#123;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v)</span><br><span class="line">            &#123;</span><br><span class="line">                Intent intent=new Intent(MapActivity.this,LocationActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private void setReceiver()&#123;</span><br><span class="line">        MapActivity.ScanReceiver scanReceiver=new MapActivity.ScanReceiver();</span><br><span class="line">        IntentFilter filter = new IntentFilter();</span><br><span class="line">        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);</span><br><span class="line">        filter.addAction(RECIEVED_MESSAGE_SCANACTIVITY);</span><br><span class="line">        LocalBroadcastManager.getInstance(this).registerReceiver(scanReceiver,filter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 向服务器端注册该警方客户端</span><br><span class="line">     */</span><br><span class="line">    private void sendToNet(PoliceInfo policeInfo)&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//        Net net=new Net() &#123;</span><br><span class="line">//            @Override</span><br><span class="line">//            public void OnResponse() &#123;</span><br><span class="line">//</span><br><span class="line">//            &#125;</span><br><span class="line">//</span><br><span class="line">//            @Override</span><br><span class="line">//            public void OnFailure() &#123;</span><br><span class="line">//</span><br><span class="line">//            &#125;</span><br><span class="line">//        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private class ScanReceiver extends BroadcastReceiver &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onReceive(Context context, Intent intent) &#123;</span><br><span class="line">            if(RECIEVED_MESSAGE_SCANACTIVITY.equals(intent.getAction()))&#123;</span><br><span class="line">                Toast.makeText(MapActivity.this,&quot;接受到新的消息&quot;,Toast.LENGTH_LONG).show();</span><br><span class="line">                //constraintLayout.setVisibility(View.GONE);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">//</span><br><span class="line">//    public void onMyLocationChange(android.location.Location location)｛</span><br><span class="line">//    //从location对象中获取经纬度信息，地址描述信息，建议拿到位置之后调用逆地理编码接口获取（获取地址描述数据章节有介绍）</span><br><span class="line">//</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 逆地理编码回调</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void onRegeocodeSearched(RegeocodeResult result, int rCode) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 响应地理编码</span><br><span class="line">     */</span><br><span class="line">    public void getLatlon(final String name) &#123;</span><br><span class="line"></span><br><span class="line">        GeocodeQuery query = new GeocodeQuery(name, &quot;010&quot;);// 第一个参数表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode，</span><br><span class="line">        geocodeSearch.getFromLocationNameAsyn(query);// 设置同步地理编码请求</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 地理编码查询回调</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void onGeocodeSearched(GeocodeResult result, int rCode) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 坐标转换函数</span><br><span class="line">     */</span><br><span class="line">    public void convert(DPoint sourceLatLng)</span><br><span class="line">    &#123;</span><br><span class="line">        CoordinateConverter converter  = new CoordinateConverter(getApplicationContext());</span><br><span class="line">        converter.from(CoordinateConverter.CoordType.GPS);</span><br><span class="line">        try&#123;</span><br><span class="line">            converter.coord(sourceLatLng);//待转换坐标点 DPoint类型</span><br><span class="line">            DPoint descLatLng=converter.convert();</span><br><span class="line"></span><br><span class="line">            //测试-地图上模拟标记报警点</span><br><span class="line">            MarkerOptions markerOption=new MarkerOptions();</span><br><span class="line">            markerOption.position(new LatLng(descLatLng.getLatitude(),descLatLng.getLongitude()));</span><br><span class="line">            markerOption.draggable(false);//设置不可拖动</span><br><span class="line">            markerOption.title(&quot;测试报警点1&quot;);//设置标题</span><br><span class="line">            markerOption.snippet(&quot;信息类型-110&quot;);//设置内容</span><br><span class="line">            aMap.addMarker(markerOption);</span><br><span class="line"></span><br><span class="line">            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();//存放所有点的经纬度</span><br><span class="line">            boundsBuilder.include(new LatLng(descLatLng.getLatitude(),descLatLng.getLongitude()));</span><br><span class="line">            aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 15));//第二个参数为四周留空宽度</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        catch (Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            Log.d(&quot;converter&quot;,&quot;convert error&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="部分Layout-XML实现"><a href="#部分Layout-XML实现" class="headerlink" title="部分Layout XML实现"></a>部分Layout XML实现</h2><h3 id="activity-map-xml"><a href="#activity-map-xml" class="headerlink" title="activity_map.xml"></a>activity_map.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;android.support.constraint.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;include</span><br><span class="line">        layout=&quot;@layout/top_layout&quot;</span><br><span class="line">        tools:layout_editor_absoluteX=&quot;0dp&quot;</span><br><span class="line">        tools:layout_editor_absoluteY=&quot;0dp&quot; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;Button</span><br><span class="line">        android:id=&quot;@+id/AddPoliceDeviceButton&quot;</span><br><span class="line">        android:layout_width=&quot;90dp&quot;</span><br><span class="line">        android:layout_height=&quot;40dp&quot;</span><br><span class="line">        android:text=&quot;添加设备&quot;</span><br><span class="line">        /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;Button</span><br><span class="line">        android:id=&quot;@+id/btn_setting&quot;</span><br><span class="line">        android:layout_width=&quot;90dp&quot;</span><br><span class="line">        android:layout_height=&quot;40dp&quot;</span><br><span class="line">        android:gravity=&quot;center&quot;</span><br><span class="line">        android:text=&quot;Setting&quot;</span><br><span class="line">        app:layout_constraintLeft_toRightOf=&quot;@+id/AddPoliceDeviceButton&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/text_blue&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:text=&quot;蓝牙状态：&quot;</span><br><span class="line">        android:textSize=&quot;15sp&quot;</span><br><span class="line">        app:layout_constraintLeft_toRightOf=&quot;@+id/btn_setting&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/text_state_blue&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:text=&quot;未开启&quot;</span><br><span class="line">        android:textSize=&quot;15sp&quot;</span><br><span class="line">        app:layout_constraintLeft_toRightOf=&quot;@+id/text_blue&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/text_wifi&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:text=&quot;WIFI状态：&quot;</span><br><span class="line">        android:textSize=&quot;15sp&quot;</span><br><span class="line">        app:layout_constraintTop_toBottomOf=&quot;@+id/text_blue&quot;</span><br><span class="line">        app:layout_constraintLeft_toRightOf=&quot;@+id/btn_setting&quot;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/text_state_wifi&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:text=&quot;未开启&quot;</span><br><span class="line">        android:textSize=&quot;15sp&quot;</span><br><span class="line">        app:layout_constraintTop_toBottomOf=&quot;@id/text_blue&quot;</span><br><span class="line">        app:layout_constraintLeft_toRightOf=&quot;@+id/text_wifi&quot;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;com.amap.api.maps.MapView</span><br><span class="line">        android:id=&quot;@+id/map&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;733dp&quot;</span><br><span class="line">        tools:layout_editor_absoluteY=&quot;1dp&quot;</span><br><span class="line">        app:layout_constraintTop_toBottomOf=&quot;@+id/btn_setting&quot;</span><br><span class="line">        /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--&lt;/android.support.v4.widget.DrawerLayout&gt;--&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="activity-main-xml"><a href="#activity-main-xml" class="headerlink" title="activity_main.xml"></a>activity_main.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;android.support.constraint.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;include</span><br><span class="line">        layout=&quot;@layout/top_layout&quot;</span><br><span class="line">        tools:layout_editor_absoluteX=&quot;0dp&quot;</span><br><span class="line">        tools:layout_editor_absoluteY=&quot;0dp&quot; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &lt;Button</span><br><span class="line">            android:id=&quot;@+id/btn_connect_to_clond&quot;</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:gravity=&quot;center&quot;</span><br><span class="line">            android:text=&quot;向服务器注册此站点&quot;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>###top_layout.xml （顶部导航栏）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;45dp&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=&quot;@+id/top_text&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:text=&quot; &quot;</span><br><span class="line">        android:layout_centerVertical=&quot;true&quot;</span><br><span class="line">        android:textSize=&quot;20sp&quot;</span><br><span class="line">        android:textStyle=&quot;bold&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageButton</span><br><span class="line">        android:id=&quot;@+id/top_map&quot;</span><br><span class="line">        android:layout_width=&quot;40dp&quot;</span><br><span class="line">        android:layout_height=&quot;40dp&quot;</span><br><span class="line">        android:layout_alignParentRight=&quot;true&quot;</span><br><span class="line">        android:layout_centerVertical=&quot;true&quot;</span><br><span class="line">        android:background=&quot;@drawable/map&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageButton</span><br><span class="line">        android:id=&quot;@+id/top_gps&quot;</span><br><span class="line">        android:layout_width=&quot;40dp&quot;</span><br><span class="line">        android:layout_height=&quot;40dp&quot;</span><br><span class="line">        android:layout_centerVertical=&quot;true&quot;</span><br><span class="line">        android:layout_toLeftOf=&quot;@id/top_map&quot;</span><br><span class="line">        android:background=&quot;@drawable/gps&quot; /&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="APP界面"><a href="#APP界面" class="headerlink" title="APP界面"></a>APP界面</h3><img src="/2019/09/09/Android-ReceiverT/t1.jpg" title="jpgName:app.jpg">
-
-
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">系统设计</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">高德地图SDK</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">蓝牙通信</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">经纬度定位</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/09/Android-ReceiverT/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -970,14 +922,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">解码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">超声波</a>
               </li>
              
@@ -986,19 +930,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
+                <a href="javascript:void(0)" class="js-tag color3">Vagrant</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WIFI</a>
+                <a href="javascript:void(0)" class="js-tag color1">virtualbox</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BLE低功耗蓝牙</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">http请求</a>
+                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">解码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1006,19 +954,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
+                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1035,6 +975,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Blinker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1058,6 +1022,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HashSet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">二叉搜索树</a>
               </li>
              
@@ -1074,27 +1042,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+                <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">层次遍历</a>
+                <a href="javascript:void(0)" class="js-tag color5">WIFI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
+                <a href="javascript:void(0)" class="js-tag color4">BLE低功耗蓝牙</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HashSet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">双重递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color2">http请求</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1102,7 +1062,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">简单模拟</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">双重递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">剑指OFFER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Map</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JAVA容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异或</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1118,27 +1102,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Map</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JAVA容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异或</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位操作</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1151,6 +1115,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Google AE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
               </li>
              
               <li class="article-tag-list-item">
