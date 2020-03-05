@@ -183,6 +183,135 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode-Tecent-20200-03-05-构造回文" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/05/leetcode-Tecent-20200-03-05-构造回文/">leetcode-Tecent-20200-03-05-构造回文</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/05/leetcode-Tecent-20200-03-05-构造回文/" class="archive-article-date">
+  	<time datetime="2020-03-05T13:38:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串s，你可以从中删除一些字符，使得剩下的串是一个回文串。如何删除才能使得回文串最长呢？<br>输出需要删除的字符个数。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><img src="/2020/03/05/leetcode-Tecent-20200-03-05-构造回文/solution1.jpg" title="jpgName:solution.jpg">
+
+<img src="/2020/03/05/leetcode-Tecent-20200-03-05-构造回文/solution2.jpg" title="jpgName:solution.jpg">
+
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><pre><code>public static int maxLen(String s1, String s2){
+    int length1 = s1.length();
+    int length2 = s2.length();
+    int[][] MaxLen = new int[length1 + 1 ][length2 + 1 ];//最长公共子序列，动态规划求法
+    for (int i = 0; i &lt; length1; ++i)
+        MaxLen[i][0] = 0;
+    for (int i = 0; i &lt; length2; ++i)
+        MaxLen[0][i] = 0;
+
+    for (int i = 1; i &lt;= length1; ++i)
+    {
+        for (int j = 1; j &lt;= length2; ++j)
+        {
+            if (s1.charAt(i-1) == s2.charAt(j-1)){
+                MaxLen[i][j] = MaxLen[i-1][j - 1] + 1;
+            }
+            else
+            {
+                MaxLen[i][j] = Math.max(MaxLen[i - 1][j], MaxLen[i][j - 1]);
+            }
+        }
+    }
+
+    return MaxLen[length1][length2];
+}</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">编辑距离思想</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">回文</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">最长回文子序列</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/05/leetcode-Tecent-20200-03-05-构造回文/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode-98-验证二叉搜索树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -203,7 +332,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2>
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<p>节点的左子树只包含小于当前节点的数。<br>节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。<br>示例 1:</p>
+<p>输入:<br>    2<br>   / <br>  1   3<br>输出: true<br>示例 2:</p>
+<p>输入:<br>    5<br>   / <br>  1   4<br>     / <br>    3   6<br>输出: false<br>解释: 输入为: [5,1,4,null,null,3,6]。<br>     根节点的值为 5 ，但是其右子节点值为 4 。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/validate-binary-search-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/validate-binary-search-tree</a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>第一种解法是用中序遍历是递增的特性来做的。<br>第二种是深度优先搜索，可以通过递归或者迭代实现。迭代用栈实现，<br>注意一个小技巧，用Integer来代替int可以做到判断是否null，如果是int只能赋予一个特定值，比较麻烦</p>
+<p>中序遍历判断：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    List&lt;Integer&gt; list=new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void inorder(TreeNode root)</span><br><span class="line">    &#123;</span><br><span class="line">        if(root==null)</span><br><span class="line">            return;</span><br><span class="line">            </span><br><span class="line">        if(root.left!=null)inorder(root.left);</span><br><span class="line">        list.add(root.val);</span><br><span class="line">        if(root.right!=null)inorder(root.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line"></span><br><span class="line">        inorder(root);</span><br><span class="line">        if(list.size()&lt;=1)</span><br><span class="line">            return true;</span><br><span class="line">        for(int i=1;i&lt;list.size();++i)&#123;</span><br><span class="line">            if(list.get(i)&lt;=list.get(i-1))</span><br><span class="line">                return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>递归：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">    public boolean dfs(TreeNode root,Integer upp,Integer low)</span><br><span class="line">    &#123;</span><br><span class="line">        if(root==null)</span><br><span class="line">            return true;</span><br><span class="line">        </span><br><span class="line">        if(upp!=null &amp;&amp; root.val &gt;= upp)</span><br><span class="line">            return false;</span><br><span class="line">        if(low!=null &amp;&amp; root.val &lt;= low)</span><br><span class="line">            return false;</span><br><span class="line">        </span><br><span class="line">        if(!dfs(root.left,root.val,low))return false;</span><br><span class="line">        if(!dfs(root.right,upp,root.val))return false;</span><br><span class="line">        return true;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line">        return dfs(root,null,null);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>迭代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  LinkedList&lt;TreeNode&gt; st = new LinkedList();</span><br><span class="line">        LinkedList&lt;Integer&gt; upp=new LinkedList&lt;&gt;(),low=new LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void update(TreeNode root, Integer lower, Integer upper) &#123;</span><br><span class="line">        st.add(root);</span><br><span class="line">        low.add(lower);</span><br><span class="line">        upp.add(upper);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean isValidBST(TreeNode root) &#123;</span><br><span class="line"></span><br><span class="line">        Integer lower=null,upper=null,val;</span><br><span class="line">        update(root, lower, upper);</span><br><span class="line"></span><br><span class="line">        while(!st.isEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            root=st.poll();</span><br><span class="line">            upper=upp.poll();</span><br><span class="line">            lower=low.poll();</span><br><span class="line">            if(root==null)</span><br><span class="line">                continue;</span><br><span class="line">            val=root.val;</span><br><span class="line">            if(lower!=null &amp;&amp; val &lt;=lower)</span><br><span class="line">                return false;</span><br><span class="line">            if(upper!=null &amp;&amp; val &gt;=upper )</span><br><span class="line">                return false;</span><br><span class="line">            </span><br><span class="line">            update(root.right, val, upper);</span><br><span class="line">            update(root.left, lower, val);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -700,117 +845,6 @@
 
 
   
-    <article id="post-leetcode-Huawei-2020-02-20-字符串解码-394" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/20/leetcode-Huawei-2020-02-20-字符串解码-394/">leetcode-Huawei-2020-02-20-字符串解码-394</a>
-    </h1>
-  
-
-        
-        <a href="/2020/02/20/leetcode-Huawei-2020-02-20-字符串解码-394/" class="archive-article-date">
-  	<time datetime="2020-02-20T13:18:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><ol start="394">
-<li>字符串解码【中等】</li>
-</ol>
-<p>给定一个经过编码的字符串，返回它解码后的字符串。</p>
-<p>编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。</p>
-<p>你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。</p>
-<p>此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。</p>
-<p>示例:</p>
-<p>s = “3[a]2[bc]”, 返回 “aaabcbc”.<br>s = “3[a2[c]]”, 返回 “accaccacc”.<br>s = “2[abc]3[cd]ef”, 返回 “abcabccdcdcdef”.</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/decode-string" target="_blank" rel="noopener">https://leetcode-cn.com/problems/decode-string</a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>用两个栈，分别存放数字和字符串。<br>利用栈先入后出的特性，对应本题的先解码内部而后解码外部的特点。<br>主要有几种情况：<br>1.碰到’[‘：保存sb存的字符串入字符串栈，以待碰到右括号时取出，除此之外，碰到左括号意味着<br>前面的数字已经累加完毕，可以入数字栈。</p>
-<p>2.碰到’]’：将sb所存的字符串内容复制N倍，N=数字栈顶的值，再取出碰到前一个左括号时存的内容（在栈中），<br>追加复制N倍的字符串到该内容后面。</p>
-<p>3.碰到数字：累加左括号前的倍数，存在mul</p>
-<p>4.碰到字符：追加当前字符到sb</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public String decodeString(String s) &#123;</span><br><span class="line">        </span><br><span class="line">        Stack&lt;Integer&gt; nums=new Stack&lt;&gt;();</span><br><span class="line">        Stack&lt;String&gt; chars=new Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        int mul=0;</span><br><span class="line">        StringBuilder sb=new StringBuilder();</span><br><span class="line">        for(int i=0;i&lt;s.length();++i)</span><br><span class="line">        &#123;</span><br><span class="line">            char ch=s.charAt(i);</span><br><span class="line">            if(ch==&apos;[&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                nums.push(mul);</span><br><span class="line">                chars.push(sb.toString());</span><br><span class="line">                mul=0;</span><br><span class="line">                sb=new StringBuilder();</span><br><span class="line">            &#125;</span><br><span class="line">            else if(ch==&apos;]&apos;)</span><br><span class="line">            &#123;</span><br><span class="line">                StringBuilder tmp=new StringBuilder();</span><br><span class="line">                int cur=nums.pop();</span><br><span class="line">                for(int j=0;j&lt;cur;++j)</span><br><span class="line">                    tmp.append(sb);</span><br><span class="line">                sb=new StringBuilder(chars.pop()+tmp);</span><br><span class="line">            &#125;</span><br><span class="line">            else if(ch&gt;=&apos;0&apos;&amp;&amp;ch&lt;=&apos;9&apos;)</span><br><span class="line">                mul=mul*10+ch-&apos;0&apos;;</span><br><span class="line">            else</span><br><span class="line">                sb.append(ch);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">华为</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/20/leetcode-Huawei-2020-02-20-字符串解码-394/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -924,6 +958,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
               </li>
              
@@ -940,7 +986,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
+                <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WIFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BLE低功耗蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">http请求</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -949,6 +1007,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">解码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -976,47 +1042,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WIFI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BLE低功耗蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">http请求</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深度优先搜索DFS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1028,6 +1058,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
@@ -1036,15 +1070,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二叉搜索树</a>
+                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">搜索算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中序遍历</a>
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1060,27 +1098,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">双重递归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">二叉搜索树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">搜索算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中序遍历</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1089,6 +1123,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大数操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">前缀</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1104,11 +1150,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+                <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
+                <a href="javascript:void(0)" class="js-tag color2">编辑距离思想</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">回文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">最长回文子序列</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1120,15 +1174,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前缀</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">剑指OFFER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">全排列</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1140,11 +1190,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">全排列</a>
+                <a href="javascript:void(0)" class="js-tag color3">异或</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异或</a>
+                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位操作</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1165,14 +1219,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JAVA容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位操作</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
               </li>
              
               <li class="article-tag-list-item">

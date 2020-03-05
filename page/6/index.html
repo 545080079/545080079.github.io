@@ -183,6 +183,128 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android-APK编译过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/17/Android-APK编译过程/">Android-APK编译过程</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/17/Android-APK编译过程/" class="archive-article-date">
+  	<time datetime="2019-09-17T04:16:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a><span style="color:blue">综述</span></h2><p>最近为了一个安卓的项目，需要学习APK编译打包过程的相关知识，因此想总结一下学到的一些要点，整理归纳后方便日后阅读。</p>
+<hr>
+<h3 id="分为如下几个流程叙述："><a href="#分为如下几个流程叙述：" class="headerlink" title="分为如下几个流程叙述："></a>分为如下几个流程叙述：</h3><p>（1）AAPT阶段</p>
+<p>（2）AIDL阶段</p>
+<p>（3）JAVA Compiler阶段</p>
+<p>（4）DEX阶段</p>
+<p>（5）APKbuilder阶段</p>
+<p>（6）Jar Signer阶段+zipalign阶段</p>
+<h2 id="color-blue-AAPT阶段"><a href="#color-blue-AAPT阶段" class="headerlink" title="$\color{blue}{AAPT阶段}$"></a>$\color{blue}{AAPT阶段}$</h2><p>AAPT是一个android SDK里的工具之一。功能是将代码打包生成R.java，resources.arsc和res文件。</p>
+<h3 id="res目录"><a href="#res目录" class="headerlink" title="res目录"></a>res目录</h3><p>res目录下包含9种目录（其中，res中的raw、pic类型的源文件保持原样，且可为非XML格式，其余都是以XML文件的形式保存的）<br>分别是：</p>
+<p>–animator：描述属性动画。</p>
+<p>–anim：描述补间动画。</p>
+<p>–color</p>
+<p>–drawable：可为XML或者bitmap文件形式保存在res/drawable目录下。</p>
+<p>–layout</p>
+<p>–menu</p>
+<p>–raw：以任意格式存储在res/raw下。和assets类资源一样，都是原封不动地打包到APK的。访问时通过每个文件被单独赋予<br>的ID来访问他们，例如R.raw.filename。</p>
+<p>–values</p>
+<p>–xml</p>
+<h3 id="R-java文件"><a href="#R-java文件" class="headerlink" title="R.java文件"></a>R.java文件</h3><p>该文件存放于打包后APK文件的app/build/generated/r/[package name]/R.java。</p>
+<p>每当添加一种res中的资源时，R.java就会添加一条静态内部类里的静态常量类final成员，且都是int类型。</p>
+<p>#####插播小知识：final类一般用于工具类的声明修饰，因为工具类使用时不需要再对其进行重写或者继承。</p>
+<h3 id="resources-arsc文件"><a href="#resources-arsc文件" class="headerlink" title="resources.arsc文件"></a>resources.arsc文件</h3><p>resources.arsc这个文件记录了所有的应用程序资源目录的信息，包括每一个资源名称、类型、值、ID以及所配置的维度信息。<br>我们可以将这个resources.arsc文件想象成是一个资源索引表，这个资源索引表在给定资源ID和设备配置信息的情况下，<br>能够在应用程序的资源目录中快速地找到最匹配的资源。</p>
+<h2 id="color-blue-AIDL阶段"><a href="#color-blue-AIDL阶段" class="headerlink" title="$\color{blue}{AIDL阶段}$"></a>$\color{blue}{AIDL阶段}$</h2><p>AIDL全名是Android Interface Definition Language（Android接口定义语言），这个阶段会根据.aidl的文件生成JAVA<br>接口文件</p>
+<h2 id="Java-Compiler阶段"><a href="#Java-Compiler阶段" class="headerlink" title="Java Compiler阶段"></a>Java Compiler阶段</h2><p>这个阶段将R.java，JAVA接口文件，JAVA源文件编译，生成.class文件</p>
+<h2 id="color-blue-DEX阶段"><a href="#color-blue-DEX阶段" class="headerlink" title="$\color{blue}{DEX阶段}$"></a>$\color{blue}{DEX阶段}$</h2><p>将.class文件和第三方的库文件进行整合链接处理后，生成classes.dex文件</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">编译原理</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">AAPT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">APK编译</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">APK打包</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/17/Android-APK编译过程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Arduino-报警生成器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -730,108 +852,6 @@
 
 
   
-    <article id="post-leetcode-113-——路径求和II" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/08/leetcode-113-——路径求和II/">leetcode[113]——路径求和II</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/08/leetcode-113-——路径求和II/" class="archive-article-date">
-  	<time datetime="2019-08-08T03:26:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。</p>
-<p>说明: 叶子节点是指没有子节点的节点。</p>
-<p>示例:<br>给定如下二叉树，以及目标和 sum = 22，</p>
-<pre><code>      5
-     / \
-    4   8
-   /   / \
-  11  13  4
- /  \    / \
-7    2  5   1</code></pre><p>返回:</p>
-<p>[<br>   [5,4,11,2],<br>   [5,8,4,5]<br>]</p>
-<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/path-sum-ii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/path-sum-ii</a></p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>是《路径总和I》的升级版II，主要难点在于本题要求完整路径并放入容器，而题I则仅需返回true or false。因此，vector里的数字必须在合适的时候push,合适的时候pop</p>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public:</span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; res;</span><br><span class="line">    </span><br><span class="line">    void ispath(TreeNode* root,int sum,vector&lt;int&gt;&amp; v)</span><br><span class="line">    &#123;</span><br><span class="line">        if(root==NULL)</span><br><span class="line">            return ;</span><br><span class="line">        if(root-&gt;left==NULL &amp;&amp; root-&gt;right==NULL)</span><br><span class="line">         &#123;</span><br><span class="line">            if(root-&gt;val==sum)</span><br><span class="line">            &#123;</span><br><span class="line">                v.push_back(root-&gt;val);//如果满足条件，加入最后一个值（当前节点的val）</span><br><span class="line">                res.push_back(v);//加入结果集</span><br><span class="line">                v.pop_back();//弹出刚刚添加的值</span><br><span class="line">                </span><br><span class="line">                return ;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">                return ;</span><br><span class="line">         &#125;</span><br><span class="line">        v.push_back(root-&gt;val);//添加当前节点val</span><br><span class="line">        ispath(root-&gt;left,sum-root-&gt;val,v);//递归向左下，带着暂存了当前路径段的v容器</span><br><span class="line">        ispath(root-&gt;right,sum-root-&gt;val,v);//递归向右下，带着暂存了当前路径段的v容器</span><br><span class="line">        v.pop_back();//递归结束后，弹出之前添加的值</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    vector&lt;vector&lt;int&gt; &gt; pathSum(TreeNode* root, int sum) &#123;</span><br><span class="line">        </span><br><span class="line">        vector&lt;int&gt; v;</span><br><span class="line">        ispath(root,sum,v);</span><br><span class="line">        return res;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/08/leetcode-113-——路径求和II/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -945,6 +965,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
               </li>
              
@@ -961,7 +993,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
+                <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WIFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BLE低功耗蓝牙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">http请求</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -970,6 +1014,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">解码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -997,47 +1049,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">TCP socket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WIFI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BLE低功耗蓝牙</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">http请求</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深度优先搜索DFS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">LCD1602</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1049,6 +1065,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位运算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
@@ -1057,15 +1077,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二叉搜索树</a>
+                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">搜索算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">中序遍历</a>
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1081,27 +1105,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">二分查找</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">双重递归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">二叉搜索树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">搜索算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">中序遍历</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1110,6 +1130,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大数操作</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">前缀</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1125,11 +1157,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">栈</a>
+                <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
+                <a href="javascript:void(0)" class="js-tag color2">编辑距离思想</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">回文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">最长回文子序列</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1141,15 +1181,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前缀</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">剑指OFFER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">全排列</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1161,11 +1197,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">全排列</a>
+                <a href="javascript:void(0)" class="js-tag color3">异或</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异或</a>
+                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">位操作</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1186,14 +1226,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">JAVA容器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">位操作</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Plan</a>
               </li>
              
               <li class="article-tag-list-item">
