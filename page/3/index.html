@@ -66,6 +66,12 @@
 	        
 				<li><a href="/categories/Android/">【目录】移动开发</a></li>
 	        
+				<li><a href="/categories/Review/">【目录】Review</a></li>
+	        
+				<li><a href="/categories/MIT-App-inventor的安卓态实现/">【工程实践项目】MITAppInventor的安卓态实现</a></li>
+	        
+				<li><a href="/categories/Plan/">【Plan】Plan</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -128,6 +134,12 @@
 			
 				
 			
+				
+			
+				
+			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -148,13 +160,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">【主页】</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">【主页】</a></li>
 		        
-					<li style="width: 25%"><a href="/categories/Arduino/">【目录】Arduino</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Arduino/">【目录】Arduino</a></li>
 		        
-					<li style="width: 25%"><a href="/categories/leetcode/">【目录】Leetcode</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/leetcode/">【目录】Leetcode</a></li>
 		        
-					<li style="width: 25%"><a href="/categories/Android/">【目录】移动开发</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Android/">【目录】移动开发</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Review/">【目录】Review</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/MIT-App-inventor的安卓态实现/">【工程实践项目】MITAppInventor的安卓态实现</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Plan/">【Plan】Plan</a></li>
 		        
 				</ul>
 			</nav>
@@ -170,6 +188,322 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-leetcode-Huawei-2020-02-19-字符串相乘-43" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/19/leetcode-Huawei-2020-02-19-字符串相乘-43/">leetcode-Huawei-2020-02-19-字符串相乘-43</a>
+    </h1>
+  
+
+        
+        <a href="/2020/02/19/leetcode-Huawei-2020-02-19-字符串相乘-43/" class="archive-article-date">
+  	<time datetime="2020-02-19T07:46:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。</p>
+<p>示例 1:</p>
+<p>输入: num1 = “2”, num2 = “3”<br>输出: “6”<br>示例 2:</p>
+<p>输入: num1 = “123”, num2 = “456”<br>输出: “56088”<br>说明：</p>
+<p>num1 和 num2 的长度小于110。<br>num1 和 num2 只包含数字 0-9。<br>num1 和 num2 均不以零开头，除非是数字 0 本身。<br>不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/multiply-strings" target="_blank" rel="noopener">https://leetcode-cn.com/problems/multiply-strings</a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>不得使用库函数，所以使用的是模拟小学学的阶梯乘法公式的代码实现，为了方便字符串运算，在前面填充了和输入相同<br>位数的前置0，要注意到几种情况：<br>1.两数位数相同时，不用额外处理<br>2.两数位数不同时，最后收尾时要判断有没有进位<br>2(1).有进位时，如果两个数字都加完了(即k==index)，则把自己填充前置0那位直接改成进位，就是0改成1<br>2(2).有进位时，如果两个数字没加完(即k!=index)，则代表前置0不是自己填充的，而是真实存在的，最高位实际上不是0，则应该额外添加一位，<br>把两个数字没加完的那位添加到最高位<br>2(3).没进位时，还有可能发生一种特殊情况：当前要加的数字还有一位没有加进去，加上即可。<br>【P.S】k是当前字符串的指针，index是之前所有累加过的字符串总和的指针，cnt用来计算字符串向左偏移量，对应的<br>是乘法每高一位要乘10</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">//自己写的模拟乘法（菜鸡版）</span><br><span class="line">class Solution &#123;</span><br><span class="line">    public String multiply(String num1, String num2) &#123;</span><br><span class="line">        </span><br><span class="line">        int index=0,cnt=0;</span><br><span class="line">        StringBuilder res=new StringBuilder(&quot;&quot;);</span><br><span class="line">        for(int i=num2.length()-1;i&gt;=0;--i)</span><br><span class="line">        &#123;</span><br><span class="line">            int carry=0,cur=0,c2=num2.charAt(i)-&apos;0&apos;;</span><br><span class="line">            StringBuilder sb=new StringBuilder();</span><br><span class="line"></span><br><span class="line">            for(int j=num1.length()-1;j&gt;=0;--j)</span><br><span class="line">            &#123;</span><br><span class="line">                int c1=num1.charAt(j)-&apos;0&apos;;</span><br><span class="line">                cur=(c1*c2+carry)%10;</span><br><span class="line">                carry=(c1*c2+carry)/10;</span><br><span class="line">                char tmp=(char)(cur+&apos;0&apos;);</span><br><span class="line">                sb.append(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">            if(carry!=0)</span><br><span class="line">            &#123;</span><br><span class="line">                cur=carry;</span><br><span class="line">                char tmp=(char)(cur+&apos;0&apos;);</span><br><span class="line">                sb.append(tmp);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            for(int k=0;k&lt;i;++k)</span><br><span class="line">                sb.append(&apos;0&apos;);//补充移位对齐的零</span><br><span class="line"></span><br><span class="line">            sb.reverse();</span><br><span class="line">            if(res.length()&gt;0)</span><br><span class="line">            &#123;</span><br><span class="line">                index=res.length()-2-cnt;</span><br><span class="line">                ++cnt;</span><br><span class="line">                carry=0;</span><br><span class="line">                int k=0;</span><br><span class="line">                for(k=sb.length()-1;index&gt;=0&amp;&amp;k&gt;=0;--k,--index)</span><br><span class="line">                &#123;</span><br><span class="line">                    int t_pre=res.charAt(index)-&apos;0&apos;;</span><br><span class="line">                    int t_cur=sb.charAt(k)-&apos;0&apos;;</span><br><span class="line"></span><br><span class="line">                    char temp=(char)(((t_cur+t_pre+carry)%10)+&apos;0&apos;);</span><br><span class="line">                    res.setCharAt(index,temp);</span><br><span class="line">                    carry=(t_cur+t_pre+carry)/10;</span><br><span class="line">                &#125;</span><br><span class="line">                if(carry!=0)</span><br><span class="line">                &#123;</span><br><span class="line">                    char tt=(char)(carry+&apos;0&apos;);</span><br><span class="line">                    if(k!=index)</span><br><span class="line">                        res.setCharAt(0,tt);</span><br><span class="line">                    else</span><br><span class="line">                        res=new StringBuilder(tt+res.toString());</span><br><span class="line">                        </span><br><span class="line">                &#125;</span><br><span class="line">                if(k==0&amp;&amp;index==-1)//特殊情况：没发生进位，但当前要加的数字还有一位没有加进去</span><br><span class="line">                    res=new StringBuilder(sb.charAt(0)+res.toString());//则添加至最左</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">                res=new StringBuilder(sb.toString());</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        while(res.charAt(0)==&apos;0&apos;&amp;&amp;res.length()&gt;1)//删除结果多余0</span><br><span class="line">            res.deleteCharAt(0);</span><br><span class="line"></span><br><span class="line">        return res.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一种更简单的模拟方法如下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">//评论区大佬写的模拟</span><br><span class="line">class Solution &#123;</span><br><span class="line">    public String multiply(String num1, String num2) &#123;</span><br><span class="line">        /**</span><br><span class="line">        num1的第i位(高位从0开始)和num2的第j位相乘的结果在乘积中的位置是[i+j, i+j+1]</span><br><span class="line">        例: 123 * 45,  123的第1位 2 和45的第0位 4 乘积 08 存放在结果的第[1, 2]位中</span><br><span class="line">          index:    0 1 2 3 4  </span><br><span class="line">              </span><br><span class="line">                        1 2 3</span><br><span class="line">                    *     4 5</span><br><span class="line">                    ---------</span><br><span class="line">                          1 5</span><br><span class="line">                        1 0</span><br><span class="line">                      0 5</span><br><span class="line">                    ---------</span><br><span class="line">                      0 6 1 5</span><br><span class="line">                        1 2</span><br><span class="line">                      0 8</span><br><span class="line">                    0 4</span><br><span class="line">                    ---------</span><br><span class="line">                    0 5 5 3 5</span><br><span class="line">        这样我们就可以单独都对每一位进行相乘计算把结果存入相应的index中        </span><br><span class="line">        **/</span><br><span class="line">        </span><br><span class="line">        int n1 = num1.length()-1;</span><br><span class="line">        int n2 = num2.length()-1;</span><br><span class="line">        if(n1 &lt; 0 || n2 &lt; 0) return &quot;&quot;;</span><br><span class="line">        int[] mul = new int[n1+n2+2];</span><br><span class="line">        </span><br><span class="line">        for(int i = n1; i &gt;= 0; --i) &#123;</span><br><span class="line">            for(int j = n2; j &gt;= 0; --j) &#123;</span><br><span class="line">                int bitmul = (num1.charAt(i)-&apos;0&apos;) * (num2.charAt(j)-&apos;0&apos;);      </span><br><span class="line">                bitmul += mul[i+j+1]; // 先加低位判断是否有新的进位</span><br><span class="line">                </span><br><span class="line">                mul[i+j] += bitmul / 10;</span><br><span class="line">                mul[i+j+1] = bitmul % 10;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        StringBuilder sb = new StringBuilder();</span><br><span class="line">        int i = 0;</span><br><span class="line">        // 去掉前导0</span><br><span class="line">        while(i &lt; mul.length-1 &amp;&amp; mul[i] == 0) </span><br><span class="line">            i++;</span><br><span class="line">        for(; i &lt; mul.length; ++i)</span><br><span class="line">            sb.append(mul[i]);</span><br><span class="line">        return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">华为</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">大数操作</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/19/leetcode-Huawei-2020-02-19-字符串相乘-43/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-leetcode-Tecent-2020-02-18-反转链表-206" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/18/leetcode-Tecent-2020-02-18-反转链表-206/">leetcode-Tecent-2020-02-18-反转链表[206]</a>
+    </h1>
+  
+
+        
+        <a href="/2020/02/18/leetcode-Tecent-2020-02-18-反转链表-206/" class="archive-article-date">
+  	<time datetime="2020-02-18T05:57:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##题目</p>
+<p>反转一个单链表。</p>
+<p>示例:</p>
+<p>输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL<br>输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL<br>进阶:<br>你可以迭代或递归地反转链表。你能否用两种方法解决这道题？</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/reverse-linked-list" target="_blank" rel="noopener">https://leetcode-cn.com/problems/reverse-linked-list</a></p>
+<p>##题解<br>两种方法解决，迭代比较直观，使用的是头插法，来一个节点就插入到最前面，于是反转完成。<br>递归法代码量小，每次递归传参时传入前一个pre节点，然后将当前节点的next赋为pre，于是反转完成，注意退出条件是cur为空（即上次递归没有存储下一个可以操作的节点时）时返回pre（即上一次递归所保存的已反转链表头节点）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode next;</span><br><span class="line"> *     ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">    public ListNode rev(ListNode cur,ListNode pre)</span><br><span class="line">    &#123;</span><br><span class="line">        //递归法(尾递归)</span><br><span class="line">        if(cur==null)</span><br><span class="line">            return pre;</span><br><span class="line">        ListNode next = cur.next;//为处理next的节点做准备</span><br><span class="line">        cur.next=pre;//当前节点next为pre（反转操作）</span><br><span class="line">        return rev(next,cur);//当前的next作为下一个cur节点，当前的cur作为pre节点</span><br><span class="line">    &#125;</span><br><span class="line">    public ListNode reverseList(ListNode head) &#123;</span><br><span class="line">        //迭代法</span><br><span class="line">        if(head==null||head.next==null)</span><br><span class="line">            return head;</span><br><span class="line">        ListNode newHead=new ListNode(head.val);</span><br><span class="line">        ListNode cur=head.next;</span><br><span class="line">        while(cur!=null)</span><br><span class="line">        &#123;</span><br><span class="line">            ListNode one=new ListNode(cur.val);</span><br><span class="line">            one.next=newHead;</span><br><span class="line">            newHead=one;</span><br><span class="line">            cur=cur.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return newHead;</span><br><span class="line">        //return rev(head,null);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">腾讯</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">尾递归</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/18/leetcode-Tecent-2020-02-18-反转链表-206/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-leetcode-Tecent-2020-02-17-字符串转换整数atoi函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/18/leetcode-Tecent-2020-02-17-字符串转换整数atoi函数/">leetcode-Tecent-2020-02-17-字符串转换整数atoi函数</a>
+    </h1>
+  
+
+        
+        <a href="/2020/02/18/leetcode-Tecent-2020-02-17-字符串转换整数atoi函数/" class="archive-article-date">
+  	<time datetime="2020-02-18T05:00:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>请你来实现一个 atoi 函数，使其能将字符串转换成整数。</p>
+<p>首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。</p>
+<p>当我们寻找到的第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字组合起来，作为该整数的正负号；假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成整数。</p>
+<p>该字符串除了有效的整数部分之后也可能会存在多余的字符，这些字符可以被忽略，它们对于函数不应该造成影响。</p>
+<p>注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，则你的函数不需要进行转换。</p>
+<p>在任何情况下，若函数不能进行有效的转换时，请返回 0。</p>
+<p>说明：</p>
+<p>假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−231,  231 − 1]。如果数值超过这个范围，请返回  INT_MAX (231 − 1) 或 INT_MIN (−231) 。</p>
+<p>示例 1:</p>
+<p>输入: “42”<br>输出: 42<br>示例 2:</p>
+<p>输入: “   -42”<br>输出: -42<br>解释: 第一个非空白字符为 ‘-‘, 它是一个负号。<br>     我们尽可能将负号与后面所有连续出现的数字组合起来，最后得到 -42 。<br>示例 3:</p>
+<p>输入: “4193 with words”<br>输出: 4193<br>解释: 转换截止于数字 ‘3’ ，因为它的下一个字符不为数字。<br>示例 4:</p>
+<p>输入: “words and 987”<br>输出: 0<br>解释: 第一个非空字符是 ‘w’, 但它不是数字或正、负号。<br>     因此无法执行有效的转换。<br>示例 5:</p>
+<p>输入: “-91283472332”<br>输出: -2147483648<br>解释: 数字 “-91283472332” 超过 32 位有符号整数范围。<br>     因此返回 INT_MIN (−231) 。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/string-to-integer-atoi" target="_blank" rel="noopener">https://leetcode-cn.com/problems/string-to-integer-atoi</a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>辣鸡题，没有技巧，就是不断地根据用例调边界条件，自己一开始写的代码太冗长了，而且溢出判断不规范，<br>在评论区找到一个简化版的，拿出来分析一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int myAtoi(String str) &#123;</span><br><span class="line">        int len=str.length();</span><br><span class="line">        int sign=1,res=0,start=0;</span><br><span class="line">        while(start&lt;len&amp;&amp;str.charAt(start)==&apos; &apos;)</span><br><span class="line">            start++;</span><br><span class="line">        if(start&gt;=len)//如果去掉空格就没字了，返回0</span><br><span class="line">            return 0;</span><br><span class="line">        if(str.charAt(start)==&apos;-&apos;)</span><br><span class="line">        &#123;</span><br><span class="line">            sign=-1;</span><br><span class="line">            ++start;</span><br><span class="line">        &#125;else if(str.charAt(start)==&apos;+&apos;)&#123;</span><br><span class="line">            sign=1;</span><br><span class="line">            ++start;</span><br><span class="line">        &#125;//正负处理</span><br><span class="line">        while (start &lt; len) &#123;</span><br><span class="line">            char currChar = str.charAt(start);</span><br><span class="line">            // 判断合法性</span><br><span class="line">            if (currChar &gt; &apos;9&apos; || currChar &lt; &apos;0&apos;) &#123;//如果后面出现了第一个非数字，结束算法</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            //核心代码：判断integer是否溢出只能提前判断</span><br><span class="line">            </span><br><span class="line">            //对于正数</span><br><span class="line">            //两种情况都是溢出：</span><br><span class="line">            //1：大于MAX/10</span><br><span class="line">            //2：等于MAX/10 且 最后一位大于MAX%10</span><br><span class="line">            </span><br><span class="line">            //对于负数</span><br><span class="line">            //也有两种情况溢出：</span><br><span class="line">            //1：小于MIN/10</span><br><span class="line">            //2：等于MIN/10 且 最后一位大于MIN%10(绝对值)</span><br><span class="line">            </span><br><span class="line">            // 题目中说：环境只能存储 32 位大小的有符号整数，因此，需要提前判断乘以 10 以后是否越界</span><br><span class="line">            if (res &gt; Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 &amp;&amp; (currChar - &apos;0&apos;) &gt; Integer.MAX_VALUE % 10)) &#123;</span><br><span class="line">                return Integer.MAX_VALUE;</span><br><span class="line">            &#125;</span><br><span class="line">            if (res &lt; Integer.MIN_VALUE / 10 || (res == Integer.MIN_VALUE / 10 &amp;&amp; (currChar - &apos;0&apos;) &gt; -(Integer.MIN_VALUE % 10))) &#123;</span><br><span class="line">                return Integer.MIN_VALUE;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // 每一步都把符号位乘进去</span><br><span class="line">            res = res * 10 + sign * (currChar - &apos;0&apos;);</span><br><span class="line">            start++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">腾讯</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">溢出</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">边界处理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/18/leetcode-Tecent-2020-02-17-字符串转换整数atoi函数/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-leetcode-Tecent-2020-02-17-最长回文子串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -494,301 +828,9 @@
 
 
   
-    <article id="post-appinventor在vagrant下的踩坑集合" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/17/appinventor在vagrant下的踩坑集合/">appinventor在vagrant下的踩坑集合</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/17/appinventor在vagrant下的踩坑集合/" class="archive-article-date">
-  	<time datetime="2019-12-17T04:04:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p>在vagrantCloud下载ubuntu/bionic64的box时要注意命令是vagrant box add ubuntu/bionic64（因为build.xml文件指明了需要bionic64，差一个字母就会找不到）</p>
-<h2 id="2-blockeditor-build-xml源文件错误"><a href="#2-blockeditor-build-xml源文件错误" class="headerlink" title="2 blockeditor/build.xml源文件错误"></a>2 blockeditor/build.xml源文件错误</h2><p>具体第几行忘记了，看报错信息，定位到改行，把前面的空行空格和反斜杠（\）全部删除。</p>
-<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p>github的appinventor仓库/lib下有两个是超链接，要去相应的github仓库下载放到相应文件夹下覆盖</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Vagrant</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">virtualbox</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/MIT-App-inventor的安卓态实现//" class="article-tag-list-link color3">MIT-App-inventor的安卓态实现</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/17/appinventor在vagrant下的踩坑集合/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-leetcode——合并索引表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/16/leetcode——合并索引表/">leetcode——合并索引表</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/16/leetcode——合并索引表/" class="archive-article-date">
-  	<time datetime="2019-12-16T11:09:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>数据表记录包含表索引和数值（int范围的整数），请对表索引相同的记录进行合并，即将相同索引的数值进行求和运算，输出按照key值升序进行输出。</p>
-<p>输入描述:<br>先输入键值对的个数<br>然后输入成对的index和value值，以空格隔开</p>
-<p>输出描述:<br>输出合并后的键值对（多行）</p>
-<p>示例1<br>输入<br>复制<br>4<br>0 1<br>0 2<br>1 2<br>3 4<br>输出<br>复制<br>0 3<br>1 2<br>3 4</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目不难，刚好复习整理JAVA容器的特性。<br>（1）    TreeMap存储键值对，内部有序，HashMap内部无序，一开始用的HashMap，没注意题目是升序输出。</p>
-<p>（2）    要用Map&lt;&gt;声明对象，因为containsKey()方法在Map接口。</p>
-<p>（3）    Entry&lt;&gt;在java.util.Map.Entry包，只import java.util.*是不能找到这个包的</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line">import java.util.Map.Entry;</span><br><span class="line">public class Main&#123;</span><br><span class="line">    public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        Scanner sc=new Scanner(System.in);</span><br><span class="line">        while(sc.hasNext())</span><br><span class="line">        &#123;</span><br><span class="line">            int pairs=sc.nextInt();</span><br><span class="line">            Map&lt;Integer,Integer&gt; hm=new TreeMap&lt;&gt;();</span><br><span class="line">            for(int i=0;i&lt;pairs;++i)</span><br><span class="line">            &#123;</span><br><span class="line">                int key=sc.nextInt(),value=sc.nextInt();</span><br><span class="line">                if(hm.containsKey(key)==false)</span><br><span class="line">                    hm.put(key,value);</span><br><span class="line">                else</span><br><span class="line">                &#123;</span><br><span class="line">                    hm.put(key,value+hm.get(key));</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">    </span><br><span class="line">            for(Entry&lt;Integer,Integer&gt; e : hm.entrySet())</span><br><span class="line">            &#123;</span><br><span class="line">                </span><br><span class="line">                System.out.print(e.getKey()+&quot; &quot;);</span><br><span class="line">                System.out.print(e.getValue()+&quot;\n&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Map</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JAVA容器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/16/leetcode——合并索引表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-leetcode-209——长度最小的子数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/16/leetcode-209——长度最小的子数组/">leetcode-209——长度最小的子数组</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/16/leetcode-209——长度最小的子数组/" class="archive-article-date">
-  	<time datetime="2019-12-16T11:08:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。</p>
-<pre><code>示例: 
-
-输入: s = 7, nums = [2,3,1,2,4,3]
-输出: 2
-解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。
-进阶:
-
-如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。
-
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/minimum-size-subarray-sum</code></pre><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>双指针思想，利用i作为左边指针，遍历j的时候逐个删除i指向的sum[i]，将所有sum&gt;=s的情况时判断是否可以更新len的值。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int minSubArrayLen(int s, int[] nums) &#123;</span><br><span class="line">        </span><br><span class="line">        int i=0;</span><br><span class="line">        int len=0;</span><br><span class="line">        int sum=0;</span><br><span class="line">        for(int j=0;j&lt;nums.length;++j)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=nums[j];</span><br><span class="line">            while(sum&gt;=s)</span><br><span class="line">            &#123;</span><br><span class="line">                len=len==0?j-i+1:Math.min(len,j-i+1);</span><br><span class="line">                sum-=nums[i++];//8-2=6+4=10-3=7+3=10-1-2=7</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        return len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">二分查找</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/16/leetcode-209——长度最小的子数组/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
