@@ -191,14 +191,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Question-amp-Solution"><a href="#Question-amp-Solution" class="headerlink" title="Question &amp; Solution"></a>Question &amp; Solution</h2><p>网络编程：</p>
-<p>socket（）：类似文件的open（）操作，打开一个socket套接字。</p>
-<p>bind（）：把ip地址或者域名绑定到socket对象上</p>
-<p>listen（）：对于服务器，应该在socket（），bind（）后开启监听</p>
-<p>connect（）：对于客户端，可以connect连接到一个socket对端服务器</p>
-<p>accept（）：在客户端connect（ ）后，服务器可以接受，这样socket通信就建立成功</p>
-<p>（1）</p>
-<p>Netty</p>
+        <h2 id="Question-amp-Solution"><a href="#Question-amp-Solution" class="headerlink" title="Question &amp; Solution"></a>Question &amp; Solution</h2><h5 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h5><ul>
+<li><p>socket（）：类似文件的open（）操作，打开一个socket套接字。</p>
+</li>
+<li><p>bind（）：把ip地址或者域名绑定到socket对象上</p>
+</li>
+<li><p>listen（）：对于服务器，应该在socket（），bind（）后开启监听</p>
+</li>
+<li><p>connect（）：对于客户端，可以connect连接到一个socket对端服务器</p>
+</li>
+<li><p>accept（）：在客户端connect（ ）后，服务器可以接受，这样socket通信就建立成功</p>
+</li>
+</ul>
+<hr>
+<h4 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h4><p>（1）Netty</p>
 <p>一个高性能异步的NIO框架。</p>
 <p>维护一个NIO Server：ServerSocketChannel《——》Reactor Thread《——》IOHandler 《——》NIO Client：SocketChannel</p>
 <p>Reactor单线程模型：一个线程，异步，理论上可以处理所有IO请求</p>
@@ -217,22 +223,36 @@
 <p>4.再通过synchronized获取callback上的锁，将方法调用结果存到callback里，再调用callback.notifyALL唤醒等待的进程</p>
 <p>（3）RMI 也是一种java的远程方法调用</p>
 <p>（4）多路复用</p>
-<p>(5) gc算法</p>
+<p>（5） gc算法</p>
 <p>从原理上看，可分为</p>
-<p>·标记-清除</p>
+<ul>
+<li>标记-清除</li>
+</ul>
 <p>会将标记的一次性删除，有碎片</p>
-<p>·标记-整理</p>
+<ul>
+<li>标记-整理</li>
+</ul>
 <p>会将被标记的移动到内存一端，一起清除，会消除碎片</p>
-<p>·复制算法</p>
+<ul>
+<li>复制算法</li>
+</ul>
 <p>From到To区域</p>
 <p>从应用上看，可分为</p>
-<p>·Serial收集器</p>
+<ul>
+<li>Serial收集器</li>
+</ul>
 <p>单线程收集器，新生代复制，老年代标记-整理，有STW</p>
-<p>·ParNeW</p>
+<ul>
+<li>ParNeW</li>
+</ul>
 <p>前者的多线程版本</p>
-<p>·Parallel Scavenge</p>
+<ul>
+<li>Parallel Scavenge</li>
+</ul>
 <p>和ParNew一样，关注点是吞吐量，可设置Parallel收集器+老年代串行/并行</p>
-<p>·CMS（C-Mark-Sweep）</p>
+<ul>
+<li>CMS（C-Mark-Sweep）</li>
+</ul>
 <p>是一种标记-清除算法的实现。为了得到最短的STW时间。</p>
 <p>步骤：</p>
 <p>1）STW，记录与Root直接相连的对象（速度很快）</p>
@@ -273,6 +293,8 @@
 </ol>
 <p>（12）top命令</p>
 <p>查看CPU、内存的占用情况，进程线程的状态等信息</p>
+<hr>
+<p>面试</p>
     
 
 <p>1.换成concurrentHashMap</p>
