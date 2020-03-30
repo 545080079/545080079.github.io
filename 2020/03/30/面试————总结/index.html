@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://545080079.github.io">
   <title>面试————总结 | MRoad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Question &amp;amp; Solution网络编程 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect">
+  <meta name="description" content="Question &amp;amp; Solution网络 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect（">
 <meta name="keywords" content="经验,总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试————总结">
 <meta property="og:url" content="http://545080079.github.io/2020/03/30/面试————总结/index.html">
 <meta property="og:site_name" content="MRoad">
-<meta property="og:description" content="Question &amp;amp; Solution网络编程 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect">
+<meta property="og:description" content="Question &amp;amp; Solution网络 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect（">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-30T09:45:04.851Z">
+<meta property="og:updated_time" content="2020-03-30T15:52:23.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试————总结">
-<meta name="twitter:description" content="Question &amp;amp; Solution网络编程 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect">
+<meta name="twitter:description" content="Question &amp;amp; Solution网络 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect（">
   
     <link rel="alternative" href="/atom.xml" title="MRoad" type="application/atom+xml">
   
@@ -209,7 +209,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Question-amp-Solution"><a href="#Question-amp-Solution" class="headerlink" title="Question &amp; Solution"></a>Question &amp; Solution</h2><h5 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h5><ul>
+        <h2 id="Question-amp-Solution"><a href="#Question-amp-Solution" class="headerlink" title="Question &amp; Solution"></a>Question &amp; Solution</h2><h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><ul>
 <li><p>socket（）：类似文件的open（）操作，打开一个socket套接字。</p>
 </li>
 <li><p>bind（）：把ip地址或者域名绑定到socket对象上</p>
@@ -221,10 +221,45 @@
 <li><p>accept（）：在客户端connect（ ）后，服务器可以接受，这样socket通信就建立成功</p>
 </li>
 </ul>
+<h5 id="Session和Session实现"><a href="#Session和Session实现" class="headerlink" title="Session和Session实现"></a>Session和Session实现</h5><ul>
+<li>Session是一个概念，负责记录用户数据，提供个性化服务，存放在服务端。</li>
+<li>Cookie是一种Session的实现方式，存放在客户端</li>
+<li>Java中HttpServletRequest.getSession()可以创建Session</li>
+<li>如果浏览器禁用了cookie，可以通过url重写技术传递用户id信息</li>
+</ul>
+<h5 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h5><ol>
+<li>HTTP / SMTP / SNMP(Simple Network Manager Protocol) / FTP</li>
+<li>TCP / UDP</li>
+<li>IP / ICMP / ARP / RARP</li>
+<li>PPP / IEEE</li>
+</ol>
+<ul>
+<li>HTTP Request报文格式（部分）</li>
+</ul>
+<ol>
+<li>Accept : application/json</li>
+<li>Content-type : application/x-www-form</li>
+<li>Cookie : …</li>
+<li>Host : m.taobao.com</li>
+<li>Origin : h5.m.taobao.com</li>
+</ol>
+<ul>
+<li>Http Response报文（部分）</li>
+</ul>
+<ol>
+<li>Content-type : application/json</li>
+<li>Date : ….</li>
+<li>Connection : keep-alive</li>
+</ol>
+<p>即可声明一次访问taobao.com，并且夹带个人cookie信息发出，接受json数据返回的请求。</p>
+<p>*从HTTP1.1起，HTTP默认使用长链接，除非指明禁止长链接。所以不用写上述的Keep-alive选项。</p>
 <hr>
-<h4 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h4><p>（1）Netty</p>
+<p>IP包 MAX = 头部20字节 + 数据65515字节</p>
+<p>UDP MAX = 头部8字节（源地址4B+目的地址4B） + 数据 （65535 - 8）字节</p>
+<hr>
+<h4 id="以下是一些问题自己的理解总结"><a href="#以下是一些问题自己的理解总结" class="headerlink" title="以下是一些问题自己的理解总结"></a>以下是一些问题自己的理解总结</h4><p>（1）Netty</p>
 <p>一个高性能异步的NIO框架。</p>
-<p>维护一个NIO Server：ServerSocketChannel《——》Reactor Thread《——》IOHandler 《——》NIO Client：SocketChannel</p>
+<p>维护一个NIO Server：ServerSocketChannel    &lt;——&gt;    Reactor Thread    &lt;——&gt;    IOHandler     &lt;——&gt;    NIO Client：SocketChannel</p>
 <p>Reactor单线程模型：一个线程，异步，理论上可以处理所有IO请求</p>
 <p>Reactor多线程模型：只留一个Thread去处理接入认证，再通过dispatch维护一个ThreadLocal去处理IO请求</p>
 <p>无🔒化设计，线程内部串行化，解决并发带来的性能下降。</p>
@@ -232,8 +267,8 @@
 <p>Netty RPC（Remote Procedure Call）</p>
 <p>可以通过如同调用本地服务一样地去调用远程服务。</p>
 <p>客户端维护一个Client Stub</p>
-<p> | 发送请求（Request ID、接口名、方法名、参数）</p>
 <p>服务端维护一个Server Stub</p>
+<p>发送请求（Request ID、接口名、方法名、参数）</p>
 <p>*如何解决requestA，requestB乱序的问题？</p>
 <p>1.requestID用atomicLong生成全局唯一</p>
 <p>2.把处理结果callback对象存到全局的concurrentHashMap</p>
@@ -287,11 +322,11 @@
 <p>（7）TCP黏包问题</p>
 <p>原因：发送端需要等待缓冲区满才发送出去；接收方不及时接收缓冲区的包。这样接收方可能会只解析缓冲区里的第一个包，造成丢包。</p>
 <p>TCP：基于流的传输，没有消息边界，认为消息是一串数据流，而不是像UDP认为消息是严格独立的。</p>
-<p>解决：</p>
-<p>1）发送定长消息</p>
-<p>2）消息中加上消息长度</p>
-<p>3）用特殊标记分割消息</p>
-<p>4）（推荐）接收方创建一个预处理线程，对接收到的数据包预处理，将黏连的包分开</p>
+<p><strong>解决：</strong></p>
+<p><strong>1）发送定长消息</strong></p>
+<p><strong>2）消息中加上消息长度</strong></p>
+<p><strong>3）用特殊标记分割消息</strong></p>
+<p><strong>4）（推荐）接收方创建一个预处理线程，对接收到的数据包预处理，将黏连的包分开</strong></p>
 <p>*UDP不会黏包，因为它有消息边界</p>
 <p>（8）linux内核参数</p>
 <p>（9）Linux下IO模型</p>
@@ -317,9 +352,9 @@
 
 <p>1.换成concurrentHashMap</p>
 <p>2.应该重写equal方法。如果在hashmap里就会导致冲突。</p>
-<p>3.Hashmap是数组+链表，到了jdk1.7加入分段锁，不用锁整张表。1.8则是抛弃了分段锁，通过乐观锁+悲观锁，粒度是一个元素一个锁，链表/红黑树在大于8或者小于6会发生彼此之间的转换。</p>
+<p>3.Hashmap是数组+链表，到了jdk1.7加入分段锁，不用锁整张表。1.8则是抛弃了分段锁，通过乐观锁+悲观锁，<strong>粒度是一个元素一个锁</strong>，<strong>链表/红黑树在大于8或者小于6会发生彼此之间的转换</strong>。</p>
 <p>4.集合Collection接口，继续细分List, Queue, Set接口。分别适用于不同的情况，List随机查找效率高，本质是数组，Queue先进先出，Set不允许重复。</p>
-<p>5.类加载用来找到类的字节码，加载到jvm中。双亲委派模型流程是类会先试图通过顶层的启动加载器来加载，如果不行才会传递给子类加载器进行加载。好处是避免出现错乱，比如一个启动类有object类，自己也写了一个，如果有双亲委派模型，就会优先加载启动类正确的object类，不会造成错乱。</p>
+<p>5.<strong>类加载用来找到类的字节码</strong>，加载到jvm中。<strong>双亲委派模型流程是类会先试图通过顶层的启动加载器加载</strong>，如果不行才会传递给子类加载器进行加载。好处是避免出现错乱，比如一个启动类有object类，自己也写了一个，如果有双亲委派模型，就会优先加载启动类正确的object类，不会造成错乱。</p>
 <p>6.char 2字节 int 4字节 float 4字节！ double 8字节 long 8字节 short 2字节</p>
 <p>7.session是服务器的，cookie是一种session的实现，在客户端，可以在http请求时发送给服务器，从而使得服务端可以追踪到用户信息，http就可以带有状态信息了</p>
 <p>8.守护进程是程序运行在后台脱离终端运行，通常在系统引导时启动，可以用于等待一些事情发生，服务通过守护进程实现。</p>
@@ -329,15 +364,15 @@
 <p>底层实现是增加一条lock字节码指令，把数据立即写回内存，但是volatile不能保证线程安全，比如其他处理器缓存了旧值，可以通过缓存一致性协议确保原子性。</p>
 <p>11.</p>
 <p>·进程：</p>
-<p>进程拥有资源，执行的时候通过线程执行，线程拥有私有栈，资源则是共享进程的。</p>
-<p>然而进程和线程的局限性是多线程时要加锁，低效。</p>
-<p>协程解决了锁问题，不用进行线程上下文切换，直接通过程序切换，不用耗费上下文切换的性能消耗。一个线程可拥有多个协程。</p>
+<p>进程拥有资源，执行的时候通过线程执行，<strong>线程拥有私有栈</strong>，资源则是共享进程的。</p>
+<p>然而<strong>进程和线程的局限性是多线程时要加锁</strong>，低效。</p>
+<p><strong>协程解决了锁问题</strong>，<strong>不用进行线程上下文切换</strong>，直接通过程序切换，不用耗费上下文切换的性能消耗。一个线程可拥有多个协程。</p>
 <p>协程举例：python中，消费者yield等待生产者生产，在生产者生产后调用协程consumer=消费者（）的send方法，即可实现消费者等待生产者。</p>
 <p>而协程的等待和线程阻塞是有本质区别的，协程的暂停完全由程序控制，而线程要通过内核切换。</p>
 <p>• fork：子进程和父进程都从fork之后的代码开始执行，子进程可以getppid获取父进程的id，子进程返回值0，父进程返回子进程的id（因为linux没有获取子进程id的系统调用）。</p>
 <p>12.</p>
 <p>线程池参数有corePoolSize，指明最小有几个线程，即核心线程；queueSize，指明阻塞队列大小，有任务来就扔到队列里，如果当前执行线程有空闲，就从队列中拎出一个执行；如果队列满了还有任务来，则可以在小于maxPoolSize时申请外来线程处理，而非核心线程。如果核心线程和阻塞队列都满还有任务来，则执行阻塞策略拒绝。</p>
-<p>13.数据库索引：B树是平衡查找树，特性是 左子树key&lt;root&lt;右子树key。但是B树非叶子节点也能存放数据，导致查找效率会比较低，这时引入B+树，只有叶子节点存数据，这样数据库索引的时候就可以减少查询消耗。范围查询、定位会更快。</p>
+<p>13.数据库索引：B树是平衡查找树，特性是 <strong>左子树key&lt;root&lt;右子树key</strong>。但是B树非叶子节点也能存放数据，导致查找效率会比较低，这时引入B+树，只有叶子节点存数据，这样数据库索引的时候就可以减少查询消耗。范围查询、定位会更快。</p>
 <p>14.cpu占用率100%怎么排查。</p>
 
       
@@ -901,6 +936,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">回溯</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BFS</a>
               </li>
             
             <div class="clearfix"></div>

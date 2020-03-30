@@ -333,7 +333,58 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="算法总结"><a href="#算法总结" class="headerlink" title="算法总结"></a>算法总结</h2><h5 id="第一部分：动态规划Down-Top"><a href="#第一部分：动态规划Down-Top" class="headerlink" title="第一部分：动态规划Down-Top"></a>第一部分：动态规划Down-Top</h5><ul>
+<li>题型：地图路径</li>
+</ul>
+<ul>
+<li>题型：编辑距离</li>
+</ul>
+<h5 id="第二部分：动态规划Top-Down"><a href="#第二部分：动态规划Top-Down" class="headerlink" title="第二部分：动态规划Top-Down"></a>第二部分：动态规划Top-Down</h5><h5 id="第三部分：回溯-剪枝"><a href="#第三部分：回溯-剪枝" class="headerlink" title="第三部分：回溯 + 剪枝"></a>第三部分：回溯 + 剪枝</h5><p>该部分涉及到题型有</p>
+<ul>
+<li><p>组合：子集</p>
+</li>
+<li><p>排列：全排列、第k个大的排列</p>
+</li>
+<li><p>暴力搜索（一般要用到剪枝）</p>
+</li>
+</ul>
+<p>  对于组合问题，特征是无关顺序。所以在递归时要限制只遍历<strong>第一个元素index之后的元素</strong>。核心代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = index; i &lt; A.length; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    list.add(A[i]);</span><br><span class="line">    helper(res, list, A, i + <span class="number">1</span>);<span class="comment">//从下一个元素开始搜索</span></span><br><span class="line">    list.remove(list.size() - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果是处理一个元素可以重复加入list结果集的问题，改动如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = index; i &lt; A.length; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    list.add(A[i]);</span><br><span class="line">    helper(res, list, A, i);<span class="comment">//从当前位置再开始搜索</span></span><br><span class="line">    list.remove(list.size() - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的问题在leetcode上「组合总和」。可接受诸如「1，2，3」中选择出「1，2，2，3，3」这样的结果。</p>
+<hr>
+<p>有了组合问题的处理方式，对于排列问题，需要改动如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(visit[i])<span class="comment">//A[i]已添加进入list，跳过</span></span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    visit[i] = <span class="keyword">true</span>;<span class="comment">//标记已访问</span></span><br><span class="line">  </span><br><span class="line">    list.add(A[i]);</span><br><span class="line">    helper(res, list, A, i + <span class="number">1</span>);</span><br><span class="line">    list.remove(list.size() - <span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">    visit[i] = <span class="keyword">false</span>;<span class="comment">//撤销访问标记</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为排列问题需要在每次填充list时遍历0到Length-1，所以可能会访问到已经填充进list的元素，所以需要添加visit数组。</p>
+<p>上面是对于没有重复元素的排列问题才可以这样处理，如果要求一个带有重复元素的序列，还需要改动如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">for(int i = 0; i &lt; A.length; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    if(visit[i])//A[i]已添加进入list，跳过</span><br><span class="line">        continue;   </span><br><span class="line">        </span><br><span class="line">    //!visited[i-1]代表之前这个元素已被撤销访问，而这个元素又和当前A[i]的值相等，所以剪枝掉</span><br><span class="line">    if(i &gt; 0 &amp;&amp; A[i] == A[i-1] &amp;&amp; !visited[i - 1])</span><br><span class="line">        continue;</span><br><span class="line">        </span><br><span class="line">    visit[i] = true;//标记已访问</span><br><span class="line">    list.add(A[i]);</span><br><span class="line">    helper(res, list, A, i + 1);</span><br><span class="line">    list.remove(list.size() - 1);</span><br><span class="line">    visit[i] = false;//撤销访问标记</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（*剪枝的前提是数组提前排序完毕）</p>
+<p>但如果按上述方式剪，会把所有A[i]==A[i-1]的节点都剪掉，有些情况就会丢解，为了避免这种情况，可以试着画一棵树，可以清晰的发现，每一次for循环其实都是同一层次的节点，每次for内部递归调用helper方法时才是进入了树深度+1的层级中，所以重复元素剪枝时应该<strong>只剪掉同一层级</strong>的节点，这就必须要再满足一个条件<strong>i&gt;index</strong>，这个条件会保证剪掉的一定是不同层级的节点，而同一层i==index时并不会被剪。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(i&gt;index &amp;&amp; A[i] == A[i-1] &amp;&amp; !visited[i - 1])//精准剪</span><br><span class="line">                continue;</span><br></pre></td></tr></table></figure>
+
+<p>【例】给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。</p>
+<p>candidates 中的每个数字在每个组合中只能使用一次。</p>
+<p>说明：</p>
+<p>所有数字（包括目标数）都是正整数。<br>解集不能包含重复的组合。 </p>
+<p>示例 1:</p>
+<p>输入: candidates = [10,1,2,7,6,1,5], target = 8,<br>所求解集为:<br>[<br>  [1, 7],<br>  [1, 2, 5],<br>  [2, 6],<br>  [1, 1, 6]<br>]</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/combination-sum-ii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/combination-sum-ii</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; list, <span class="keyword">int</span>[] candidates,<span class="keyword">int</span> cur, <span class="keyword">int</span> target, <span class="keyword">int</span> index)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      <span class="comment">//满足条件时加入结果集res</span></span><br><span class="line">        <span class="keyword">if</span>(cur == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;&gt;(list));<span class="comment">//由于list共享，所以必须new新的list</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = index; i &lt; candidates.length; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (cur - candidates[i] &lt; <span class="number">0</span>)<span class="comment">//剪掉不可能满足情况的分支</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span>(i &gt; index &amp;&amp; candidates[i] == candidates[i-<span class="number">1</span>])<span class="comment">//去掉要产生重复结果的分支</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            list.add(candidates[i]);</span><br><span class="line">            helper(res, list, candidates, cur - candidates[i] , target, i + <span class="number">1</span>);</span><br><span class="line">            list.remove(list.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum2(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        </span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Arrays.sort(candidates);<span class="comment">//提前排序</span></span><br><span class="line">        helper(res, list, candidates,target, target, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上……基本涵盖了所有排列组合问题的情况，其它情况都可以根据需求条件删改。</p>
+<hr>
+<h5 id="第四部分：BFS"><a href="#第四部分：BFS" class="headerlink" title="第四部分：BFS"></a>第四部分：BFS</h5><ul>
+<li>题型：图的遍历</li>
+<li>题型：树的遍历（层次遍历）</li>
+</ul>
+<p>两种题型都可以通过队列来实现，</p>
+<p>如果要获取每一层的元素，即要判断是否该点为该层最后一个节点，加入两个变量nextLevel和curListNums，如下：</p>
+
       
 
       
@@ -341,7 +392,49 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">回溯</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BFS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Review//" class="article-tag-list-link color2">Review</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -395,7 +488,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Question-amp-Solution"><a href="#Question-amp-Solution" class="headerlink" title="Question &amp; Solution"></a>Question &amp; Solution</h2><h5 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h5><ul>
+        <h2 id="Question-amp-Solution"><a href="#Question-amp-Solution" class="headerlink" title="Question &amp; Solution"></a>Question &amp; Solution</h2><h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><ul>
 <li><p>socket（）：类似文件的open（）操作，打开一个socket套接字。</p>
 </li>
 <li><p>bind（）：把ip地址或者域名绑定到socket对象上</p>
@@ -407,10 +500,45 @@
 <li><p>accept（）：在客户端connect（ ）后，服务器可以接受，这样socket通信就建立成功</p>
 </li>
 </ul>
+<h5 id="Session和Session实现"><a href="#Session和Session实现" class="headerlink" title="Session和Session实现"></a>Session和Session实现</h5><ul>
+<li>Session是一个概念，负责记录用户数据，提供个性化服务，存放在服务端。</li>
+<li>Cookie是一种Session的实现方式，存放在客户端</li>
+<li>Java中HttpServletRequest.getSession()可以创建Session</li>
+<li>如果浏览器禁用了cookie，可以通过url重写技术传递用户id信息</li>
+</ul>
+<h5 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h5><ol>
+<li>HTTP / SMTP / SNMP(Simple Network Manager Protocol) / FTP</li>
+<li>TCP / UDP</li>
+<li>IP / ICMP / ARP / RARP</li>
+<li>PPP / IEEE</li>
+</ol>
+<ul>
+<li>HTTP Request报文格式（部分）</li>
+</ul>
+<ol>
+<li>Accept : application/json</li>
+<li>Content-type : application/x-www-form</li>
+<li>Cookie : …</li>
+<li>Host : m.taobao.com</li>
+<li>Origin : h5.m.taobao.com</li>
+</ol>
+<ul>
+<li>Http Response报文（部分）</li>
+</ul>
+<ol>
+<li>Content-type : application/json</li>
+<li>Date : ….</li>
+<li>Connection : keep-alive</li>
+</ol>
+<p>即可声明一次访问taobao.com，并且夹带个人cookie信息发出，接受json数据返回的请求。</p>
+<p>*从HTTP1.1起，HTTP默认使用长链接，除非指明禁止长链接。所以不用写上述的Keep-alive选项。</p>
 <hr>
-<h4 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h4><p>（1）Netty</p>
+<p>IP包 MAX = 头部20字节 + 数据65515字节</p>
+<p>UDP MAX = 头部8字节（源地址4B+目的地址4B） + 数据 （65535 - 8）字节</p>
+<hr>
+<h4 id="以下是一些问题自己的理解总结"><a href="#以下是一些问题自己的理解总结" class="headerlink" title="以下是一些问题自己的理解总结"></a>以下是一些问题自己的理解总结</h4><p>（1）Netty</p>
 <p>一个高性能异步的NIO框架。</p>
-<p>维护一个NIO Server：ServerSocketChannel《——》Reactor Thread《——》IOHandler 《——》NIO Client：SocketChannel</p>
+<p>维护一个NIO Server：ServerSocketChannel    &lt;——&gt;    Reactor Thread    &lt;——&gt;    IOHandler     &lt;——&gt;    NIO Client：SocketChannel</p>
 <p>Reactor单线程模型：一个线程，异步，理论上可以处理所有IO请求</p>
 <p>Reactor多线程模型：只留一个Thread去处理接入认证，再通过dispatch维护一个ThreadLocal去处理IO请求</p>
 <p>无🔒化设计，线程内部串行化，解决并发带来的性能下降。</p>
@@ -418,8 +546,8 @@
 <p>Netty RPC（Remote Procedure Call）</p>
 <p>可以通过如同调用本地服务一样地去调用远程服务。</p>
 <p>客户端维护一个Client Stub</p>
-<p> | 发送请求（Request ID、接口名、方法名、参数）</p>
 <p>服务端维护一个Server Stub</p>
+<p>发送请求（Request ID、接口名、方法名、参数）</p>
 <p>*如何解决requestA，requestB乱序的问题？</p>
 <p>1.requestID用atomicLong生成全局唯一</p>
 <p>2.把处理结果callback对象存到全局的concurrentHashMap</p>
@@ -473,11 +601,11 @@
 <p>（7）TCP黏包问题</p>
 <p>原因：发送端需要等待缓冲区满才发送出去；接收方不及时接收缓冲区的包。这样接收方可能会只解析缓冲区里的第一个包，造成丢包。</p>
 <p>TCP：基于流的传输，没有消息边界，认为消息是一串数据流，而不是像UDP认为消息是严格独立的。</p>
-<p>解决：</p>
-<p>1）发送定长消息</p>
-<p>2）消息中加上消息长度</p>
-<p>3）用特殊标记分割消息</p>
-<p>4）（推荐）接收方创建一个预处理线程，对接收到的数据包预处理，将黏连的包分开</p>
+<p><strong>解决：</strong></p>
+<p><strong>1）发送定长消息</strong></p>
+<p><strong>2）消息中加上消息长度</strong></p>
+<p><strong>3）用特殊标记分割消息</strong></p>
+<p><strong>4）（推荐）接收方创建一个预处理线程，对接收到的数据包预处理，将黏连的包分开</strong></p>
 <p>*UDP不会黏包，因为它有消息边界</p>
 <p>（8）linux内核参数</p>
 <p>（9）Linux下IO模型</p>
@@ -503,9 +631,9 @@
 
 <p>1.换成concurrentHashMap</p>
 <p>2.应该重写equal方法。如果在hashmap里就会导致冲突。</p>
-<p>3.Hashmap是数组+链表，到了jdk1.7加入分段锁，不用锁整张表。1.8则是抛弃了分段锁，通过乐观锁+悲观锁，粒度是一个元素一个锁，链表/红黑树在大于8或者小于6会发生彼此之间的转换。</p>
+<p>3.Hashmap是数组+链表，到了jdk1.7加入分段锁，不用锁整张表。1.8则是抛弃了分段锁，通过乐观锁+悲观锁，<strong>粒度是一个元素一个锁</strong>，<strong>链表/红黑树在大于8或者小于6会发生彼此之间的转换</strong>。</p>
 <p>4.集合Collection接口，继续细分List, Queue, Set接口。分别适用于不同的情况，List随机查找效率高，本质是数组，Queue先进先出，Set不允许重复。</p>
-<p>5.类加载用来找到类的字节码，加载到jvm中。双亲委派模型流程是类会先试图通过顶层的启动加载器来加载，如果不行才会传递给子类加载器进行加载。好处是避免出现错乱，比如一个启动类有object类，自己也写了一个，如果有双亲委派模型，就会优先加载启动类正确的object类，不会造成错乱。</p>
+<p>5.<strong>类加载用来找到类的字节码</strong>，加载到jvm中。<strong>双亲委派模型流程是类会先试图通过顶层的启动加载器加载</strong>，如果不行才会传递给子类加载器进行加载。好处是避免出现错乱，比如一个启动类有object类，自己也写了一个，如果有双亲委派模型，就会优先加载启动类正确的object类，不会造成错乱。</p>
 <p>6.char 2字节 int 4字节 float 4字节！ double 8字节 long 8字节 short 2字节</p>
 <p>7.session是服务器的，cookie是一种session的实现，在客户端，可以在http请求时发送给服务器，从而使得服务端可以追踪到用户信息，http就可以带有状态信息了</p>
 <p>8.守护进程是程序运行在后台脱离终端运行，通常在系统引导时启动，可以用于等待一些事情发生，服务通过守护进程实现。</p>
@@ -515,15 +643,15 @@
 <p>底层实现是增加一条lock字节码指令，把数据立即写回内存，但是volatile不能保证线程安全，比如其他处理器缓存了旧值，可以通过缓存一致性协议确保原子性。</p>
 <p>11.</p>
 <p>·进程：</p>
-<p>进程拥有资源，执行的时候通过线程执行，线程拥有私有栈，资源则是共享进程的。</p>
-<p>然而进程和线程的局限性是多线程时要加锁，低效。</p>
-<p>协程解决了锁问题，不用进行线程上下文切换，直接通过程序切换，不用耗费上下文切换的性能消耗。一个线程可拥有多个协程。</p>
+<p>进程拥有资源，执行的时候通过线程执行，<strong>线程拥有私有栈</strong>，资源则是共享进程的。</p>
+<p>然而<strong>进程和线程的局限性是多线程时要加锁</strong>，低效。</p>
+<p><strong>协程解决了锁问题</strong>，<strong>不用进行线程上下文切换</strong>，直接通过程序切换，不用耗费上下文切换的性能消耗。一个线程可拥有多个协程。</p>
 <p>协程举例：python中，消费者yield等待生产者生产，在生产者生产后调用协程consumer=消费者（）的send方法，即可实现消费者等待生产者。</p>
 <p>而协程的等待和线程阻塞是有本质区别的，协程的暂停完全由程序控制，而线程要通过内核切换。</p>
 <p>• fork：子进程和父进程都从fork之后的代码开始执行，子进程可以getppid获取父进程的id，子进程返回值0，父进程返回子进程的id（因为linux没有获取子进程id的系统调用）。</p>
 <p>12.</p>
 <p>线程池参数有corePoolSize，指明最小有几个线程，即核心线程；queueSize，指明阻塞队列大小，有任务来就扔到队列里，如果当前执行线程有空闲，就从队列中拎出一个执行；如果队列满了还有任务来，则可以在小于maxPoolSize时申请外来线程处理，而非核心线程。如果核心线程和阻塞队列都满还有任务来，则执行阻塞策略拒绝。</p>
-<p>13.数据库索引：B树是平衡查找树，特性是 左子树key&lt;root&lt;右子树key。但是B树非叶子节点也能存放数据，导致查找效率会比较低，这时引入B+树，只有叶子节点存数据，这样数据库索引的时候就可以减少查询消耗。范围查询、定位会更快。</p>
+<p>13.数据库索引：B树是平衡查找树，特性是 <strong>左子树key&lt;root&lt;右子树key</strong>。但是B树非叶子节点也能存放数据，导致查找效率会比较低，这时引入B+树，只有叶子节点存数据，这样数据库索引的时候就可以减少查询消耗。范围查询、定位会更快。</p>
 <p>14.cpu占用率100%怎么排查。</p>
 
       
@@ -1220,6 +1348,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">回溯</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BFS</a>
               </li>
             
             <div class="clearfix"></div>
