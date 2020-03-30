@@ -171,68 +171,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="categories-Review" class="article article-type-categories  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/30/Review/">Review</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/30/Review/" class="archive-article-date">
-  	<time datetime="2020-03-30T09:27:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/30/Review/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-面试————总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -869,6 +807,103 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/02/22/leetcode-Huawei-2020-02-22-单词的压缩编码-820/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-leetcode-Huawei-2020-02-21-快乐数-202" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/21/leetcode-Huawei-2020-02-21-快乐数-202/">leetcode-Huawei-2020-02-21-快乐数-202</a>
+    </h1>
+  
+
+        
+        <a href="/2020/02/21/leetcode-Huawei-2020-02-21-快乐数-202/" class="archive-article-date">
+  	<time datetime="2020-02-21T14:09:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><ol start="202">
+<li>快乐数<br>编写一个算法来判断一个数是不是“快乐数”。</li>
+</ol>
+<p>一个“快乐数”定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程直到这个数变为 1，也可能是无限循环但始终变不到 1。如果可以变为 1，那么这个数就是快乐数。</p>
+<p>示例: </p>
+<p>输入: 19<br>输出: true<br>解释:<br>12 + 92 = 82<br>82 + 22 = 68<br>62 + 82 = 100<br>12 + 02 + 02 = 1</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/happy-number" target="_blank" rel="noopener">https://leetcode-cn.com/problems/happy-number</a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>本题的快乐数的性质是到循环的时候一定会出现重复数字，即环，判断是否出现环，最快的算法就是快慢指针。<br>如果当前环是由于slow和fast都等于1，则代表是快乐数，<br>如果出现了其他情况，都代表是不快乐数。<br>一开始用的是HashSet存放元素，有重复就返回不快乐，虽然写着简单，但空间复杂度容易过高，<br>还可以判断是否出现了4，如果出现4必然导致无线循环，这点是快乐数的特性，比较特殊。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line"></span><br><span class="line">int bitSquareSum(int t) &#123;</span><br><span class="line">        int sum = 0;</span><br><span class="line">        while(t!=0)</span><br><span class="line">        &#123;</span><br><span class="line">            int tmp=t%10;</span><br><span class="line">            sum+=tmp*tmp;</span><br><span class="line">            t/=10;</span><br><span class="line">        &#125;</span><br><span class="line">        return sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean isHappy(int n) &#123;</span><br><span class="line">        int slow=n,fast=n;</span><br><span class="line"></span><br><span class="line">        do&#123;</span><br><span class="line">            slow=bitSquareSum(slow);</span><br><span class="line">            fast=bitSquareSum(fast);</span><br><span class="line">            fast=bitSquareSum(fast);</span><br><span class="line">        &#125;while(slow!=fast);</span><br><span class="line">        </span><br><span class="line">        return slow==1;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数学</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">华为</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/21/leetcode-Huawei-2020-02-21-快乐数-202/">展开全文 >></a>
         </p>
       
 

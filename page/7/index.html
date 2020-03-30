@@ -171,117 +171,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Arduino-基于Blinker的蓝牙手机控制小车" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/15/Arduino-基于Blinker的蓝牙手机控制小车/">Arduino--基于Blinker的蓝牙手机控制小车</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/15/Arduino-基于Blinker的蓝牙手机控制小车/" class="archive-article-date">
-  	<time datetime="2019-08-15T13:19:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>1）JDY-18蓝牙模块</p>
-<p>2）Blinker APP（官网可下）</p>
-<p>3）智能小车配件（Arduino UNO板，杜邦线若干，电机2个，轮胎2个，底板，面包板）</p>
-<p>4）一台智能手机</p>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>主要实现功能是由手机端蓝牙发送指令到JDY-18，再通过开发板收到的指令对小车进行控制指令的发送，实现电机带动轮胎。</p>
-<p>APP可发送前进、后退、左转、右转、刹车、调速的指令，速度区间是0-255（PWM占空比），因为左右电机的速度不一致（出厂问题），所以在实际运行时，设置左<br>电机速度比右电机速度高30，因此电机速度可调整区间是0-225，又因为速度过慢会使得小车无法前进（阻力过大），所以最终可调整区间为50&lt;=速度&lt;=225。<br>如图所示。</p>
-<img src="/2019/08/15/Arduino-基于Blinker的蓝牙手机控制小车/app1.jpg" title="jpgName:app1.jpg">
-
-<p>蓝牙模块可任选，之所以用到Blinker是因为安卓编程麻烦，用这个很方便可以写一个定制的APP用发送指令，还支持BLE，WIFI等接入。然后智能小车部分主要是<br>在某宝买了2个轮胎和一个底板，配件也打包买的，装配很简单，像搭积木一样搭就行了。</p>
-<p>智能小车组装完成图（部分零部件可不装，如舵机云台等）</p>
-<img src="/2019/08/15/Arduino-基于Blinker的蓝牙手机控制小车/car1.jpg" title="jpgName:car1.jpg">
-
-<h2 id="前进指令代码"><a href="#前进指令代码" class="headerlink" title="前进指令代码"></a>前进指令代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">void run1()//keep前进</span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">  digitalWrite(left_go,HIGH);//高电平有效</span><br><span class="line">  digitalWrite(left_back,LOW);</span><br><span class="line">  analogWrite(left_go,sudu+30);//解决左右电机速度不一致，+30</span><br><span class="line">  analogWrite(left_back,0);</span><br><span class="line">  </span><br><span class="line">  digitalWrite(right_go,HIGH);</span><br><span class="line">  digitalWrite(right_back,LOW);</span><br><span class="line">  analogWrite(right_go,sudu+30);//解决左右电机速度不一致，+30</span><br><span class="line">  analogWrite(right_back,0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以此类推，前后左右代码相似。</p>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#define BLINKER_BLE</span><br><span class="line"></span><br><span class="line">#include &lt;Blinker.h&gt;</span><br><span class="line"></span><br><span class="line">BlinkerButton Button_go(&quot;btn-go&quot;);</span><br><span class="line">BlinkerButton Button_down(&quot;btn-down&quot;);</span><br><span class="line">BlinkerButton Button_left(&quot;btn-left&quot;);</span><br><span class="line">BlinkerButton Button_right(&quot;btn-right&quot;);</span><br><span class="line">BlinkerButton Button_stop(&quot;btn-stop&quot;);</span><br><span class="line">BlinkerSlider Slider_sudu(&quot;ran-sd&quot;);</span><br><span class="line"></span><br><span class="line">int left_go=6;</span><br><span class="line">int left_back=9;</span><br><span class="line">int right_go=10;</span><br><span class="line">int right_back=11;</span><br><span class="line">int sudu=100;</span><br><span class="line"></span><br><span class="line">void Slider_sudu_callback(int32_t value)//读取手机端的速度滑块值（ 50&lt;=value&lt;=225 ）</span><br><span class="line">&#123;</span><br><span class="line">  sudu=value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void Button_go_callback(const String &amp; state)</span><br><span class="line">&#123;</span><br><span class="line">  run1();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Button_down_callback(const String &amp; state)</span><br><span class="line">&#123;</span><br><span class="line">  back();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Button_left_callback(const String &amp; state)</span><br><span class="line">&#123;</span><br><span class="line">  turn_left();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Button_right_callback(const String &amp; state)</span><br><span class="line">&#123;</span><br><span class="line">  turn_right();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Button_stop_callback(const String &amp; state)</span><br><span class="line">&#123;</span><br><span class="line">  stopcar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//void dataRead(const String &amp; data)</span><br><span class="line">//&#123;</span><br><span class="line">//    BLINKER_LOG(&quot;Blinker readString: &quot;, data);</span><br><span class="line">//    ran_sd.print(data);</span><br><span class="line">//&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void turn_left()//左转</span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">  digitalWrite(left_go,HIGH);</span><br><span class="line">  digitalWrite(left_back,LOW);</span><br><span class="line">  analogWrite(left_back,0);</span><br><span class="line">  analogWrite(left_go,sudu);//90</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  digitalWrite(right_go,HIGH);</span><br><span class="line">  digitalWrite(right_back,LOW);</span><br><span class="line">  analogWrite(right_go,sudu+30);</span><br><span class="line">  analogWrite(right_back,0);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line">void turn_right()//右转</span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">  digitalWrite(left_go,HIGH);</span><br><span class="line">  digitalWrite(left_back,LOW);</span><br><span class="line">  analogWrite(left_back,0);</span><br><span class="line">  analogWrite(left_go,sudu+30);</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  digitalWrite(right_go,HIGH);</span><br><span class="line">  digitalWrite(right_back,LOW);</span><br><span class="line">  analogWrite(right_go,sudu);</span><br><span class="line">  analogWrite(right_back,0);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void run1()//keep前进</span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">  digitalWrite(left_go,HIGH);</span><br><span class="line">  digitalWrite(left_back,LOW);</span><br><span class="line">  analogWrite(left_go,sudu+30);</span><br><span class="line">  analogWrite(left_back,0);</span><br><span class="line">  </span><br><span class="line">  digitalWrite(right_go,HIGH);</span><br><span class="line">  digitalWrite(right_back,LOW);</span><br><span class="line">  analogWrite(right_go,sudu+30);</span><br><span class="line">  analogWrite(right_back,0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void back()</span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">  digitalWrite(left_go,LOW);</span><br><span class="line">  digitalWrite(left_back,HIGH);</span><br><span class="line">  analogWrite(left_go,0);</span><br><span class="line">  analogWrite(left_back,sudu+30);</span><br><span class="line">  </span><br><span class="line">  digitalWrite(right_go,LOW);</span><br><span class="line">  digitalWrite(right_back,HIGH);</span><br><span class="line">  analogWrite(right_back,sudu+30);</span><br><span class="line">  analogWrite(right_go,0);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void stopcar()</span><br><span class="line">&#123;</span><br><span class="line">  digitalWrite(left_go,LOW);</span><br><span class="line">  digitalWrite(left_back,LOW);</span><br><span class="line">  digitalWrite(right_back,LOW);</span><br><span class="line">  digitalWrite(right_go,LOW);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void setup() &#123;</span><br><span class="line"></span><br><span class="line">    Serial.begin(115200);</span><br><span class="line">    BLINKER_DEBUG.stream(Serial);</span><br><span class="line">      </span><br><span class="line">    pinMode(left_go,OUTPUT);</span><br><span class="line">    pinMode(left_back,OUTPUT);</span><br><span class="line">    pinMode(right_go,OUTPUT);</span><br><span class="line">    pinMode(right_back,OUTPUT);</span><br><span class="line">    pinMode(LED_BUILTIN, OUTPUT);</span><br><span class="line">    Blinker.begin(4,5);</span><br><span class="line">    </span><br><span class="line">    Button_go.attach(Button_go_callback);</span><br><span class="line">    Button_down.attach(Button_down_callback);</span><br><span class="line">    Button_left.attach(Button_left_callback);</span><br><span class="line">    Button_right.attach(Button_right_callback);</span><br><span class="line">    Button_stop.attach(Button_stop_callback);</span><br><span class="line">    Slider_sudu.attach(Slider_sudu_callback);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">  </span><br><span class="line">  Blinker.run();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">蓝牙</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JDY-18模块</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">远程控制</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Blinker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Arduino//" class="article-tag-list-link color3">Arduino</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/15/Arduino-基于Blinker的蓝牙手机控制小车/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-leetcode-226-———反转二叉树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -770,6 +659,103 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/08/02/leetcode-268-——缺失数字/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-leetcode-191-——位1的个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/01/leetcode-191-——位1的个数/">leetcode[191]——位1的个数</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/01/leetcode-191-——位1的个数/" class="archive-article-date">
+  	<time datetime="2019-08-01T08:32:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##题目<br>编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为汉明重量）。</p>
+<p>示例 1：</p>
+<p>输入：00000000000000000000000000001011<br>输出：3<br>解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 ‘1’。<br>示例 2：</p>
+<p>输入：00000000000000000000000010000000<br>输出：1<br>解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 ‘1’。<br>示例 3：</p>
+<p>输入：11111111111111111111111111111101<br>输出：31<br>解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 ‘1’。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/number-of-1-bits" target="_blank" rel="noopener">https://leetcode-cn.com/problems/number-of-1-bits</a></p>
+<p>##分析</p>
+<p>解法一比较好想。</p>
+<p>重点说解法二。主要思想是通过n和n-1相与后，可以让最靠右边（低位）的反转成0而不改变其它位的数值。因此可以通过这个小技巧，可得解法二。</p>
+<h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>利用不断循环右移，逐位判断是否为1，是的话ans++即可，想法直观。时空都是O(1)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int hammingWeight(uint32_t n) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h2><p>根据解法一可以再进一步优化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int hammingWeight(uint32_t n) &#123;</span><br><span class="line">    int mask = 1,ans = 0;</span><br><span class="line">    for(int i=0;i&lt;32;i++,n&gt;&gt;=1)</span><br><span class="line">    &#123;</span><br><span class="line">        if(n&amp;mask)</span><br><span class="line">            ++ans;</span><br><span class="line">    &#125;</span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">位运算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/01/leetcode-191-——位1的个数/">展开全文 >></a>
         </p>
       
 
