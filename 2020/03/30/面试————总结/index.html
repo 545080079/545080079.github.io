@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="MRoad">
 <meta property="og:description" content="Question &amp;amp; Solution网络 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect（">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-30T15:52:23.059Z">
+<meta property="og:updated_time" content="2020-03-31T08:36:49.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试————总结">
 <meta name="twitter:description" content="Question &amp;amp; Solution网络 socket（）：类似文件的open（）操作，打开一个socket套接字。  bind（）：把ip地址或者域名绑定到socket对象上  listen（）：对于服务器，应该在socket（），bind（）后开启监听  connect（）：对于客户端，可以connect连接到一个socket对端服务器  accept（）：在客户端connect（">
@@ -253,9 +253,64 @@
 </ol>
 <p>即可声明一次访问taobao.com，并且夹带个人cookie信息发出，接受json数据返回的请求。</p>
 <p>*从HTTP1.1起，HTTP默认使用长链接，除非指明禁止长链接。所以不用写上述的Keep-alive选项。</p>
+<ul>
+<li><p>IP包 MAX = 头部20字节 + 数据65515字节</p>
+</li>
+<li><p>UDP MAX = 头部8字节（源地址4B+目的地址4B） + 数据 （65535 - 8）字节</p>
+</li>
+</ul>
 <hr>
-<p>IP包 MAX = 头部20字节 + 数据65515字节</p>
-<p>UDP MAX = 头部8字节（源地址4B+目的地址4B） + 数据 （65535 - 8）字节</p>
+<ul>
+<li><p>Http响应状态码</p>
+<p><code>2xx</code>成功响应</p>
+<p>​    204:成功，但没有资源返回</p>
+<p>​    206:对某部分资源进行响应，content-range指定范围</p>
+<p><code>3xx</code>需要额外操作完成</p>
+<p>​    301:永久重定向</p>
+<p>​    302:临时重定向</p>
+<p><code>4xx</code>客户端错误</p>
+<p>​    401:需要http认证</p>
+<p>​    403:被服务器拒绝</p>
+<p><code>5xx</code>服务器端错误</p>
+<p>​    503:超负荷</p>
+<p>​    500:执行时出错</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>MIME ：一种描述消息类型的因特网标准，MIME消息可以包含文本、视频、音频以及其它应用程序专用的数据</p>
+<p>文本文件：text/htm、text/plain、text/css、application/xhtml+xml、application/xml</p>
+<p>图片文件： image/jpeg、image/gif、image/png</p>
+<p>视频文件： video/mpeg、video/quicktime</p>
+<p>应用程序二进制文件： application/octet-stream、application/zip</p>
+<p>q用来表示优先级：</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>q</th>
+<th>MIME</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.0</td>
+<td>text/html</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>application/xhtml+xml</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>application/xml</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>* / *</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
 <hr>
 <h4 id="以下是一些问题自己的理解总结"><a href="#以下是一些问题自己的理解总结" class="headerlink" title="以下是一些问题自己的理解总结"></a>以下是一些问题自己的理解总结</h4><p>（1）Netty</p>
 <p>一个高性能异步的NIO框架。</p>
@@ -667,6 +722,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">解码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
               </li>
              
@@ -699,26 +766,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">解码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
               </li>
              
@@ -739,6 +786,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
@@ -751,7 +806,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">回溯</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -763,14 +838,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">字符串</a>
               </li>
              
@@ -779,7 +846,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -836,10 +907,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -936,18 +1003,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">回溯</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BFS</a>
               </li>
             
             <div class="clearfix"></div>

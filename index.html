@@ -384,6 +384,38 @@
 </ul>
 <p>两种题型都可以通过队列来实现，</p>
 <p>如果要获取每一层的元素，即要判断是否该点为该层最后一个节点，加入两个变量nextLevel和curListNums，如下：</p>
+<h5 id="第五部分：并查集"><a href="#第五部分：并查集" class="headerlink" title="第五部分：并查集"></a>第五部分：并查集</h5><ul>
+<li>题型：判断在不在同一个集合中</li>
+<li>题型：有关集合合并</li>
+</ul>
+<p>在以上两种情况的问题，需要考虑用并查集。</p>
+<p>先说第一种题型，这种问题具有代表性的有岛屿孤立问题、朋友圈问题等等，举一个例子：</p>
+<blockquote>
+<p>547.朋友圈</p>
+<p>班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。</p>
+<p>给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。</p>
+<p>示例 1:</p>
+<p>输入:<br>[[1,1,0],<br> [1,1,0],<br> [0,0,1]]<br>输出: 2<br>说明：已知学生0和学生1互为朋友，他们在一个朋友圈。<br>第2个学生自己在一个朋友圈。所以返回2。<br>示例 2:</p>
+<p>输入:<br>[[1,1,0],<br> [1,1,1],<br> [0,1,1]]<br>输出: 1<br>说明：已知学生0和学生1互为朋友，学生1和学生2互为朋友，所以学生0和学生2也是朋友，所以他们三个在一个朋友圈，返回1。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/friend-circles" target="_blank" rel="noopener">https://leetcode-cn.com/problems/friend-circles</a></p>
+</blockquote>
+<p>该题就是典型的并查集问题，先梳理一下并查集的要点：</p>
+<p>1.Union(x，y): 把x,y合并成同一个集合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public void union(int[] father, int x, int y)</span><br><span class="line">&#123;</span><br><span class="line">    int a = find(father, x);</span><br><span class="line">    int b = find(father, y);</span><br><span class="line">    if(a != b)&#123;</span><br><span class="line">        --cnt;</span><br><span class="line">        father[a] = b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.find(x):找到x的根节点并返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public int find(int[] father, int x)</span><br><span class="line">&#123;</span><br><span class="line">    if(father[x] == x)</span><br><span class="line">        return x;</span><br><span class="line">        </span><br><span class="line">    return find(father, father[x]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里会有一个问题，就是按直观的find写法就是递归一层一层的去找到root节点，是一个链式的查找，时间复杂度O（N）。可以通过路径压缩，在递归回溯的时候让每一个子节点直接链接root节点，这样查找的时候就可以做到O（1）啦。（严格说是log*n，在n非常大的时候，大小也仅仅只有5，可以上网搜到证明。和log n是不同的概念)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public int find(int[] father, int x)</span><br><span class="line">&#123;</span><br><span class="line">    if(father[x] == x)</span><br><span class="line">        return x;</span><br><span class="line">        </span><br><span class="line">    return father[x] = find(father, father[x]);//两步合为一步，先找到根，再让father[x] = root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>知道了并查集的写法，回到本题，现在题目需要如何知道有几个这样的root节点，即一个root代表一个独立的朋友圈。我们知道union时就会让一个节点合并到一个朋友圈里，所以只需要在union<strong>实际发生时</strong>增加一行，让统计root节点个数的cnt减1即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">public void union(int[] father, int x, int y)</span><br><span class="line">&#123;</span><br><span class="line">    int a = find(father, x);</span><br><span class="line">    int b = find(father, y);</span><br><span class="line">    if(a != b)&#123;</span><br><span class="line">        --cnt;//如果不在一个集合，才减少</span><br><span class="line">        father[a] = b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，就把核心的代码都写完了。</p>
+<p>附上整题的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int find(int[] father, int x)</span><br><span class="line">    &#123;</span><br><span class="line">        if(father[x] == x)</span><br><span class="line">            return x;</span><br><span class="line">            </span><br><span class="line">        return father[x] = find(father, father[x]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void union(int[] father, int x, int y)</span><br><span class="line">    &#123;</span><br><span class="line">        int a = find(father, x);</span><br><span class="line">        int b = find(father, y);</span><br><span class="line">        if(a != b)&#123;</span><br><span class="line">            --cnt;</span><br><span class="line">            father[a] = b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int cnt = 0;</span><br><span class="line"></span><br><span class="line">    public int findCircleNum(int[][] M) &#123;</span><br><span class="line"></span><br><span class="line">        if(M.length == 0 || M[0].length == 0)</span><br><span class="line">            return 0;</span><br><span class="line"></span><br><span class="line">        //Init 并查集</span><br><span class="line">        int n = M.length;</span><br><span class="line">        int[] father = new int[n];</span><br><span class="line">        for(int i = 0; i&lt;n; ++i)</span><br><span class="line">            father[i] = i;</span><br><span class="line">        cnt = n;</span><br><span class="line"></span><br><span class="line">		//合并每个为1的节点（当i != j）</span><br><span class="line">        for(int i = 0; i&lt;n; ++i)</span><br><span class="line">            for(int j = i; j&lt;n; ++j)</span><br><span class="line">                if(i != j &amp;&amp; M[i][j] == 1) union(father, i, j);</span><br><span class="line">        return cnt;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -397,19 +429,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DFS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">递归</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -417,7 +441,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
         		</li>
       		
 		</ul>
@@ -532,9 +564,64 @@
 </ol>
 <p>即可声明一次访问taobao.com，并且夹带个人cookie信息发出，接受json数据返回的请求。</p>
 <p>*从HTTP1.1起，HTTP默认使用长链接，除非指明禁止长链接。所以不用写上述的Keep-alive选项。</p>
+<ul>
+<li><p>IP包 MAX = 头部20字节 + 数据65515字节</p>
+</li>
+<li><p>UDP MAX = 头部8字节（源地址4B+目的地址4B） + 数据 （65535 - 8）字节</p>
+</li>
+</ul>
 <hr>
-<p>IP包 MAX = 头部20字节 + 数据65515字节</p>
-<p>UDP MAX = 头部8字节（源地址4B+目的地址4B） + 数据 （65535 - 8）字节</p>
+<ul>
+<li><p>Http响应状态码</p>
+<p><code>2xx</code>成功响应</p>
+<p>​    204:成功，但没有资源返回</p>
+<p>​    206:对某部分资源进行响应，content-range指定范围</p>
+<p><code>3xx</code>需要额外操作完成</p>
+<p>​    301:永久重定向</p>
+<p>​    302:临时重定向</p>
+<p><code>4xx</code>客户端错误</p>
+<p>​    401:需要http认证</p>
+<p>​    403:被服务器拒绝</p>
+<p><code>5xx</code>服务器端错误</p>
+<p>​    503:超负荷</p>
+<p>​    500:执行时出错</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>MIME ：一种描述消息类型的因特网标准，MIME消息可以包含文本、视频、音频以及其它应用程序专用的数据</p>
+<p>文本文件：text/htm、text/plain、text/css、application/xhtml+xml、application/xml</p>
+<p>图片文件： image/jpeg、image/gif、image/png</p>
+<p>视频文件： video/mpeg、video/quicktime</p>
+<p>应用程序二进制文件： application/octet-stream、application/zip</p>
+<p>q用来表示优先级：</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>q</th>
+<th>MIME</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.0</td>
+<td>text/html</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>application/xhtml+xml</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>application/xml</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>* / *</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
 <hr>
 <h4 id="以下是一些问题自己的理解总结"><a href="#以下是一些问题自己的理解总结" class="headerlink" title="以下是一些问题自己的理解总结"></a>以下是一些问题自己的理解总结</h4><p>（1）Netty</p>
 <p>一个高性能异步的NIO框架。</p>
@@ -783,11 +870,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -1079,6 +1166,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">解码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">蓝牙</a>
               </li>
              
@@ -1111,26 +1210,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">传感器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">红外遥控</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">解码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Arduino</a>
               </li>
              
@@ -1151,6 +1230,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">超声波</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HC-SR04</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
               </li>
              
@@ -1163,7 +1250,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">回溯</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1175,14 +1282,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">字符串</a>
               </li>
              
@@ -1191,7 +1290,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态规划</a>
+                <a href="javascript:void(0)" class="js-tag color2">深度优先搜索（DFS）</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多指针</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1248,10 +1351,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1348,18 +1447,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">回溯</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">BFS</a>
               </li>
             
             <div class="clearfix"></div>
